@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: Apache-2.0
+# dsh-score bundle patch: mount the multi-dimensional plugin quality scorer.
+#
+# Every configuration key is listed below with its default, commented out —
+# uncomment only the keys you override (defaults come from the Schemastery
+# Config schema; see README § Configuration for the full table).
+- insert:
+    - id: score
+      name: dsh-score
+      config:
+        # Deadline for one git/gh/npm probe command in milliseconds.
+        # probeTimeoutMs: 60000
+
+        # Cap on the sanitized output tail recorded per probe, in bytes.
+        # outputTailBytes: 8000
+
+        # How long a cached score card is reused before re-scoring, in
+        # milliseconds (0 disables the cache).
+        # cacheMaxAgeMs: 86400000
+
+        # Commit-recency thresholds: maintenance drops to warn after
+        # staleCommitWarnDays and to fail after staleCommitFailDays.
+        # staleCommitWarnDays: 90
+        # staleCommitFailDays: 365
+
+        # Oldest-open-issue age thresholds (issue response proxy): warn/fail.
+        # staleIssueWarnDays: 30
+        # staleIssueFailDays: 180
+
+        # Batch limits for /score.
+        # maxBatchTargets: 20
+        # batchConcurrency: 1
+
+        # Per-dimension weights used to sum the total (defaults sum to 100).
+        # weights:
+        #   install: 25
+        #   maintenance: 20
+        #   documentation: 20
+        #   security: 20
+        #   compliance: 15
