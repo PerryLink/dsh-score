@@ -1,14 +1,24 @@
-# dsh-score
+<div align="center">
 
-Multi-dimensional quality scoring for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugins. Given a repo or npm package, it gathers **real `gh`/`npm` CLI evidence** and scores five dimensions — install success (consuming `dsh-test-drive` results when present), maintenance activity, documentation completeness, security scan, and protocol compliance — into a risk card with a weighted total and letter grade, plus a JSON/Markdown leaderboard.
+# 🏆 dsh-score
 
-**一句话定位 (中文)**: 基于真实 gh/npm 证据对 DSH 插件做五维质量评分（安装成功率/维护活跃度/文档完整性/安全扫描/协议合规），输出风险卡与排行榜。
+**Multi-dimensional quality scoring for DeepSeek Harness plugins.**
 
-[Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md) · [中文](README.zh.md)
+*Five dimensions, real `gh`/`npm` evidence, one weighted risk card and leaderboard.*
 
-[![ci](https://github.com/PerryLink/dsh-score/actions/workflows/ci.yml/badge.svg)](https://github.com/PerryLink/dsh-score/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![DSH plugin](https://img.shields.io/badge/dsh-plugin-✅-green)](https://github.com/topics/dsh-plugin)
+[![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-score/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-score/actions)
+[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-score?label=version)](https://github.com/PerryLink/dsh-score/releases)
 [![npm version](https://img.shields.io/npm/v/dsh-score)](https://www.npmjs.com/package/dsh-score)
 [![npm downloads](https://img.shields.io/npm/dm/dsh-score)](https://www.npmjs.com/package/dsh-score)
+
+[English](README.md) · [简体中文](README.zh.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
+
+</div>
+
+---
 
 ## Compatibility
 

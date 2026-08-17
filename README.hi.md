@@ -1,8 +1,24 @@
-# dsh-score
+<div align="center">
 
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) प्लगइन के लिए बहु-आयामी गुणवत्ता स्कोरिंग। एक रिपॉजिटरी या npm पैकेज देकर, यह **वास्तविक `gh`/`npm` CLI साक्ष्य** एकत्र करता है और पाँच आयामों को स्कोर करता है — इंस्टॉल सफलता (जब उपलब्ध हो तो `dsh-test-drive` परिणामों का उपभोग), रखरखाव गतिविधि, दस्तावेज़ीकरण पूर्णता, सुरक्षा स्कैन और प्रोटोकॉल अनुपालन — भारित कुल और अक्षर ग्रेड वाले रिस्क कार्ड के रूप में, साथ ही JSON/Markdown लीडरबोर्ड।
+# 🏆 dsh-score
 
-[English](README.md) · [Español](README.es.md) · [Português](README.pt.md) · [中文](README.zh.md)
+**DeepSeek Harness प्लगइन के लिए बहु-आयामी गुणवत्ता स्कोरिंग।**
+
+*पाँच आयाम, वास्तविक `gh`/`npm` साक्ष्य, एक भारित रिस्क कार्ड और लीडरबोर्ड।*
+
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![DSH plugin](https://img.shields.io/badge/dsh-plugin-✅-green)](https://github.com/topics/dsh-plugin)
+[![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-score/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-score/actions)
+[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-score?label=version)](https://github.com/PerryLink/dsh-score/releases)
+[![npm version](https://img.shields.io/npm/v/dsh-score)](https://www.npmjs.com/package/dsh-score)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-score)](https://www.npmjs.com/package/dsh-score)
+
+[English](README.md) · [简体中文](README.zh.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
+
+</div>
+
+---
 
 ## संगतता
 
