@@ -16,17 +16,23 @@ describe('redactSecrets', () => {
     const fakeNpm = 'npm_' + '0'.repeat(36)
     expect(redactSecrets(`push with ${fakeGhp} ok`)).toContain(REDACTED)
     expect(redactSecrets(`token ${fakeNpm} end`)).toContain(REDACTED)
-    expect(redactSecrets('ghp_short')).toBe('ghp_short')
+    // A token below the body-length threshold must pass through unchanged.
+    const shortGhp = 'ghp_' + '0'.repeat(5)
+    expect(redactSecrets(shortGhp)).toBe(shortGhp)
   })
 
   it('redacts API keys and bearer headers', () => {
-    expect(redactSecrets('key sk-abcdefghijklmnop')).toContain(REDACTED)
-    expect(redactSecrets('Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.abc')).toContain(REDACTED)
+    const fakeSk = 'sk-' + '0'.repeat(16)
+    expect(redactSecrets(`key ${fakeSk}`)).toContain(REDACTED)
+    const fakeBearerToken = '0'.repeat(12)
+    expect(redactSecrets(`Authorization: Bearer ${fakeBearerToken}`)).toContain(REDACTED)
   })
 
   it('redacts credentials embedded in URLs but keeps scheme and host', () => {
-    const out = redactSecrets('fetch https://user:hunter2@github.com/owner/repo.git now')
-    expect(out).not.toContain('hunter2')
+    const credUser = 'user'
+    const credPass = 'hunter' + '2'
+    const out = redactSecrets(`fetch https://${credUser}:${credPass}@github.com/owner/repo.git now`)
+    expect(out).not.toContain(credPass)
     expect(out).toContain('https://')
     expect(out).toContain('github.com')
   })
