@@ -82,6 +82,7 @@ describe('resolveConfig fails loud', () => {
 
   it('rejects batch bounds violations', () => {
     expect(() => resolveConfig({ maxBatchTargets: 0 })).toThrow(/config\.maxBatchTargets/)
+    expect(() => resolveConfig({ maxBatchTargets: 201 })).toThrow(/config\.maxBatchTargets/)
     expect(() => resolveConfig({ batchConcurrency: 9 })).toThrow(/config\.batchConcurrency/)
   })
 
@@ -91,5 +92,13 @@ describe('resolveConfig fails loud', () => {
 
   it('rejects out-of-range weight values', () => {
     expect(() => resolveConfig({ weights: { install: 101 } })).toThrow(/config\.weights\.install/)
+  })
+
+  it('accepts weights that do not sum to 100 (the total is a weighted average)', () => {
+    // `computeTotal` divides by the weight sum, so weights are relative, not
+    // absolute percentages — a non-100 sum is valid, not a misconfiguration.
+    const resolved = resolveConfig({ weights: { install: 10, maintenance: 0, documentation: 0, security: 0, compliance: 0 } })
+    expect(resolved.weights.install).toBe(10)
+    expect(resolved.weights.compliance).toBe(0)
   })
 })
