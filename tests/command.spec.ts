@@ -33,6 +33,9 @@ function invocation(rawInput: string, harness: Harness): CommandInvocation {
     commandId: CommandId('cmd-test'),
     agent: harness.agent,
     rawInput,
+    // rc8: CommandInvocation carries durably admitted image blocks; the
+    // /score command declares no `input.images`, so the empty list matches.
+    attachments: [],
     signal: new AbortController().signal,
   }
 }
