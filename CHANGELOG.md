@@ -5,6 +5,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2026-08-21
+
+### Changed
+
+- Upgrade all `@deepseek-ai/dsh-*` peers to the DSH `0.1.0-rc.8` release: peerDependencies now declare `>=0.1.0-rc.8 <0.2.0`, devDependencies pin `0.1.0-rc.8` exactly, and the `dshWorkshop.compatibility.dshVersions` marker and README compatibility tables follow.
+- `typecheck`/`typecheck:ci` and the test harness now validate against the published `0.1.0-rc.8` types.
+
 ## [0.1.0] - 2026-08-17
 
 ### Added

@@ -4,4 +4,4 @@
  * The structured score records it as `score.pluginVersion`.
  * @module dsh-score/version
  */
-export const VERSION = '0.1.0'
+export const VERSION = '0.1.1'
