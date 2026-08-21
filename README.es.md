@@ -24,7 +24,7 @@
 
 | Componente | Versión |
 |---|---|
-| DeepSeek Harness | `0.1.0-rc.6` (peer dependencies fijadas) |
+| DeepSeek Harness | `0.1.0-rc.8` (dependencias entre pares `>=0.1.0-rc.8 <0.2.0`) |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | Gestor de paquetes | `pnpm@11.7.0` |
 | Plataforma | Windows / macOS / Linux (plugin solo host) |
