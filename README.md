@@ -1,6 +1,7 @@
 <div align="center">
 
 # 🏆 dsh-score
+[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-score)
 
 **Multi-dimensional quality scoring for DeepSeek Harness plugins.**
 
