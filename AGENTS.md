@@ -8,7 +8,7 @@ Standalone DeepSeek Harness plugin repository (`dsh-score`). Development follows
 - `src/config.ts` — Schemastery schema + explicit `resolveConfig` (no hidden `?? default`); every default, threshold, and weight is re-judged there so plain-JS mounts fail loud too.
 - `src/result.ts` — the structured score contract `dsh-score/v1`; the zod schemas are the single source of truth and validate records at the durable boundary of the `score` storage domain.
 - `src/probe.ts` — the `gh`/`npm` CLI probe layer over `ctx.subprocess` (argv-only, never a shell) plus the pure JSON parsers. `src/dimensions.ts` — the five pure dimension evaluators. `src/score.ts` — the single-target pipeline + the reserved test-drive consumer. `src/batch.ts` — the `score-batch` job producer over `ctx.jobs`.
-- `tests/` — vitest; real Cordis `Context` + real `SessionStore`/`Session`/`ToolRuntime`/`AgentRegistry`/`LocalJobRegistry`/`Storage`+`DomainFacility` from the `0.1.0-rc.8` peers; the subprocess provider is a scripted subclass of the REAL `SubprocessRuntime`.
+- `tests/` — vitest; real Cordis `Context` + real `SessionStore`/`Session`/`ToolRuntime`/`AgentRegistry`/`LocalJobRegistry`/`Storage`+`DomainFacility` from the `0.1.1-rc.2` peers; the subprocess provider is a scripted subclass of the REAL `SubprocessRuntime`.
 
 ## Hard rules applied here
 
@@ -24,7 +24,7 @@ Standalone DeepSeek Harness plugin repository (`dsh-score`). Development follows
 
 `pnpm run typecheck && pnpm run typecheck:ci && pnpm test && pnpm run build && pnpm run verify:self-contained && pnpm run verify:artifacts && pnpm pack`
 
-- `typecheck` resolves `@deepseek-ai/*` through tsconfig paths to the local harness checkout; `typecheck:ci` clears the paths and checks against the published `0.1.0-rc.8` types. Both must stay green.
+- `typecheck` resolves `@deepseek-ai/*` through tsconfig paths to the local harness checkout; `typecheck:ci` clears the paths and checks against the published `0.1.1-rc.2` types. Both must stay green.
 - `test` runs the scripted suites against the real peers with a scripted subprocess provider. Real-CLI scoring (`gh`/`npm` on PATH + `gh` authenticated) is exercised manually, not in CI.
 
 ## Release

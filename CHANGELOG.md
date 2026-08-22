@@ -5,6 +5,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Upgrade all `@deepseek-ai/dsh-*` peers to the DSH `0.1.1-rc.2` release: devDependencies pin `0.1.1-rc.2` exactly (including `dsh-attachment`), the `dshWorkshop.compatibility.dshVersions` marker and the README compatibility tables follow, and the compat workflow installs `@deepseek-ai/dsh@0.1.1-rc.2` with `dsh-base`/`dsh-headless` at `0.1.1-rc.2`. Peer dependencies stay `>=0.1.0-rc.8 <0.2.0` because the plugin uses no rc2-only API.
+- `typecheck`/`typecheck:ci` and the test harness now validate against the published `0.1.1-rc.2` types.
+
 ## [0.1.1] - 2026-08-21
 
 ### Changed
