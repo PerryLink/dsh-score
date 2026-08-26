@@ -104,6 +104,21 @@ score(target: string, refresh?: boolean, background?: boolean)
 
 एक कार्ड (`sc_...`), लीडरबोर्ड (`lb_...`), या बिना id के नवीनतम लीडरबोर्ड लौटाता है।
 
+## बैज और JSON API
+
+`score_badge` एक अंकित लक्ष्य के लिए README में एम्बेड करने योग्य बैज और पाँच-आयामी JSON उत्पन्न करता है।
+
+- **बैज** — shields.io फ्लैट SVG (`badge.svg` फ़ील्ड / `renderScoreBadge`), दस्तावेज़ित endpoint URL, और Markdown एम्बेड स्निपेट।
+- **पाँच-आयामी JSON** — `install`/`maintenance`/`documentation`/`security`/`compliance` प्रत्येक में `status`/`score`/`weight`/`summary`, साथ में भारित `total` और अक्षर `grade` (`schema: "dsh-score/badge/v1"`).
+
+कुल बैज एम्बेड करें:
+
+```markdown
+![dsh-score: B · 84/100](https://img.shields.io/badge/dsh--score-B_%C2%B7_84%2F100-green)
+```
+
+`no-evidence` आयाम अपनी ईमानदार स्थिति और 0 स्कोर बनाए रखता है — बैज और JSON कभी संख्या नहीं गढ़ते।
+
 ## अनुमतियाँ और डेटा
 
 - केवल सार्वजनिक सेवाएँ: `ctx.subprocess`, `ctx.jobs`, `ctx.storageDomain`, `ctx.tools`, `ctx.commands`।

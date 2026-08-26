@@ -104,6 +104,21 @@ Inicia um job em lote em segundo plano; a última linha nomeia o id do ranking p
 
 Retorna um cartão (`sc_...`), um ranking (`lb_...`) ou, sem id, o último ranking.
 
+## Insígnia e API JSON
+
+`score_badge` gera uma insígnia embebível em README e o JSON de cinco dimensões para um alvo pontuado.
+
+- **Insígnia** — SVG plano do shields.io (campo `badge.svg` / `renderScoreBadge`), URL de endpoint documentada e trecho Markdown de incorporação.
+- **JSON de cinco dimensões** — `install`/`maintenance`/`documentation`/`security`/`compliance` com `status`/`score`/`weight`/`summary`, além do `total` ponderado e da `grade` (`schema: "dsh-score/badge/v1"`).
+
+Incorpore a insígnia total:
+
+```markdown
+![dsh-score: B · 84/100](https://img.shields.io/badge/dsh--score-B_%C2%B7_84%2F100-green)
+```
+
+Uma dimensão `no-evidence` mantém seu estado honesto e pontua 0 — a insígnia e o JSON nunca fabricam números.
+
 ## Permissões e dados
 
 - Apenas serviços públicos: `ctx.subprocess`, `ctx.jobs`, `ctx.storageDomain`, `ctx.tools`, `ctx.commands`.

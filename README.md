@@ -36,6 +36,7 @@
 - `score` tool — one target through the five-dimension pipeline; returns the structured risk card, or `{ kind: 'background', jobId }` with `background: true`.
 - `/score` command — batch scoring of a whitespace/comma-separated target list as a `score-batch` background job over `ctx.jobs`, producing a leaderboard snapshot (JSON + Markdown).
 - `score_report` tool — fetch any stored score card (`sc_...`), leaderboard (`lb_...`), or the latest leaderboard.
+- `score_badge` tool — an embeddable README badge (shields.io flat SVG + endpoint URL) and the five-dimension JSON for one scored target.
 - **Five dimensions** (weights configurable, defaults sum to 100): install success `25`, maintenance `20`, documentation `20`, security `20`, compliance `15`.
 - **Evidence discipline** — every dimension records its audit links (`source`, sanitized `detail`, `observedAt`); a dimension without evidence reports `no-evidence` (score 0, excluded from the weighted total), never a fabricated number.
 - Structured results — every record carries `schema: "dsh-score/v1"` with first-class fields; this is the machine-readable contract downstream tooling consumes.
@@ -107,6 +108,16 @@ Starts one background batch job; progress streams through the job output, and th
 
 Returns a score card (`sc_...`), a leaderboard (`lb_...`), or — with no id — the latest leaderboard.
 
+### `score_badge(target? | id?, refresh?)`
+
+Generates an embeddable README badge and the five-dimension JSON for one target:
+
+- `target` — score a GitHub repo or npm package (through the cache) and badge it; mutually exclusive with `id`.
+- `id` — badge a stored score card (`sc_...`) without re-scoring.
+- `refresh: true` — bypass the score cache (only applies to `target`).
+
+Returns the badge (SVG + endpoint + Markdown embed) and the compact five-dimension JSON — see [Badge & JSON API](#badge--json-api).
+
 ### Structured result sample
 
 ```json
@@ -132,6 +143,47 @@ Returns a score card (`sc_...`), a leaderboard (`lb_...`), or — with no id —
 ```
 
 Scoring: the total is a weighted average over dimensions that gathered evidence (no-evidence dimensions are excluded and renormalized); `A` ≥ 90, `B` ≥ 75, `C` ≥ 60, `D` ≥ 40, else `F`, and `N/A` when nothing had evidence.
+
+## Badge & JSON API
+
+`score_badge` generates an embeddable README badge and the five-dimension JSON for one scored target.
+
+### Badge
+
+Three forms, all derived from the same settled score card:
+
+- **Endpoint** — a documented [shields.io](https://shields.io) static URL, paste-ready for a README image (zero self-hosting).
+- **SVG** — a self-contained shields.io flat-style SVG (`badge.svg` field / `renderScoreBadge`) for offline or self-hosted READMEs.
+- **Markdown** — the embed snippet combining both.
+
+Embed the total badge in any README:
+
+```markdown
+![dsh-score: B · 84/100](https://img.shields.io/badge/dsh--score-B_%C2%B7_84%2F100-green)
+```
+
+### Five-dimension JSON
+
+The same call returns the compact JSON API envelope (`schema: "dsh-score/badge/v1"`):
+
+```json
+{
+  "schema": "dsh-score/badge/v1",
+  "target": { "kind": "repo", "spec": "github:owner/dsh-click#abc123" },
+  "scoredAt": "2026-08-16T00:00:00.000Z",
+  "total": 84,
+  "grade": "B",
+  "dimensions": {
+    "install":      { "label": "install", "status": "no-evidence", "score": 0,  "weight": 25, "summary": "no dsh-test-drive result recorded" },
+    "maintenance":  { "label": "maintenance", "status": "pass", "score": 90, "weight": 20, "summary": "active (0 open issues)" },
+    "documentation": { "label": "docs", "status": "pass", "score": 85, "weight": 20, "summary": "README + CHANGELOG + SECURITY" },
+    "security":     { "label": "security", "status": "warn", "score": 60, "weight": 20, "summary": "permissive license" },
+    "compliance":   { "label": "compliance", "status": "pass", "score": 100, "weight": 15, "summary": "dsh.bundle.patch + dsh-plugin topic" }
+  }
+}
+```
+
+A `no-evidence` dimension keeps its honest status and score 0 — the badge and JSON never fabricate a number.
 
 ## Permissions & data
 

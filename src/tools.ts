@@ -12,6 +12,8 @@ import type { Agent } from '@deepseek-ai/dsh-agent'
 import type { Domain } from '@deepseek-ai/dsh-storage-domain'
 import { defineTool } from '@deepseek-ai/dsh-tools'
 import type { ToolRunContext } from '@deepseek-ai/dsh-tools'
+import { BADGE_SCHEMA, badgeJson } from './badge.ts'
+import type { BadgeJson } from './badge.ts'
 import { startBatchJob } from './batch.ts'
 import type { BatchDeps } from './batch.ts'
 import type { ResolvedConfig } from './config.ts'
@@ -135,6 +137,82 @@ const leaderboardSchema = {
   },
 } as const
 
+/** JSON-schema fragment for one compact dimension entry of the badge JSON. */
+const dimensionScoreSummarySchema = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    label: { type: 'string' },
+    status: { type: 'string' },
+    score: { type: 'number' },
+    weight: { type: 'number' },
+    summary: { type: 'string' },
+  },
+} as const
+
+/** JSON-schema fragment for the total badge surface (SVG + endpoint + markdown). */
+const badgeSurfaceSchema = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    endpoint: { type: 'string' },
+    markdown: { type: 'string' },
+    svg: { type: 'string' },
+  },
+} as const
+
+/** JSON-schema fragment for one per-dimension badge (endpoint + markdown). */
+const badgeEndpointSchema = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    endpoint: { type: 'string' },
+    markdown: { type: 'string' },
+  },
+} as const
+
+/** Full JSON-schema fragment for the `score_badge` five-dimension JSON output. */
+const badgeJsonSchema = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    schema: { type: 'string', const: BADGE_SCHEMA },
+    target: {
+      type: 'object',
+      additionalProperties: false,
+      properties: { kind: { type: 'string' }, spec: { type: 'string' } },
+    },
+    scoredAt: { type: 'string' },
+    pluginVersion: { type: 'string' },
+    total: { type: 'number' },
+    grade: { type: 'string' },
+    verdict: { type: 'string' },
+    dimensions: {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        install: dimensionScoreSummarySchema,
+        maintenance: dimensionScoreSummarySchema,
+        documentation: dimensionScoreSummarySchema,
+        security: dimensionScoreSummarySchema,
+        compliance: dimensionScoreSummarySchema,
+      },
+    },
+    badge: badgeSurfaceSchema,
+    dimensionBadges: {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        install: badgeEndpointSchema,
+        maintenance: badgeEndpointSchema,
+        documentation: badgeEndpointSchema,
+        security: badgeEndpointSchema,
+        compliance: badgeEndpointSchema,
+      },
+    },
+  },
+} as const
+
 /** Canonical background branch returned when `score` runs as a job. */
 export interface BackgroundHandle {
   kind: 'background'
@@ -153,6 +231,27 @@ function renderScore(value: ScoreResult | BackgroundHandle): { type: 'text'; tex
 function renderReport(value: ScoreResult | LeaderboardRecord): { type: 'text'; text: string }[] {
   const text = 'rows' in value ? renderLeaderboard(value) : renderScoreCard(value)
   return [{ type: 'text', text }]
+}
+
+/** Render one `score_badge` result: Markdown embed + the five-dimension JSON. */
+function renderBadge(value: BadgeJson): { type: 'text'; text: string }[] {
+  const lines = [
+    '# Score badge',
+    '',
+    `- Target: \`${value.target.spec}\` — grade **${value.grade}** (${value.total}/100)`,
+    `- Scored: ${value.scoredAt}`,
+    '',
+    '## Embed',
+    '',
+    value.badge.markdown,
+    '',
+    '## Five-dimension JSON',
+    '',
+    '```json',
+    JSON.stringify({ schema: value.schema, target: value.target, scoredAt: value.scoredAt, pluginVersion: value.pluginVersion, total: value.total, grade: value.grade, verdict: value.verdict, dimensions: value.dimensions }, null, 2),
+    '```',
+  ]
+  return [{ type: 'text', text: lines.join('\n') }]
 }
 
 /** The deadline for one foreground score: every probe deadline plus slack. */
@@ -250,5 +349,49 @@ export function allTools(services: ToolServices) {
     },
   })
 
-  return [score, scoreReport]
+  const scoreBadge = defineTool({
+    name: 'score_badge',
+    description:
+      'Generate an embeddable README badge and the five-dimension JSON for one plugin target. Scores the target through the cache (or fetches a stored score card by id) and returns a shields.io flat SVG badge, its documented endpoint URL, a Markdown embed snippet, and the compact five-dimension JSON (install/maintenance/documentation/security/compliance each with status, score, weight, summary) plus the weighted total and letter grade. A dimension without evidence is reported honestly as no-evidence (grey, score 0), never fabricated.',
+    parameters: {
+      target: {
+        type: 'string',
+        description: 'Plugin target to badge: a GitHub repo or an npm package name (mutually exclusive with id).',
+      },
+      id: {
+        type: 'string',
+        description: 'Stored score id (sc_...) to badge without re-scoring (mutually exclusive with target).',
+      },
+      refresh: {
+        type: 'boolean',
+        description: 'Bypass the score cache and re-score from fresh evidence (default false; only applies to target).',
+      },
+    },
+    output: {
+      schema: badgeJsonSchema,
+      render: (_args, value) => renderBadge(value as unknown as BadgeJson),
+    },
+    timeoutMs: scoreDeadlineMs(services.config),
+    async execute(args, exec) {
+      const hasTarget = args.target !== undefined && args.target !== ''
+      const hasId = args.id !== undefined && args.id !== ''
+      if (hasTarget === hasId) {
+        throw new Error('dsh-score: score_badge requires exactly one of target or id')
+      }
+      let result: ScoreResult
+      if (hasId) {
+        const domain = await services.domain()
+        const card = domain.table('scores').get(String(args.id))
+        if (card === undefined) throw new Error(`dsh-score: no score recorded with id ${String(args.id)}`)
+        result = card
+      } else {
+        const target = sanitizeTarget(String(args.target))
+        if (target.length === 0) throw new Error('dsh-score: target must be a non-empty string')
+        result = await services.runner.score(target, { signal: exec.signal, refresh: args.refresh === true })
+      }
+      return badgeJson(result)
+    },
+  })
+
+  return [score, scoreBadge, scoreReport]
 }

@@ -106,6 +106,21 @@ score(target: string, refresh?: boolean, background?: boolean)
 
 返回评分卡（`sc_...`）、排行榜（`lb_...`），或不传 id 时返回最新排行榜。
 
+## 徽章与 JSON API
+
+`score_badge` 为某个已评分目标生成可嵌入 README 的徽章与五维 JSON。
+
+- **徽章**：shields.io 扁平 SVG（`badge.svg` 字段 / `renderScoreBadge`）、文档化端点 URL、以及 Markdown 嵌入片段。
+- **五维 JSON**：`install`/`maintenance`/`documentation`/`security`/`compliance` 各自的 `status`/`score`/`weight`/`summary`，外加加权 `total` 与字母 `grade`（`schema: "dsh-score/badge/v1"`）。
+
+嵌入总徽章：
+
+```markdown
+![dsh-score: B · 84/100](https://img.shields.io/badge/dsh--score-B_%C2%B7_84%2F100-green)
+```
+
+`no-evidence` 维度保持诚实状态并计 0 分——徽章与 JSON 绝不伪造数字。
+
 ## 权限与数据
 
 - 只消费公开服务：`ctx.subprocess`、`ctx.jobs`、`ctx.storageDomain`、`ctx.tools`、`ctx.commands`。

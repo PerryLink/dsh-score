@@ -104,6 +104,21 @@ Inicia un trabajo por lotes en segundo plano; la última línea nombra el id de 
 
 Devuelve una tarjeta (`sc_...`), una tabla (`lb_...`) o, sin id, la última tabla.
 
+## Insignia y API JSON
+
+`score_badge` genera una insignia embebible en README y el JSON de cinco dimensiones para un objetivo puntuado.
+
+- **Insignia** — SVG plano de shields.io (campo `badge.svg` / `renderScoreBadge`), URL de endpoint documentada y fragmento Markdown de inserción.
+- **JSON de cinco dimensiones** — `install`/`maintenance`/`documentation`/`security`/`compliance` con `status`/`score`/`weight`/`summary`, más el `total` ponderado y la `grade` (`schema: "dsh-score/badge/v1"`).
+
+Inserta la insignia total:
+
+```markdown
+![dsh-score: B · 84/100](https://img.shields.io/badge/dsh--score-B_%C2%B7_84%2F100-green)
+```
+
+Una dimensión `no-evidence` conserva su estado honesto y puntúa 0 — la insignia y el JSON nunca inventan números.
+
 ## Permisos y datos
 
 - Solo servicios públicos: `ctx.subprocess`, `ctx.jobs`, `ctx.storageDomain`, `ctx.tools`, `ctx.commands`.
