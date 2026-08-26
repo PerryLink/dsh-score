@@ -5,6 +5,12 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- `score_badge` tool: an embeddable README badge (self-contained shields.io flat-style SVG, paste-ready endpoint URL, and Markdown embed snippet) plus a compact five-dimension JSON envelope (`schema: "dsh-score/badge/v1"`) for one scored target, from either a fresh `target` score or a stored score card `id` with an optional `refresh` cache bypass. A `no-evidence` dimension keeps its honest status and score 0 — the badge and JSON never fabricate a number.
+
 ## [0.1.3] - 2026-08-23
 
 ## [0.1.2] - 2026-08-22
