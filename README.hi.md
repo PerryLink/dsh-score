@@ -36,6 +36,7 @@
 - `score` टूल — पाँच-आयामी पाइपलाइन के माध्यम से एक लक्ष्य; संरचित रिस्क कार्ड लौटाता है, या `background: true` के साथ `{ kind: 'background', jobId }`।
 - `/score` कमांड — `ctx.jobs` पर `score-batch` पृष्ठभूमि कार्य के रूप में स्पेस/कॉमा से अलग लक्ष्य सूची की बैच स्कोरिंग, लीडरबोर्ड स्नैपशॉट (JSON + Markdown) बनाता है।
 - `score_report` टूल — कोई संग्रहीत स्कोर कार्ड (`sc_...`), लीडरबोर्ड (`lb_...`), या नवीनतम लीडरबोर्ड लाता है।
+- `score_badge` टूल — किसी लक्ष्य या संग्रहीत कार्ड के लिए README बैज और पाँच-आयामी JSON।
 - **पाँच आयाम** (भार विन्यास योग्य, डिफ़ॉल्ट योग 100): इंस्टॉल `25`, रखरखाव `20`, दस्तावेज़ीकरण `20`, सुरक्षा `20`, अनुपालन `15`।
 - **साक्ष्य अनुशासन** — हर आयाम अपने ऑडिट लिंक दर्ज करता है; साक्ष्य के बिना वह `no-evidence` रिपोर्ट करता है (स्कोर 0, कुल से बाहर), कभी कोई बनाया हुआ नंबर नहीं।
 - संरचित परिणाम — हर रिकॉर्ड `schema: "dsh-score/v1"` रखता है।
@@ -93,7 +94,7 @@ dsh plugin --profile web remove dsh-score  # अनइंस्टॉल
 score(target: string, refresh?: boolean, background?: boolean)
 ```
 
-- `target` — GitHub रिपॉजिटरी (`github:owner/repo`, `owner/repo`, git/https URL) या npm पैकेज नाम।
+- `target` — GitHub रिपॉज़िटरी (`github:owner/repo`, `owner/repo`, git/https URL) या npm पैकेज नाम।
 - `refresh: true` कैश छोड़कर साक्ष्य पुनः एकत्र करता है।
 - `background: true` एक `score-batch` कार्य शुरू करता है।
 
@@ -105,17 +106,79 @@ score(target: string, refresh?: boolean, background?: boolean)
 
 एक कार्ड (`sc_...`), लीडरबोर्ड (`lb_...`), या बिना id के नवीनतम लीडरबोर्ड लौटाता है।
 
+### `score_badge(target? | id?, refresh?)`
+
+एक लक्ष्य के लिए README बैज और पाँच-आयामी JSON उत्पन्न करता है:
+
+- `target` — कैश के माध्यम से GitHub रिपॉज़िटरी या npm पैकेज स्कोर कर बैज देता है; `id` के साथ परस्पर अनन्य।
+- `id` — बिना पुनः स्कोर किए संग्रहीत स्कोर कार्ड (`sc_...`) का बैज।
+- `refresh: true` — स्कोर कैश छोड़ता है (केवल `target` पर लागू)।
+
+बैज (SVG + endpoint + Markdown एम्बेड) और पाँच-आयामी JSON लौटाता है — नीचे «बैज और JSON API» देखें।
+
+### Structured result sample
+
+```json
+{
+  "schema": "dsh-score/v1",
+  "scoreId": "sc_8f1c2e4a9b3d7f01",
+  "target": { "kind": "repo", "spec": "github:owner/dsh-click#abc123" },
+  "scoredAt": "2026-08-16T00:00:00.000Z",
+  "durationMs": 3210,
+  "pluginVersion": "0.1.0",
+  "dimensions": {
+    "install": { "dimension": "install", "status": "no-evidence", "score": 0, "weight": 25,
+                 "summary": "no dsh-test-drive result recorded for this target (install success unmeasured)",
+                 "evidence": [{ "source": "test-drive", "detail": "no test-drive record found in the test_drive domain", "observedAt": "2026-08-16T00:00:00.000Z" }] },
+    "maintenance": { "dimension": "maintenance", "status": "pass", "score": 100, "weight": 20,
+                     "summary": "active (2026-08-10T00:00:00Z; 0 open issues)",
+                     "evidence": [{ "source": "gh-api", "detail": "last activity 2026-08-10T00:00:00Z", "observedAt": "2026-08-16T00:00:00.000Z" }] }
+  },
+  "total": 88,
+  "grade": "B",
+  "verdict": "healthy (weighted total 88/100)"
+}
+```
+
+स्कोरिंग: कुल साक्ष्य जुटाने वाले आयामों का भारित औसत है (no-evidence आयाम बाहर रहते हैं और पुनः सामान्य होते हैं); `A` ≥ 90, `B` ≥ 75, `C` ≥ 60, `D` ≥ 40, अन्यथा `F`, और `N/A` जब कुछ भी साक्ष्य न हो।
+
 ## बैज और JSON API
 
 `score_badge` एक अंकित लक्ष्य के लिए README में एम्बेड करने योग्य बैज और पाँच-आयामी JSON उत्पन्न करता है।
 
-- **बैज** — shields.io फ्लैट SVG (`badge.svg` फ़ील्ड / `renderScoreBadge`), दस्तावेज़ित endpoint URL, और Markdown एम्बेड स्निपेट।
-- **पाँच-आयामी JSON** — `install`/`maintenance`/`documentation`/`security`/`compliance` प्रत्येक में `status`/`score`/`weight`/`summary`, साथ में भारित `total` और अक्षर `grade` (`schema: "dsh-score/badge/v1"`).
+### बैज
+
+तीन रूप, सभी उसी settled स्कोर कार्ड से व्युत्पन्न:
+
+- **Endpoint** — दस्तावेज़ित [shields.io](https://shields.io) स्थिर URL, README छवि के लिए पेस्ट-तैयार (शून्य self-hosting)।
+- **SVG** — self-contained shields.io फ्लैट-शैली SVG (`badge.svg` फ़ील्ड / `renderScoreBadge`) ऑफ़लाइन या self-hosted README के लिए।
+- **Markdown** — दोनों को मिलाने वाला एम्बेड स्निपेट।
 
 कुल बैज एम्बेड करें:
 
 ```markdown
 ![dsh-score: B · 84/100](https://img.shields.io/badge/dsh--score-B_%C2%B7_84%2F100-green)
+```
+
+### पाँच-आयामी JSON
+
+वही कॉल compact JSON API लिफ़ाफ़ा लौटाता है (`schema: "dsh-score/badge/v1"`):
+
+```json
+{
+  "schema": "dsh-score/badge/v1",
+  "target": { "kind": "repo", "spec": "github:owner/dsh-click#abc123" },
+  "scoredAt": "2026-08-16T00:00:00.000Z",
+  "total": 84,
+  "grade": "B",
+  "dimensions": {
+    "install":      { "label": "install", "status": "no-evidence", "score": 0,  "weight": 25, "summary": "no dsh-test-drive result recorded" },
+    "maintenance":  { "label": "maintenance", "status": "pass", "score": 90, "weight": 20, "summary": "active (0 open issues)" },
+    "documentation": { "label": "docs", "status": "pass", "score": 85, "weight": 20, "summary": "README + CHANGELOG + SECURITY" },
+    "security":     { "label": "security", "status": "warn", "score": 60, "weight": 20, "summary": "permissive license" },
+    "compliance":   { "label": "compliance", "status": "pass", "score": 100, "weight": 15, "summary": "dsh.bundle.patch + dsh-plugin topic" }
+  }
+}
 ```
 
 `no-evidence` आयाम अपनी ईमानदार स्थिति और 0 स्कोर बनाए रखता है — बैज और JSON कभी संख्या नहीं गढ़ते।
@@ -135,8 +198,8 @@ score(target: string, refresh?: boolean, background?: boolean)
 
 ## ज्ञात सीमाएँ
 
-- रिपॉजिटरी प्रोब के लिए प्रमाणित `gh` और नेटवर्क चाहिए; npm प्रोब के लिए `npm` और registry पहुँच चाहिए।
-- बिना समाधान योग्य GitHub रिपॉजिटरी के, दस्तावेज़ीकरण/सुरक्षा/अनुपालन `no-evidence` रिपोर्ट करते हैं।
+- रिपॉज़िटरी प्रोब के लिए प्रमाणित `gh` और नेटवर्क चाहिए; npm प्रोब के लिए `npm` और registry पहुँच चाहिए।
+- बिना समाधान योग्य GitHub रिपॉज़िटरी के, दस्तावेज़ीकरण/सुरक्षा/अनुपालन `no-evidence` रिपोर्ट करते हैं।
 - इंस्टॉल सफलता लक्ष्य रिकॉर्ड किए गए `dsh-test-drive` के माउंट होने पर निर्भर करती है।
 - «issue प्रतिक्रिया» एक प्रॉक्सी है (सबसे पुराने खुले issue की आयु)।
 - परिणाम प्रति लक्ष्य कैश होते हैं; पुनः स्कोर के लिए `refresh: true` उपयोग करें।
