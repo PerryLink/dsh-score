@@ -105,18 +105,59 @@ Inicia um job em lote em segundo plano; a última linha nomeia o id do ranking p
 
 Retorna um cartão (`sc_...`), um ranking (`lb_...`) ou, sem id, o último ranking.
 
+### `score_badge(target? | id?, refresh?)`
+
+Gera uma insígnia embebível em README e o JSON de cinco dimensões para um alvo:
+
+- `target` — pontua um repositório do GitHub ou um pacote npm (via cache) e gera a insígnia; mutuamente exclusivo com `id`.
+- `id` — gera a insígnia de um cartão armazenado (`sc_...`) sem repontuar.
+- `refresh: true` — ignora o cache de pontuação (aplica-se apenas a `target`).
+
+Retorna a insígnia (SVG + endpoint + trecho Markdown) e o JSON compacto de cinco dimensões — veja «Insígnia e API JSON» abaixo.
+
+### Structured result sample
+
+```json
+{
+  "schema": "dsh-score/v1",
+  "scoreId": "sc_8f1c2e4a9b3d7f01",
+  "target": { "kind": "repo", "spec": "github:owner/dsh-click#abc123" },
+  "scoredAt": "2026-08-16T00:00:00.000Z",
+  "durationMs": 3210,
+  "pluginVersion": "0.1.0",
+  "dimensions": {
+    "install": { "dimension": "install", "status": "no-evidence", "score": 0, "weight": 25,
+                 "summary": "no dsh-test-drive result recorded for this target (install success unmeasured)",
+                 "evidence": [{ "source": "test-drive", "detail": "no test-drive record found in the test_drive domain", "observedAt": "2026-08-16T00:00:00.000Z" }] },
+    "maintenance": { "dimension": "maintenance", "status": "pass", "score": 100, "weight": 20,
+                     "summary": "active (2026-08-10T00:00:00Z; 0 open issues)",
+                     "evidence": [{ "source": "gh-api", "detail": "last activity 2026-08-10T00:00:00Z", "observedAt": "2026-08-16T00:00:00.000Z" }] }
+  },
+  "total": 88,
+  "grade": "B",
+  "verdict": "healthy (weighted total 88/100)"
+}
+```
+
+Pontuação: o total é uma média ponderada sobre as dimensões com evidência (dimensões no-evidence são excluídas e renormalizadas); `A` ≥ 90, `B` ≥ 75, `C` ≥ 60, `D` ≥ 40, senão `F`, e `N/A` quando nada teve evidência.
+
 ## Insígnia e API JSON
 
 `score_badge` gera uma insígnia embebível em README e o JSON de cinco dimensões para um alvo pontuado.
 
+### Insígnia
+
 - **Insígnia** — SVG plano do shields.io (campo `badge.svg` / `renderScoreBadge`), URL de endpoint documentada e trecho Markdown de incorporação.
-- **JSON de cinco dimensões** — `install`/`maintenance`/`documentation`/`security`/`compliance` com `status`/`score`/`weight`/`summary`, além do `total` ponderado e da `grade` (`schema: "dsh-score/badge/v1"`).
 
 Incorpore a insígnia total:
 
 ```markdown
 ![dsh-score: B · 84/100](https://img.shields.io/badge/dsh--score-B_%C2%B7_84%2F100-green)
 ```
+
+### JSON de cinco dimensões
+
+- **JSON de cinco dimensões** — `install`/`maintenance`/`documentation`/`security`/`compliance` com `status`/`score`/`weight`/`summary`, além do `total` ponderado e da `grade` (`schema: "dsh-score/badge/v1"`).
 
 Uma dimensão `no-evidence` mantém seu estado honesto e pontua 0 — a insígnia e o JSON nunca fabricam números.
 

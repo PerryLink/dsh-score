@@ -107,18 +107,59 @@ score(target: string, refresh?: boolean, background?: boolean)
 
 返回评分卡（`sc_...`）、排行榜（`lb_...`），或不传 id 时返回最新排行榜。
 
+### `score_badge(target? | id?, refresh?)`
+
+为某个目标生成可嵌入 README 的徽章与五维 JSON：
+
+- `target` — 经缓存对 GitHub 仓库或 npm 包评分并生成徽章；与 `id` 互斥。
+- `id` — 对已存评分卡（`sc_...`）生成徽章，不重新评分。
+- `refresh: true` — 绕过评分缓存（仅对 `target` 生效）。
+
+返回徽章（SVG + endpoint + Markdown 嵌入）与紧凑五维 JSON——见下文「徽章与 JSON API」。
+
+### Structured result sample
+
+```json
+{
+  "schema": "dsh-score/v1",
+  "scoreId": "sc_8f1c2e4a9b3d7f01",
+  "target": { "kind": "repo", "spec": "github:owner/dsh-click#abc123" },
+  "scoredAt": "2026-08-16T00:00:00.000Z",
+  "durationMs": 3210,
+  "pluginVersion": "0.1.0",
+  "dimensions": {
+    "install": { "dimension": "install", "status": "no-evidence", "score": 0, "weight": 25,
+                 "summary": "no dsh-test-drive result recorded for this target (install success unmeasured)",
+                 "evidence": [{ "source": "test-drive", "detail": "no test-drive record found in the test_drive domain", "observedAt": "2026-08-16T00:00:00.000Z" }] },
+    "maintenance": { "dimension": "maintenance", "status": "pass", "score": 100, "weight": 20,
+                     "summary": "active (2026-08-10T00:00:00Z; 0 open issues)",
+                     "evidence": [{ "source": "gh-api", "detail": "last activity 2026-08-10T00:00:00Z", "observedAt": "2026-08-16T00:00:00.000Z" }] }
+  },
+  "total": 88,
+  "grade": "B",
+  "verdict": "healthy (weighted total 88/100)"
+}
+```
+
+计分：总分为收集到证据维度的加权平均（no-evidence 维度被剔除并重新归一）；`A` ≥ 90，`B` ≥ 75，`C` ≥ 60，`D` ≥ 40，否则 `F`，全无证据时为 `N/A`。
+
 ## 徽章与 JSON API
 
 `score_badge` 为某个已评分目标生成可嵌入 README 的徽章与五维 JSON。
 
+### 徽章
+
 - **徽章**：shields.io 扁平 SVG（`badge.svg` 字段 / `renderScoreBadge`）、文档化端点 URL、以及 Markdown 嵌入片段。
-- **五维 JSON**：`install`/`maintenance`/`documentation`/`security`/`compliance` 各自的 `status`/`score`/`weight`/`summary`，外加加权 `total` 与字母 `grade`（`schema: "dsh-score/badge/v1"`）。
 
 嵌入总徽章：
 
 ```markdown
 ![dsh-score: B · 84/100](https://img.shields.io/badge/dsh--score-B_%C2%B7_84%2F100-green)
 ```
+
+### 五维 JSON
+
+- **五维 JSON**：`install`/`maintenance`/`documentation`/`security`/`compliance` 各自的 `status`/`score`/`weight`/`summary`，外加加权 `total` 与字母 `grade`（`schema: "dsh-score/badge/v1"`）。
 
 `no-evidence` 维度保持诚实状态并计 0 分——徽章与 JSON 绝不伪造数字。
 
