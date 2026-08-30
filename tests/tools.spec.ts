@@ -6,10 +6,18 @@
  */
 
 import { JobId } from '@deepseek-ai/dsh-jobs'
-import { CallId } from '@deepseek-ai/dsh-llm'
 import type { ToolExecutionResult } from '@deepseek-ai/dsh-tools'
 import { describe, expect, it } from 'vitest'
 import { mountHarness, type Harness, type ScriptedSpawn } from './harness.ts'
+
+/**
+ * Brand a synthetic tool-call id without naming the host line's brand: the
+ * published `0.1.1-rc.2` line exports `CallId` while host HEAD renamed it to
+ * `ToolCallId` — deriving the type from `tools.execute` keeps both typecheck
+ * rulers green.
+ */
+type ToolExecInput = Parameters<Harness['ctx']['tools']['execute']>[0]
+const makeCallId = (id: string): ToolExecInput['callId'] => id as ToolExecInput['callId']
 
 const RECENT = '2026-08-15T00:00:00.000Z'
 
@@ -28,7 +36,7 @@ let callCounter = 0
 async function callTool(harness: Harness, name: string, args: unknown): Promise<ToolExecutionResult> {
   callCounter += 1
   return harness.ctx.tools.execute({
-    callId: CallId(`tools-spec-${callCounter}`),
+    callId: makeCallId(`tools-spec-${callCounter}`),
     name,
     arguments: args,
     agent: harness.agent,

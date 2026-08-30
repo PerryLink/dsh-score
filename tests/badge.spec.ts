@@ -6,12 +6,20 @@
  * @module dsh-score/test/badge.spec
  */
 
-import { CallId } from '@deepseek-ai/dsh-llm'
 import type { ToolExecutionResult } from '@deepseek-ai/dsh-tools'
 import { describe, expect, it } from 'vitest'
 import { BADGE_SCHEMA, badgeJson, gradeColor, renderBadgeMarkdown, renderScoreBadge, renderShieldsSvg, shieldsEndpointUrl, statusColor } from '../src/badge.ts'
 import type { DimensionScore, ScoreResult } from '../src/result.ts'
 import { mountHarness, type Harness, type ScriptedSpawn } from './harness.ts'
+
+/**
+ * Brand a synthetic tool-call id without naming the host line's brand: the
+ * published `0.1.1-rc.2` line exports `CallId` while host HEAD renamed it to
+ * `ToolCallId` — deriving the type from `tools.execute` keeps both typecheck
+ * rulers green.
+ */
+type ToolExecInput = Parameters<Harness['ctx']['tools']['execute']>[0]
+const makeCallId = (id: string): ToolExecInput['callId'] => id as ToolExecInput['callId']
 
 const RECENT = '2026-08-15T00:00:00.000Z'
 
@@ -123,7 +131,7 @@ describe('score_badge tool', () => {
   async function callTool(harness: Harness, name: string, args: unknown): Promise<ToolExecutionResult> {
     callCounter += 1
     return harness.ctx.tools.execute({
-      callId: CallId(`badge-spec-${callCounter}`),
+      callId: makeCallId(`badge-spec-${callCounter}`),
       name,
       arguments: args,
       agent: harness.agent,
