@@ -189,7 +189,7 @@ A `no-evidence` dimension keeps its honest status and score 0 — the badge and 
 ## Permissions & data
 
 - Only public services are consumed: `ctx.subprocess`, `ctx.jobs`, `ctx.storageDomain`, `ctx.tools`, `ctx.commands`.
-- Score cards and leaderboards are stored in the `score` storage-domain (tables `scores`, `leaderboards`; latest-leaderboard pointer). When the composition has no `storageDomain` (e.g. the shipped headless profile), tools still work and score persistence is disabled with a logged reason.
+- Score cards and leaderboards are stored in the `score` storage-domain (tables `scores`, `leaderboards`; latest-leaderboard pointer). When the composition has no `storageDomain` (the headless profile on the published `0.1.1-rc.2` line), tools still work and score persistence is disabled with a logged reason. Host `0.1.2-alpha.1` mounts storage-domain in its base bundle, so persistence is active there.
 - Child processes inherit the provider's credential-scrubbed environment; `gh` reads its own credential store. No environment value is ever logged.
 - All report/log strings pass through pure sanitizers: token literals, URL credentials, and bearer headers are redacted, and tails are byte-capped.
 

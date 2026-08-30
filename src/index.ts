@@ -29,10 +29,12 @@ import type { ToolServices } from './tools.ts'
 export const name = 'dsh-score'
 
 /**
- * Public services only. `storageDomain` is deliberately OPTIONAL: the shipped
- * `dsh-base` bundle (headless profile) does not mount it, and the plugin must
+ * Public services only. `storageDomain` is deliberately OPTIONAL: the published
+ * `dsh-base` bundle (0.1.1-rc.2 line) does not mount it, and the plugin must
  * still boot there — score persistence degrades to disabled with a logged
- * reason, tools keep working. Install evidence reads the already-open
+ * reason, tools keep working. Host HEAD (0.1.2-alpha.1) mounts storage-domain
+ * since `3a4232a8fa`; the degrade path remains for the published line. Install
+ * evidence reads the already-open
  * `test_drive` domain via the same optional service, never a hard dependency.
  */
 export const inject = ['tools', 'commands', 'subprocess', 'jobs']

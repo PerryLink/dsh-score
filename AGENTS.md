@@ -4,7 +4,7 @@ Standalone DeepSeek Harness plugin repository (`dsh-score`). Development follows
 
 ## Layout
 
-- `src/index.ts` — function-plugin contract (`name`/`inject`/`Config`/`apply`; NO default export). Injects `tools`, `commands`, `subprocess`, `jobs`; `storageDomain` is deliberately OPTIONAL (`ctx.get`) because the shipped `dsh-base` bundle does not mount it — the plugin must still boot in the headless profile, so score persistence degrades to disabled with a logged reason.
+- `src/index.ts` — function-plugin contract (`name`/`inject`/`Config`/`apply`; NO default export). Injects `tools`, `commands`, `subprocess`, `jobs`; `storageDomain` is deliberately OPTIONAL (`ctx.get`): the published `dsh-base` bundle (0.1.1-rc.2 line) does not mount it, while host HEAD mounts storage-domain (0.1.2-alpha.1, `3a4232a8fa`) — the plugin must still boot on the published line, so score persistence degrades to disabled with a logged reason when the service is absent.
 - `src/config.ts` — Schemastery schema + explicit `resolveConfig` (no hidden `?? default`); every default, threshold, and weight is re-judged there so plain-JS mounts fail loud too.
 - `src/result.ts` — the structured score contract `dsh-score/v1`; the zod schemas are the single source of truth and validate records at the durable boundary of the `score` storage domain.
 - `src/probe.ts` — the `gh`/`npm` CLI probe layer over `ctx.subprocess` (argv-only, never a shell) plus the pure JSON parsers. `src/dimensions.ts` — the five pure dimension evaluators. `src/score.ts` — the single-target pipeline + the reserved test-drive consumer. `src/batch.ts` — the `score-batch` job producer over `ctx.jobs`.
