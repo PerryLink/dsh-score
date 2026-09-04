@@ -26,7 +26,7 @@
 
 | Component | Version |
 |---|---|
-| DeepSeek Harness | `0.1.2-alpha.5` (peer dependencies `>=0.1.0-rc.8 <0.2.0`) |
+| DeepSeek Harness | `0.1.2-rc.1` (peer dependencies `>=0.1.0-rc.8 <0.2.0`) |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | Package manager | `pnpm@11.7.0` |
 | Platform | Windows / macOS / Linux (host-only plugin) |
@@ -189,8 +189,8 @@ A `no-evidence` dimension keeps its honest status and score 0 — the badge and 
 ## Permissions & data
 
 - Only public services are consumed: `ctx.subprocess`, `ctx.jobs`, `ctx.storageDomain`, `ctx.tools`, `ctx.commands`.
-- Score cards and leaderboards are stored in the `score` storage-domain (tables `scores`, `leaderboards`; latest-leaderboard pointer). When the composition has no `storageDomain` (the headless profile on the published `0.1.1-rc.2` line), tools still work and score persistence is disabled with a logged reason. Host `0.1.2-alpha.5` mounts storage-domain in its base bundle, so persistence is active there.
-0.1.2-alpha.5 (adapted 2026-09-02): the session envelope keeps its ignorable field for stored-log read compatibility only - Session.append still cannot stamp it, so audit-gate behavior is unchanged.
+- Score cards and leaderboards are stored in the `score` storage-domain (tables `scores`, `leaderboards`; latest-leaderboard pointer). When the composition has no `storageDomain` (the headless profile on the published `0.1.1-rc.2` line), tools still work and score persistence is disabled with a logged reason. Host `0.1.2-rc.1` mounts storage-domain in its base bundle, so persistence is active there.
+0.1.2-rc.1 (adapted 2026-09-04): the session envelope keeps its ignorable field for stored-log read compatibility only - Session.append still cannot stamp it, so audit-gate behavior is unchanged.
 - Child processes inherit the provider's credential-scrubbed environment; `gh` reads its own credential store. No environment value is ever logged.
 - All report/log strings pass through pure sanitizers: token literals, URL credentials, and bearer headers are redacted, and tails are byte-capped.
 
@@ -217,7 +217,7 @@ pnpm run typecheck && pnpm run typecheck:ci && pnpm test
 pnpm run build && pnpm run verify:self-contained && pnpm run verify:artifacts && pnpm pack
 ```
 
-- `typecheck` resolves `@deepseek-ai/*` through the local harness checkout; `typecheck:ci` checks against the published `0.1.2-alpha.5` types.
+- `typecheck` resolves `@deepseek-ai/*` through the local harness checkout; `typecheck:ci` checks against the published `0.1.2-rc.1` types.
 - Tests use the real `Context`/`Session`/`ToolRuntime`/`LocalJobRegistry`/storage stack with a scripted subprocess provider.
 - Real-CLI scoring (requires `gh`/`npm` on PATH, `gh` authenticated): invoke `score` from a mounted profile.
 - Release: `node scripts/release.mjs <x.y.z>` (bumps, stamps CHANGELOG, re-runs the gate, commits + tags; never pushes).
