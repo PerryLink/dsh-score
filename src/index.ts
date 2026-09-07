@@ -41,6 +41,8 @@ export const inject = ['tools', 'commands', 'subprocess', 'jobs']
 
 export { VERSION } from './version.ts'
 export { Config, resolveConfig } from './config.ts'
+// Service Definition — the public score contract (RESULT_SCHEMA, DIMENSIONS,
+// badge/tool schemas) re-exported as the plugin's type & validator surface.
 export { RESULT_SCHEMA, DIMENSIONS, computeTotal, hasEvidence, gradeOf, verdictOf, totalsOf, ScoreResultSchema, LeaderboardRecordSchema } from './result.ts'
 export type { Dimension, DimensionStatus, TargetKind, EvidenceLink, DimensionScore, ScoreResult, LeaderboardRow, LeaderboardRecord } from './result.ts'
 export { BADGE_SCHEMA, DIMENSION_BADGE_LABELS, gradeColor, statusColor, renderShieldsSvg, shieldsEndpointUrl, badgeJson, renderScoreBadge, renderDimensionBadges, renderBadgeMarkdown } from './badge.ts'
@@ -86,10 +88,14 @@ export function apply(ctx: Context, config: Config): void {
   const runner = new ScoreRunner(deps)
   const services: ToolServices = { ...deps, runner }
 
+  // Service Provider — register the scoring tools with the host tool registry
+  // (one effect per tool, all owned by this fiber).
   for (const tool of allTools(services)) {
     ctx.effect(() => ctx.tools.register(tool), `dsh-score: ${tool.name} tool`)
   }
 
+  // Consumer — the /score command handler consumes the shared ToolServices
+  // (subprocess probe driver, jobs, storage domain) on every invocation.
   ctx.effect(() => ctx.commands.register({
     name: 'score',
     description: 'Batch score plugin targets (background job + leaderboard snapshot)',
