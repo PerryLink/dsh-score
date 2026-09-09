@@ -25,7 +25,7 @@
 
 | Componente | Versión |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.1.3-alpha.1`** (etiqueta de GitHub, verificado el 2026-09-06: cadena completa de puertas + smoke de instalación de perfil). Línea de dependencia npm `0.1.2-rc.1` (dependencias entre pares `>=0.1.2-rc.1 <0.2.0`). |
+| DeepSeek Harness | **`dsh-v0.1.5-alpha.1`** (etiqueta de GitHub; verificado el 2026-09-09: puertas de tipos, suites unitarias/de ensamblaje, build de artefactos). Línea npm publicada `0.1.5-alpha.1` (el `latest` de npm sigue siendo `0.1.2-rc.1`; dependencias entre pares `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`). |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | Gestor de paquetes | `pnpm@11.7.0` |
 | Plataforma | Windows / macOS / Linux (plugin solo host) |
@@ -164,7 +164,7 @@ Una dimensión `no-evidence` conserva su estado honesto y puntúa 0 — la insig
 ## Permisos y datos
 
 - Solo servicios públicos: `ctx.subprocess`, `ctx.jobs`, `ctx.storageDomain`, `ctx.tools`, `ctx.commands`.
-- Las tarjetas y tablas se almacenan en el dominio `score` (tablas `scores`, `leaderboards`; puntero a la última tabla). Sin `storageDomain`, las herramientas siguen funcionando y la persistencia se desactiva con motivo registrado.
+- Las tarjetas y tablas se almacenan en el dominio `score` (tablas `scores`, `leaderboards`; puntero a la última tabla). Sin `storageDomain`, las herramientas siguen funcionando y la persistencia se desactiva con motivo registrado. El bundle `dsh-base` publicado monta storage-domain desde `0.1.2-rc.1` (verificado con los tarballs `0.1.2-rc.1` y `0.1.5-alpha.1`), así que la persistencia está activa en la línea publicada.
 - Los procesos hijos heredan un entorno sin credenciales; `gh` usa su propio almacén. Ningún valor de entorno se registra.
 
 ## Límites de seguridad

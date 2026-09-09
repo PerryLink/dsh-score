@@ -25,7 +25,7 @@
 
 | 组件 | 版本 |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.1.3-alpha.1`**（GitHub tag，2026-09-06 已核验：完整门禁链 + profile 安装冒烟）。npm 依赖线 `0.1.2-rc.1`（peer 依赖 `>=0.1.2-rc.1 <0.2.0`）。 |
+| DeepSeek Harness | **`dsh-v0.1.5-alpha.1`**（GitHub tag；2026-09-09 已核验：类型门 + 单元/装配测试 + 制品构建）。已发布 npm 线 `0.1.5-alpha.1`（npm `latest` 仍是 `0.1.2-rc.1`；peer 依赖 `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`）。 |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | 包管理器 | `pnpm@11.7.0` |
 | 平台 | Windows / macOS / Linux（纯 host 插件） |
@@ -166,7 +166,7 @@ score(target: string, refresh?: boolean, background?: boolean)
 ## 权限与数据
 
 - 只消费公开服务：`ctx.subprocess`、`ctx.jobs`、`ctx.storageDomain`、`ctx.tools`、`ctx.commands`。
-- 评分卡与排行榜存于 `score` 存储域（表 `scores`、`leaderboards`；最新排行榜指针）。组合里没有 `storageDomain`（如官方 headless profile）时工具仍可用，评分持久化被禁用并记录原因。
+- 评分卡与排行榜存于 `score` 存储域（表 `scores`、`leaderboards`；最新排行榜指针）。组合里没有 `storageDomain`（如官方 headless profile）时工具仍可用，评分持久化被禁用并记录原因。官方 `dsh-base` bundle 自 `0.1.2-rc.1` 起就挂载 storage-domain（已对 `0.1.2-rc.1` 与 `0.1.5-alpha.1` 的 tarball 核验），因此已发布线上持久化是启用的。
 - 子进程继承 provider 已剥离凭据的环境；`gh` 读取其自身的凭据存储。任何环境变量值都不被记录。
 - 所有报告/日志字符串经过纯脱敏函数：token 字面量、URL 凭据、bearer 头被脱敏，尾部按字节截断。
 
@@ -193,7 +193,7 @@ pnpm run typecheck && pnpm run typecheck:ci && pnpm test
 pnpm run build && pnpm run verify:self-contained && pnpm run verify:artifacts && pnpm pack
 ```
 
-- `typecheck` 经本地 harness checkout 解析 `@deepseek-ai/*`；`typecheck:ci` 对照已发布的 `0.1.2-rc.1` 类型。
+- `typecheck` 经本地 harness checkout 解析 `@deepseek-ai/*`；`typecheck:ci` 对照已发布的 `0.1.5-alpha.1` 类型。
 - 测试使用真实 `Context`/`Session`/`ToolRuntime`/`LocalJobRegistry`/存储栈，子进程 provider 为脚本化实现。
 - 真实 CLI 评分（需 PATH 有 `gh`/`npm`，`gh` 已认证）：在已挂载 profile 中调用 `score`。
 - 发布：`node scripts/release.mjs <x.y.z>`（升版本、盖 CHANGELOG、重跑门禁、提交 + tag；绝不 push）。
