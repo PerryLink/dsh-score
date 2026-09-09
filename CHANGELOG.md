@@ -5,6 +5,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.9] - 2026-09-09
+
+### Changed
+
+- Adapt to the dsh `0.1.5-alpha.1` seam: `Inbox` is now a type-only export (the concrete class moved loop-internal) and `SubprocessHandle` no longer carries `pid`; the test harness uses a structural `unsupportedInbox()`-shaped stand-in and drops the removed `pid` field. No behavior change; `src/` needed no edits.
+- Refresh the compatibility baseline to `dsh-v0.1.5-alpha.1` across the five-language READMEs, `AGENTS.md`, and the compat workflow: published npm line `0.1.5-alpha.1` (npm `latest` is still `0.1.2-rc.1`), composite peer range `>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0`, and `typecheck:ci` now checks the published `0.1.5-alpha.1` types. The `storageDomain` wording is corrected: the published `dsh-base` bundle mounts storage-domain from `0.1.2-rc.1` on, so the optional read is defensive rather than load-bearing.
+
 ## [0.2.8] - 2026-09-08
 
 ### Docs
