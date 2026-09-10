@@ -64,7 +64,7 @@ describe('evaluateMaintenance', () => {
 
 describe('evaluateDocumentation', () => {
   it('scores README + languages + CHANGELOG + SECURITY', () => {
-    const files = ['README.md', 'README.zh.md', 'README.es.md', 'CHANGELOG.md', 'SECURITY.md']
+    const files = ['README.md', 'README-zh.md', 'README-es.md', 'CHANGELOG.md', 'SECURITY.md']
     const result = evaluateDocumentation(inputs({ repo: { files } }))
     expect(result.status).toBe('pass')
     expect(result.score).toBe(80) // 40 (README) + 2*10 (languages) + 10 (CHANGELOG) + 10 (SECURITY)

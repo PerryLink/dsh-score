@@ -26,7 +26,7 @@ const RECENT = '2026-08-15T00:00:00.000Z'
 const GOOD_REPO_SCRIPTS: ScriptedSpawn[] = [
   { exitCode: 0, stdout: JSON.stringify({ pushed_at: RECENT, open_issues_count: 0, default_branch: 'main', archived: false, license: { spdx_id: 'MIT' }, topics: ['dsh-plugin'] }) },
   { exitCode: 0, stdout: JSON.stringify([{ commit: { committer: { date: RECENT } } }]) },
-  { exitCode: 0, stdout: JSON.stringify([{ name: 'README.md' }, { name: 'README.zh.md' }, { name: 'CHANGELOG.md' }, { name: 'SECURITY.md' }]) },
+  { exitCode: 0, stdout: JSON.stringify([{ name: 'README.md' }, { name: 'README-zh.md' }, { name: 'CHANGELOG.md' }, { name: 'SECURITY.md' }]) },
   { exitCode: 0, stdout: JSON.stringify({ content: Buffer.from(JSON.stringify({ dsh: { bundle: { patch: './cordis.patch.yml' } } }), 'utf8').toString('base64') }) },
   { exitCode: 0, stdout: JSON.stringify({ content: Buffer.from('# patch', 'utf8').toString('base64') }) },
   { exitCode: 0, stdout: JSON.stringify({ content: Buffer.from('# readme', 'utf8').toString('base64') }) },
