@@ -194,7 +194,7 @@ export function evaluateDocumentation(input: EvalInputs): DimensionScore {
   const files = rawFiles.map(name => name.toLowerCase())
   const has = (name: string): boolean => files.includes(name)
   const readme = has('readme.md')
-  const languages = ['readme.zh.md', 'readme.es.md', 'readme.pt.md', 'readme.hi.md'].filter(has).length
+  const languages = ['readme-zh.md', 'readme-es.md', 'readme-pt.md', 'readme-hi.md'].filter(has).length
   const changelog = has('changelog.md')
   const security = has('security.md')
 
