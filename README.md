@@ -27,7 +27,7 @@
 
 | Component | Version |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.1.5-alpha.1`** (GitHub tag; verified 2026-09-09: type gates, unit/assembly suites, artifact build). Published npm line `0.1.5-alpha.1` (npm `latest` is still `0.1.2-rc.1`; peer dependencies `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`) |
+| DeepSeek Harness | **`dsh-v0.1.5-rc.1`** (GitHub tag; verified 2026-09-10: type gates, unit/assembly suites, artifact build). Published npm line `0.1.5-rc.1` (npm `latest`/`next` are `0.1.5-rc.1`; peer dependencies `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`) |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | Package manager | `pnpm@11.7.0` |
 | Platform | Windows / macOS / Linux (host-only plugin) |
@@ -218,7 +218,7 @@ pnpm run typecheck && pnpm run typecheck:ci && pnpm test
 pnpm run build && pnpm run verify:self-contained && pnpm run verify:artifacts && pnpm pack
 ```
 
-- `typecheck` resolves `@deepseek-ai/*` through the local harness checkout; `typecheck:ci` checks against the published `0.1.5-alpha.1` types.
+- `typecheck` resolves `@deepseek-ai/*` through the local harness checkout; `typecheck:ci` checks against the published `0.1.5-rc.1` types.
 - Tests use the real `Context`/`Session`/`ToolRuntime`/`LocalJobRegistry`/storage stack with a scripted subprocess provider.
 - Real-CLI scoring (requires `gh`/`npm` on PATH, `gh` authenticated): invoke `score` from a mounted profile.
 - Release: `node scripts/release.mjs <x.y.z>` (bumps, stamps CHANGELOG, re-runs the gate, commits + tags; never pushes).
