@@ -26,7 +26,7 @@
 
 | Componente | Versão |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.1.5-rc.1`** (tag do GitHub; verificado em 2026-09-10: portas de tipos, suítes unitárias/de montagem, build de artefatos). Linha npm publicada `0.1.5-rc.1` (o `latest`/`next` do npm agora são `0.1.5-rc.1`; dependências de pares `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`). |
+| DeepSeek Harness | **`dsh-v0.1.5-rc.2`** (tag do GitHub; verificado em 2026-09-11: portas de tipos, suítes unitárias/de montagem, build de artefatos). Linha npm publicada `0.1.5-rc.2` (o `latest`/`next` do npm agora são `0.1.5-rc.2`; dependências de pares `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`). |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | Gerenciador de pacotes | `pnpm@11.7.0` |
 | Plataforma | Windows / macOS / Linux (plugin somente host) |
