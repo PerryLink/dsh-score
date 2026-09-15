@@ -54,6 +54,10 @@ export class FakeSubprocessRuntime extends SubprocessRuntime {
     return Promise.resolve(`C:\\Fake\\${command}.exe`)
   }
 
+  async terminalEnvironment(): Promise<{ platform: 'windows' }> {
+    return { platform: 'windows' }
+  }
+
   spawn(spec: SubprocessSpawnSpec): SubprocessHandle {
     this.spawns.push(spec)
     const script = this.scripts.shift() ?? {}
@@ -81,15 +85,17 @@ export class FakeSubprocessRuntime extends SubprocessRuntime {
       this.terminated.push(7777)
       settleDone({ exitCode: null, signal: 'SIGTERM' })
     }
-    return {
+    const handle = {
       stdin: undefined,
       stdout: undefined,
       stderr: undefined,
+      control: undefined,
       collected,
       done,
       terminate,
       waitForExit: async () => true,
     }
+    return handle
   }
 
   spawnTerminal(): never {
