@@ -283,6 +283,10 @@ export class ProbeDriver {
   /** Run one CLI invocation with collected stdio and a deadline. */
   async run(program: string, args: readonly string[], signal?: AbortSignal | undefined): Promise<ChildRunResult> {
     const started = Date.now()
+    // Per-command deadline: every probe gets the full `probeTimeoutMs`. The
+    // enclosing foreground score has the larger budget computed by
+    // `scoreDeadlineMs` in `tools.ts`, which covers the worst case of 8
+    // sequential probes (7 here in `probeRepo` plus `probeNpm`).
     const deadline = AbortSignal.timeout(this.deps.config.probeTimeoutMs)
     const merged = signal === undefined ? deadline : AbortSignal.any([signal, deadline])
     let handle
