@@ -27,7 +27,7 @@
 
 | 组件 | 版本 |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.1.5-rc.2`**（GitHub tag；2026-09-11 已核验：类型门 + 单元/装配测试 + 制品构建）。已发布 npm 线 `0.1.5-rc.2`（npm `latest`/`next` 已是 `0.1.5-rc.2`；peer 依赖 `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`）。 |
+| DeepSeek Harness | **`dsh-v0.1.6-alpha.2`**（GitHub tag；peer 区间已承认 alpha.2 线：`>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0`）。dev/test 钉号与 `typecheck:ci` 尺子仍对照已发布的 `0.1.5-rc.2` 线（2026-09-18 已核验：类型门 + 单元/装配测试 + 制品构建）；alpha.2 线上无插件代码改动。 |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | 包管理器 | `pnpm@11.7.0` |
 | 平台 | Windows / macOS / Linux（纯 host 插件） |
