@@ -7,9 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Declare `dsh.manifestVersion: 1` and `engines.dsh` (`>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0`) so the manifest itself states the host lines this plugin is built for. Both fields are declarative - no published reader consumes them yet - and no supported line is dropped: the range only adds the `0.1.6-*` tuple to the two lines already admitted.
+- Run `assert:ruler-fresh` inside the CI gate ahead of the two type rulers. It makes the `typecheck` ruler's checkout face loud when the checkout's `lib/types` is older than its `src`, or missing (tsc then falls back to the published types and reports a false green). On a runner with no harness clone it reports the face as not verifiable and exits 0, so the step stays honest instead of being red by construction.
+
 ### Changed
 
+- Add the `|| >=0.1.6-0 <0.2.0` clause to the 6 `@deepseek-ai/dsh-*` peer ranges. The two earlier clauses are preserved verbatim, so `0.1.2-rc.1` and `0.1.5-rc.2` keep satisfying every range; only the `0.1.6-*` tuple becomes newly admitted.
+- Re-anchor the Compat workflow to the `0.1.6-alpha.2` host line (CLI install, `dsh-base` + `dsh-headless` profile install) and keep `minimumReleaseAge: 0` in the scratch profile, so the real install / row-mount / keyless-load smoke runs against the line the peer range now admits.
 - Implement the new `SubprocessRuntime.terminalEnvironment` member and `SubprocessHandle.control` field in the scripted test provider (0.1.6-alpha.1 extended the subprocess seam).
+- Record the falsified "660 s vs 840 s budget mismatch" as a comment on `scoreDeadlineMs` (`src/tools.ts`) and on the per-command deadline in `src/probe.ts run()`. One foreground score runs at most 8 sequential CLI probes (7 in `probeRepo`, 1 in `probeNpm`), so the worst case is 480 s against the 660 s deadline. Comment only; no behavior change.
+
+### Docs
+
+- Refresh the five-language README compatibility baseline to `dsh-v0.1.6-alpha.2` and the three-clause peer range, and state that the dev/test pins and the `typecheck:ci` ruler still measure the published `0.1.5-rc.2` line.
+- `dshWorkshop.capability.invocation` now lists the real `score_badge` tool. The stale `score_batch` entry (the background job kind, not a tool) is kept for one release cycle so consumers reading the old string keep working.
 
 ## [0.2.11] - 2026-09-12
 
