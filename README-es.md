@@ -27,7 +27,7 @@
 
 | Componente | Versión |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.1.5-rc.2`** (etiqueta de GitHub; verificado el 2026-09-11: puertas de tipos, suites unitarias/de ensamblaje, build de artefactos). Línea npm publicada `0.1.5-rc.2` (el `latest`/`next` de npm ya son `0.1.5-rc.2`; dependencias entre pares `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`). |
+| DeepSeek Harness | **`dsh-v0.1.6-alpha.2`** (etiqueta de GitHub; el rango de pares admite la línea alpha.2: `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0`). Los pines de dev/test y la regla `typecheck:ci` siguen midiendo la línea publicada `0.1.5-rc.2` (verificado el 2026-09-18: puertas de tipos, suites unitarias/de ensamblaje, build de artefactos); no cambió código del plugin para la línea alpha.2. |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | Gestor de paquetes | `pnpm@11.7.0` |
 | Plataforma | Windows / macOS / Linux (plugin solo host) |

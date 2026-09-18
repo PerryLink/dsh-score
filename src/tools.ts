@@ -254,7 +254,20 @@ function renderBadge(value: BadgeJson): { type: 'text'; text: string }[] {
   return [{ type: 'text', text: lines.join('\n') }]
 }
 
-/** The deadline for one foreground score: every probe deadline plus slack. */
+/**
+ * The deadline for one foreground score: every probe deadline plus slack.
+ *
+ * Falsified suspicion, recorded here so it is not re-opened: the "660 s vs
+ * 840 s budget mismatch" does not exist. One foreground score runs at most 8
+ * sequential CLI probes - 7 `gh api` call sites in `probeRepo` plus 1
+ * `npm view` in `probeNpm`, each bounded by its own `probeTimeoutMs` deadline
+ * (`AbortSignal.timeout` in `probe.ts run()`) - so the worst case is
+ * 8 * 60_000 ms = 480 s against this deadline of 10 * probeTimeoutMs + 60 s =
+ * 660 s: 180 s of headroom, 37.5 % of the worst case and 27 % of the budget.
+ * The multiplier is the invariant worth keeping: the number of sequential
+ * probes per foreground score must stay <= 10, or this formula has to grow
+ * with the probe count.
+ */
 function scoreDeadlineMs(config: ResolvedConfig): number {
   return config.probeTimeoutMs * 10 + 60_000
 }
