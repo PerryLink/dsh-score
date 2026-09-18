@@ -6,6 +6,9 @@
 // corresponding package's src/ directory. Red = the checkout ruler would
 // silently measure a stale type face (or fall back to node_modules for a
 // missing target) - exactly the false green this assertion exists to catch.
+// A runner with no harness clone (GitHub Actions) reports the face as not
+// verifiable there and exits 0; the `typecheck:ci` ruler still measures the
+// published line on that runner, so no ruler is left unguarded.
 import { readFileSync, existsSync, statSync, readdirSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 
@@ -15,6 +18,12 @@ const paths = tsconfig.compilerOptions?.paths ?? {}
 const targets = Object.values(paths).flat()
 if (targets.length === 0) {
   console.log('fresh: no paths targets (ruler measures the published line only)')
+  process.exit(0)
+}
+
+const checkoutRoot = resolve(repoRoot, '..', '..', '..', '..', 'deepseek-harness')
+if (!existsSync(checkoutRoot)) {
+  console.log('fresh: harness checkout absent - the checkout face is not verifiable on this runner; skipping')
   process.exit(0)
 }
 
