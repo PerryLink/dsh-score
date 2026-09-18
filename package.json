@@ -141,6 +141,7 @@
     "prepare": "node scripts/prepare.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
     "typecheck:ci": "tsc -p tsconfig.ci.json --noEmit",
+    "assert:ruler-fresh": "node scripts/assert-ruler-fresh.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
