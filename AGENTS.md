@@ -22,7 +22,7 @@ Standalone DeepSeek Harness plugin repository (`dsh-score`). Development follows
 
 ## Checks
 
-`pnpm run typecheck && pnpm run typecheck:ci && pnpm test && pnpm run build && pnpm run verify:self-contained && pnpm run check:lockfile && pnpm run verify:artifacts && pnpm run check:lockfile && pnpm pack`
+`pnpm run typecheck && pnpm run typecheck:ci && pnpm test && pnpm run build && pnpm run verify:self-contained && pnpm run verify:artifacts && pnpm run check:lockfile && pnpm pack`
 
 - `typecheck` resolves `@deepseek-ai/*` through tsconfig paths to the local harness checkout; `typecheck:ci` clears the paths and checks against the published `0.1.5-alpha.1` types. Both must stay green.
 - `test` runs the scripted suites against the real peers with a scripted subprocess provider. Real-CLI scoring (`gh`/`npm` on PATH + `gh` authenticated) is exercised manually, not in CI.
