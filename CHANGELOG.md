@@ -5,6 +5,19 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.14] - 2026-09-23
+
+### Fixed
+
+- Migrate the `score-batch` job producer to the `0.1.7` `ctx.jobs` contract. The line rewrote the service face with no compatibility union: every caller/owner argument is a `SessionId` instead of an `Agent`, `JobHooks.readOutput()` is gone, and a `JobRead` carries ring `chunks` instead of a `text` field. `jobs.start({ owner })` therefore now receives the owning session id, `owner.id` (the host's `Agent` carries exactly its `SessionId` as `id`, and the registry resolves the live `Agent` back from that id), and per-target progress lines are appended with `job.append(line + "\n")` in place of the removed `readOutput` splice-drain hook. Each line is still delivered once, in order, with its trailing newline — the model's consuming cursor provides the once-only delivery the drain used to. The returned `JobHooks` is cancel + done only. No assertion was weakened, deleted or reordered; only the caller argument changed in the two specs that drive it.
+
+### Changed
+
+- Move the `@deepseek-ai/dsh-*` dev/test pins to `0.1.7-alpha.2` and re-verify both rulers against that line: `typecheck` resolves the local harness checkout through tsconfig `paths`, `typecheck:ci` the published `0.1.7-alpha.2` faces.
+- Every declared host range — `engines.dsh` and the six `peerDependencies` bands — gains the `|| >=0.1.7-0 <0.2.0` arm, so the bands now admit the `0.1.7` prerelease line. Under semver's prerelease rule a range whose only prerelease comparators sit on earlier version tuples cannot admit a later alpha, so the previous three-clause form excluded the very host this release targets. No existing arm was removed or narrowed.
+- `dshWorkshop.compatibility.dshVersions` gains `0.1.7-alpha.2`, and all five READMEs name the verified line.
+- The compat workflow now installs the `0.1.7-alpha.2` host instead of `0.1.6-alpha.2`, so the scheduled end-to-end run exercises the line this package declares.
+
 ## [0.2.13] - 2026-09-19
 
 ### Added
