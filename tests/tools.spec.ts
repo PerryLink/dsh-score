@@ -80,7 +80,7 @@ describe('score_report', () => {
     const harness = await mountHarness({ scripts: [...GOOD_REPO_SCRIPTS] })
     const background = await callTool(harness, 'score', { target: 'owner/repo', background: true })
     const jobId = String((background.value as Record<string, unknown>).jobId)
-    await harness.ctx.jobs.wait(JobId(jobId), 10_000, harness.agent)
+    await harness.ctx.jobs.wait(JobId(jobId), 10_000, harness.agent.id)
     const report = await callTool(harness, 'score_report', {})
     expect(report.isError).toBe(false)
     const value = report.value as Record<string, unknown>

@@ -1,9 +1,9 @@
 /**
  * The `score-batch` background-job producer over `ctx.jobs`. One job scores a
  * list of targets (serially or with bounded concurrency), streams per-target
- * progress lines through `readOutput`, and on settlement writes the leaderboard
- * record (JSON) into the storage domain plus the latest-leaderboard pointer, so
- * `score_report` can fetch the Markdown/JSON pair by id.
+ * progress lines into the job's output ring, and on settlement writes the
+ * leaderboard record (JSON) into the storage domain plus the latest-leaderboard
+ * pointer, so `score_report` can fetch the Markdown/JSON pair by id.
  *
  * @module dsh-score/batch
  */
@@ -11,7 +11,7 @@
 import { randomBytes } from 'node:crypto'
 import type { Agent } from '@deepseek-ai/dsh-agent'
 import type { Context } from '@deepseek-ai/cordis'
-import type { JobHooks, JobId, JobKind, JobOutcome } from '@deepseek-ai/dsh-jobs'
+import type { JobHandle, JobHooks, JobId, JobKind, JobOutcome } from '@deepseek-ai/dsh-jobs'
 import { RESULT_SCHEMA, totalsOf } from './result.ts'
 import type { LeaderboardRecord, LeaderboardRow, ScoreResult } from './result.ts'
 import { sanitizeTarget } from './sanitize.ts'
@@ -137,23 +137,28 @@ export function startBatchJob(deps: BatchDeps, targets: readonly string[], owner
   return deps.ctx.jobs.start({
     kind,
     label,
-    owner,
-    run: (): JobHooks => {
+    // The official spec fences access by the owning session id, and the host's
+    // Agent carries exactly that as `id`.
+    owner: owner.id,
+    run: (job: JobHandle): JobHooks => {
       const abort = new AbortController()
-      const progress: string[] = []
+      // One ring append per progress line. The model's consuming cursor hands
+      // out the same bytes the removed `readOutput` splice-drain did: each line
+      // once, in order, with its trailing newline.
+      const emit = (line: string): void => { job.append(`${line}\n`) }
       const done = Promise.withResolvers<JobOutcome>()
       let settled = false
       const settle = (outcome: JobOutcome): JobOutcome => {
         if (settled) return outcome
         settled = true
-        progress.push(`${outcome.status === 'completed' ? 'batch finished' : 'batch stopped'}: ${outcome.detail ?? ''}`)
+        emit(`${outcome.status === 'completed' ? 'batch finished' : 'batch stopped'}: ${outcome.detail ?? ''}`)
         done.resolve(outcome)
         return outcome
       }
-      void runBatch(deps, sanitized, abort.signal, line => { progress.push(line) })
+      void runBatch(deps, sanitized, abort.signal, emit)
         .then(({ leaderboardId, leaderboard }) => {
-          progress.push(`leaderboard ${leaderboardId} — fetch with score_report("${leaderboardId}")`)
-          progress.push(renderScoreCardForBatch(leaderboard))
+          emit(`leaderboard ${leaderboardId} — fetch with score_report("${leaderboardId}")`)
+          emit(renderScoreCardForBatch(leaderboard))
           settle({ status: 'completed', detail: leaderboardSummary(leaderboard) })
         })
         .catch((error: unknown) => {
@@ -163,14 +168,10 @@ export function startBatchJob(deps: BatchDeps, targets: readonly string[], owner
       return {
         cancel(reason?: string): void {
           abort.abort(reason ?? 'cancelled')
-          progress.push(`cancelling (${reason ?? 'no reason given'})`)
+          emit(`cancelling (${reason ?? 'no reason given'})`)
           settle({ status: 'killed', detail: `cancelled: ${reason ?? 'no reason given'}` })
         },
         done: done.promise,
-        readOutput: (): string => {
-          if (progress.length === 0) return ''
-          return `${progress.splice(0, progress.length).join('\n')}\n`
-        },
       }
     },
   })
