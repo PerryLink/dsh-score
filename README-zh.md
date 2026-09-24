@@ -36,7 +36,7 @@
 
 | 组件 | 版本 |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.1.7-rc.1`**（GitHub tag；peer 区间已承认 alpha.2 线：`>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`）。dev/test 钉号与 `typecheck:ci` 尺子现对照已发布的 `0.1.7-rc.1` 线（`0.1.6-alpha.2` 面已于 2026-09-18 核验：类型门 + 单元/装配测试 + 制品构建）；`ctx.jobs` 接缝已迁移到 alpha.2 的 `SessionId` 契约。 |
+| DeepSeek Harness | **`dsh-v0.1.7-rc.2`**（GitHub tag；peer 区间已承认 alpha.2 线：`>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`）。dev/test 钉号与 `typecheck:ci` 尺子现对照已发布的 `0.1.7-rc.2` 线（`0.1.6-alpha.2` 面已于 2026-09-18 核验：类型门 + 单元/装配测试 + 制品构建）；`ctx.jobs` 接缝已迁移到 alpha.2 的 `SessionId` 契约。 |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | 包管理器 | `pnpm@11.7.0` |
 | 平台 | Windows / macOS / Linux（纯 host 插件） |
@@ -204,7 +204,7 @@ pnpm run typecheck && pnpm run typecheck:ci && pnpm test
 pnpm run build && pnpm run verify:self-contained && pnpm run verify:artifacts && pnpm pack
 ```
 
-- `typecheck` 经本地 harness checkout 解析 `@deepseek-ai/*`；`typecheck:ci` 对照已发布的 `0.1.7-rc.1` 类型。
+- `typecheck` 经本地 harness checkout 解析 `@deepseek-ai/*`；`typecheck:ci` 对照已发布的 `0.1.7-rc.2` 类型。
 - 测试使用真实 `Context`/`Session`/`ToolRuntime`/`LocalJobRegistry`/存储栈，子进程 provider 为脚本化实现。
 - 真实 CLI 评分（需 PATH 有 `gh`/`npm`，`gh` 已认证）：在已挂载 profile 中调用 `score`。
 - 发布：`node scripts/release.mjs <x.y.z>`（升版本、盖 CHANGELOG、重跑门禁、提交 + tag；绝不 push）。
