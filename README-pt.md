@@ -29,7 +29,7 @@
 
 | Componente | Versão |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.1.7-alpha.2`** (tag do GitHub; o intervalo de pares admite a linha alpha.2: `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`). Os pins de dev/test e a régua `typecheck:ci` agora medem a linha publicada `0.1.7-alpha.2` (a face `0.1.6-alpha.2` foi verificada em 2026-09-18: portas de tipos, suítes unitárias/de montagem, build de artefatos); o seam `ctx.jobs` foi migrado para o contrato `SessionId` de alpha.2. |
+| DeepSeek Harness | **`dsh-v0.1.7-rc.1`** (tag do GitHub; o intervalo de pares admite a linha alpha.2: `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`). Os pins de dev/test e a régua `typecheck:ci` agora medem a linha publicada `0.1.7-rc.1` (a face `0.1.6-alpha.2` foi verificada em 2026-09-18: portas de tipos, suítes unitárias/de montagem, build de artefatos); o seam `ctx.jobs` foi migrado para o contrato `SessionId` de alpha.2. |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | Gerenciador de pacotes | `pnpm@11.7.0` |
 | Plataforma | Windows / macOS / Linux (plugin somente host) |

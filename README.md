@@ -30,7 +30,7 @@
 
 | Component | Version |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.1.7-alpha.2`** (GitHub tag; the peer range admits the alpha.2 line: `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`). Dev/test pins and the `typecheck:ci` ruler now measure the published `0.1.7-alpha.2` line (the `0.1.6-alpha.2` face was verified 2026-09-18: type gates, unit/assembly suites, artifact build); the `ctx.jobs` seam was migrated to the alpha.2 `SessionId` contract. |
+| DeepSeek Harness | **`dsh-v0.1.7-rc.1`** (GitHub tag; the peer range admits the alpha.2 line: `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`). Dev/test pins and the `typecheck:ci` ruler now measure the published `0.1.7-rc.1` line (the `0.1.6-alpha.2` face was verified 2026-09-18: type gates, unit/assembly suites, artifact build); the `ctx.jobs` seam was migrated to the alpha.2 `SessionId` contract. |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | Package manager | `pnpm@11.7.0` |
 | Platform | Windows / macOS / Linux (host-only plugin) |
@@ -221,7 +221,7 @@ pnpm run typecheck && pnpm run typecheck:ci && pnpm test
 pnpm run build && pnpm run verify:self-contained && pnpm run verify:artifacts && pnpm pack
 ```
 
-- `typecheck` resolves `@deepseek-ai/*` through the local harness checkout; `typecheck:ci` checks against the published `0.1.7-alpha.2` types.
+- `typecheck` resolves `@deepseek-ai/*` through the local harness checkout; `typecheck:ci` checks against the published `0.1.7-rc.1` types.
 - Tests use the real `Context`/`Session`/`ToolRuntime`/`LocalJobRegistry`/storage stack with a scripted subprocess provider.
 - Real-CLI scoring (requires `gh`/`npm` on PATH, `gh` authenticated): invoke `score` from a mounted profile.
 - Release: `node scripts/release.mjs <x.y.z>` (bumps, stamps CHANGELOG, re-runs the gate, commits + tags; never pushes).
