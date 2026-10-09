@@ -34,6 +34,20 @@
 这个插件是 [DSH 插件家族](https://github.com/PerryLink)的一员（40+ 个，全部 Apache-2.0）。如果你在用，**给个 star** —— 它不会解锁任何功能，但会让下一个人在搜索里更容易找到它。
 
 *English:* part of a 40+ plugin family for DeepSeek Harness. If it is useful, **a star helps the next person find it** — nothing is gated behind it.
+## What is dsh-score?
+
+为 DeepSeek Harness 插件提供多指标质量评分。
+
+五个维度、真实 gh/npm 证据，一张加权风险卡与排行榜。
+
+![dsh-score 终端演示：dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.png)
+
+## Comparison
+
+![dsh-score 的实测对比柱状图](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-evidence.png)
+
+the weights the five-dimension total is computed from · README §Configuration
+
 ## 兼容性
 
 | 组件 | 版本 |

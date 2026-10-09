@@ -34,6 +34,20 @@
 यह प्लगइन [DSH प्लगइन परिवार](https://github.com/PerryLink) का हिस्सा है (40+ प्लगइन, सभी Apache-2.0)। अगर यह उपयोगी लगे, तो **एक स्टार दें** — इससे कोई सुविधा अनलॉक नहीं होती, पर अगला व्यक्ति इसे खोज में आसानी से पा लेता है।
 
 *English:* part of a 40+ plugin family for DeepSeek Harness. If it is useful, **a star helps the next person find it** — nothing is gated behind it.
+## What is dsh-score?
+
+DeepSeek Harness प्लगइन के लिए बहु-आयामी गुणवत्ता स्कोरिंग।
+
+पाँच आयाम, वास्तविक `gh`/`npm` साक्ष्य, एक भारित रिस्क कार्ड और लीडरबोर्ड।
+
+![dsh-score का टर्मिनल डेमो: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.png)
+
+## Comparison
+
+![dsh-score का मापा गया तुलना चार्ट](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-evidence.png)
+
+the weights the five-dimension total is computed from · README §Configuration
+
 ## संगतता
 
 | घटक | संस्करण |

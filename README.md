@@ -36,6 +36,20 @@
 *English:* part of a 40+ plugin family for DeepSeek Harness. If it is useful, **a star helps the next person find it** — nothing is gated behind it.
 
 
+## What is dsh-score?
+
+Multi-dimensional quality scoring for DeepSeek Harness plugins.
+
+Five dimensions, real `gh`/`npm` evidence, one weighted risk card and leaderboard.
+
+![Terminal demo of dsh-score: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.png)
+
+## Comparison
+
+![Measured comparison chart for dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-evidence.png)
+
+the weights the five-dimension total is computed from · README §Configuration
+
 ## Compatibility
 
 | Component | Version |
