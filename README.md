@@ -44,6 +44,10 @@ Five dimensions, real `gh`/`npm` evidence, one weighted risk card and leaderboar
 
 ![Terminal demo of dsh-score: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.png)
 
+![Animated terminal demo of dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.gif)
+
+*The same run, animated.*
+
 ## Comparison
 
 ![Measured comparison chart for dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-evidence.png)

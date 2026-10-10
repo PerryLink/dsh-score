@@ -43,6 +43,10 @@ Cinco dimensiones, evidencia real de los CLI `gh`/`npm`, una tarjeta de riesgo p
 
 ![Demostración de terminal de dsh-score: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.png)
 
+![Animated terminal demo of dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.gif)
+
+*La misma ejecución, animada.*
+
 ## Comparison
 
 ![Gráfico comparativo medido de dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-evidence.png)

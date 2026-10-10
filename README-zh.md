@@ -43,6 +43,10 @@
 
 ![dsh-score 终端演示：dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.png)
 
+![Animated terminal demo of dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.gif)
+
+*同一次运行，动图版。*
+
 ## Comparison
 
 ![dsh-score 的实测对比柱状图](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-evidence.png)
