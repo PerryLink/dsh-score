@@ -28,12 +28,15 @@ describe('ProbeDriver gh/npm behaviors', () => {
     const outcome = await makeDriver(harness).ghJson('repos/o/r')
     expect(outcome.value).toBeUndefined()
     expect(outcome.evidence).toHaveLength(1)
+    expect(outcome.evidence[0]?.detail).toContain('exit 1')
+    expect(outcome.evidence[0]?.detail).toContain('gh: not found')
   })
 
   it('records no value on malformed gh JSON', async () => {
     const harness = await mountHarness({ plugin: false, scripts: [{ exitCode: 0, stdout: 'not json' }] })
     const outcome = await makeDriver(harness).ghJson('repos/o/r')
     expect(outcome.value).toBeUndefined()
+    expect(outcome.evidence[0]?.detail).toContain('invalid JSON')
   })
 
   it('records no value on empty gh output', async () => {

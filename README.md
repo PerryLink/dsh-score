@@ -42,7 +42,7 @@ Multi-dimensional quality scoring for DeepSeek Harness plugins.
 
 Five dimensions, real `gh`/`npm` evidence, one weighted risk card and leaderboard.
 
-![Terminal demo of dsh-score: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.png)
+![Terminal demo of dsh-score: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-hero.png)
 
 ![Animated terminal demo of dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.gif)
 
@@ -52,13 +52,11 @@ Five dimensions, real `gh`/`npm` evidence, one weighted risk card and leaderboar
 
 ![Measured comparison chart for dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-evidence.png)
 
-the weights the five-dimension total is computed from · README §Configuration
-
 ## Compatibility
 
 | Component | Version |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.1-alpha.1`** (GitHub tag; the peer range admits the alpha.2 line: `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`). Dev/test pins and the `typecheck:ci` ruler now measure the published `0.1.7-rc.2` line (the `0.1.6-alpha.2` face was verified 2026-09-18: type gates, unit/assembly suites, artifact build); the `ctx.jobs` seam was migrated to the alpha.2 `SessionId` contract. |
+| DeepSeek Harness | **`dsh-v0.2.1-rc.2`** (GitHub tag). The `engines.dsh` gate is `>=0.2.1-0 <0.3.0`; dev/test pins and the `typecheck:ci` ruler measure `0.2.1-rc.2`. The `ctx.jobs` seam uses the `SessionId` contract. |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | Package manager | `pnpm@11.7.0` |
 | Platform | Windows / macOS / Linux (host-only plugin) |
@@ -160,7 +158,7 @@ Returns the badge (SVG + endpoint + Markdown embed) and the compact five-dimensi
   "target": { "kind": "repo", "spec": "github:owner/dsh-click#abc123" },
   "scoredAt": "2026-08-16T00:00:00.000Z",
   "durationMs": 3210,
-  "pluginVersion": "0.2.11",
+  "pluginVersion": "0.2.22",
   "dimensions": {
     "install": { "dimension": "install", "status": "no-evidence", "score": 0, "weight": 25,
                  "summary": "no dsh-test-drive result recorded for this target (install success unmeasured)",
@@ -222,7 +220,6 @@ A `no-evidence` dimension keeps its honest status and score 0 — the badge and 
 
 - Only public services are consumed: `ctx.subprocess`, `ctx.jobs`, `ctx.storageDomain`, `ctx.tools`, `ctx.commands`.
 - Score cards and leaderboards are stored in the `score` storage-domain (tables `scores`, `leaderboards`; latest-leaderboard pointer). When the composition has no `storageDomain` (profiles that predate the base bundle's storage rows, such as the `0.1.1-rc.2`-era headless profile), tools still work and score persistence is disabled with a logged reason. The published `dsh-base` bundle mounts storage-domain from `0.1.2-rc.1` on (verified against the `0.1.2-rc.1` and `0.1.5-alpha.1` tarballs), so persistence is active on the published line.
-0.1.2-rc.1 (adapted 2026-09-04) and 0.1.5-rc.2: the session envelope keeps its ignorable field for stored-log read compatibility only - Session.append still cannot stamp it, so audit-gate behavior is unchanged.
 - Child processes inherit the provider's credential-scrubbed environment; `gh` reads its own credential store. No environment value is ever logged.
 - All report/log strings pass through pure sanitizers: token literals, URL credentials, and bearer headers are redacted, and tails are byte-capped.
 

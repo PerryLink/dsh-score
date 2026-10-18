@@ -63,6 +63,13 @@ describe('rowOf / progressLine / leaderboardSummary', () => {
 })
 
 describe('runBatch', () => {
+
+  it('reports persisted=false when the storage domain is unavailable', async () => {
+    const harness = await mountHarness({ plugin: false, scripts: [...GOOD_REPO_SCRIPTS] })
+    const deps = { ...batchDeps(harness), domain: async () => { throw new Error('no storage') } }
+    const { persisted } = await runBatch(deps, ['owner/repo'], new AbortController().signal, () => {})
+    expect(persisted).toBe(false)
+  })
   it('scores a target and writes a leaderboard with the latest pointer', async () => {
     const harness = await mountHarness({ plugin: false, scripts: [...GOOD_REPO_SCRIPTS] })
     const deps = batchDeps(harness)

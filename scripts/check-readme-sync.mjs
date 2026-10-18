@@ -3,6 +3,7 @@
 // every configuration-table key. Section headings may be translated; the
 // English file is the source of truth.
 import { readFileSync, existsSync } from 'node:fs'
+import { readFileSync as readJson } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -48,6 +49,21 @@ const source = contents[0]
 if (source === undefined) process.exit(1)
 const expectedSections = sectionCount(source)
 const expectedKeys = configKeysOf(source)
+const enginesDsh = JSON.parse(readJson(path.join(root, 'package.json'), 'utf8')).engines?.dsh
+if (typeof enginesDsh !== 'string' || enginesDsh.length === 0) {
+  failures.push('package.json engines.dsh is missing')
+}
+const escapedRange = enginesDsh?.replaceAll('|', '\\|')
+for (const [index, text] of contents.entries()) {
+  if (text === '' || escapedRange === undefined) continue
+  const harness = text.split(/\r?\n/u).find(line => line.startsWith('| DeepSeek Harness |'))
+  if (harness === undefined) {
+    failures.push(`${FILES[index]}: missing the DeepSeek Harness row`)
+  } else if (!harness.includes(escapedRange)) {
+    failures.push(`${FILES[index]}: Harness row does not contain engines.dsh ${enginesDsh}`)
+  }
+}
+
 
 for (let index = 1; index < FILES.length; index++) {
   const file = FILES[index]

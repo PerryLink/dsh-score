@@ -41,7 +41,7 @@
 
 五个维度、真实 gh/npm 证据，一张加权风险卡与排行榜。
 
-![dsh-score 终端演示：dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.png)
+![dsh-score 终端演示：dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-hero.png)
 
 ![Animated terminal demo of dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.gif)
 
@@ -51,13 +51,11 @@
 
 ![dsh-score 的实测对比柱状图](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-evidence.png)
 
-the weights the five-dimension total is computed from · README §Configuration
-
 ## 兼容性
 
 | 组件 | 版本 |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.1-alpha.1`**（GitHub tag；peer 区间已承认 alpha.2 线：`>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`）。dev/test 钉号与 `typecheck:ci` 尺子现对照已发布的 `0.1.7-rc.2` 线（`0.1.6-alpha.2` 面已于 2026-09-18 核验：类型门 + 单元/装配测试 + 制品构建）；`ctx.jobs` 接缝已迁移到 alpha.2 的 `SessionId` 契约。 |
+| DeepSeek Harness | **`dsh-v0.2.1-rc.2`** (GitHub tag). The `engines.dsh` gate is `>=0.2.1-0 <0.3.0`; dev/test pins and the `typecheck:ci` ruler measure `0.2.1-rc.2`. The `ctx.jobs` seam uses the `SessionId` contract. |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | 包管理器 | `pnpm@11.7.0` |
 | 平台 | Windows / macOS / Linux（纯 host 插件） |

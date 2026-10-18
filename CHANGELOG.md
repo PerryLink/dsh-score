@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.2.24] - 2026-10-18
+
+### Changed
+
+- Add a 1280×720 hero and a 960×540, 4-second terminal GIF rendered from the test run; `screenshots.json` is an object array and `capture.json` records the command.
+
+## [0.2.23] - 2026-10-18
+
+### Fixed
+
+- **A `no-evidence` dimension now explains the probe failure.** `gh api` / `npm view` evidence rows carry `exit N`, `timeout`, the redacted stderr tail, or `invalid JSON` instead of only the command line, so a grey dimension answers "why". Sanitization still runs through `redactSecrets` + `tailText`.
+
+## [0.2.22] - 2026-10-17
+
+### Fixed
+
+- **A batch no longer promises a fetchable leaderboard id when persistence is off.** `runBatch` now returns `persisted`; when the storage domain is absent or the write fails, the final job line says `persistence disabled — leaderboard not stored` instead of `fetch with score_report("<id>")`. The score cards remain complete.
+- **README compatibility rows are true to the manifest again.** All five now name `dsh-v0.2.1-rc.2`, `engines.dsh >=0.2.1-0 <0.3.0`, and the `0.2.1-rc.2` ruler; the stale `0.1.7-rc.2` claim, the foreign audit-gate paragraph and the dangling weight caption are gone. `check-readme-sync.mjs` now fails when a Harness row does not contain `engines.dsh` verbatim.
+- Compatibility: `engines.dsh` -> `>=0.2.1-0 <0.3.0`; devDependencies to `0.2.1-rc.2`; add `@deepseek-ai/dsh-working-directory`.
+
 All notable changes to this project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),

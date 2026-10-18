@@ -41,7 +41,7 @@ Pontuação de qualidade multidimensional para plugins do DeepSeek Harness.
 
 Cinco dimensões, evidência real dos CLIs `gh`/`npm`, um cartão de risco ponderado e ranking.
 
-![Demonstração de terminal do dsh-score: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.png)
+![Demonstração de terminal do dsh-score: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-hero.png)
 
 ![Animated terminal demo of dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.gif)
 
@@ -51,13 +51,11 @@ Cinco dimensões, evidência real dos CLIs `gh`/`npm`, um cartão de risco ponde
 
 ![Gráfico comparativo medido do dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-evidence.png)
 
-the weights the five-dimension total is computed from · README §Configuration
-
 ## Compatibilidade
 
 | Componente | Versão |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.1-alpha.1`** (tag do GitHub; o intervalo de pares admite a linha alpha.2: `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`). Os pins de dev/test e a régua `typecheck:ci` agora medem a linha publicada `0.1.7-rc.2` (a face `0.1.6-alpha.2` foi verificada em 2026-09-18: portas de tipos, suítes unitárias/de montagem, build de artefatos); o seam `ctx.jobs` foi migrado para o contrato `SessionId` de alpha.2. |
+| DeepSeek Harness | **`dsh-v0.2.1-rc.2`** (GitHub tag). The `engines.dsh` gate is `>=0.2.1-0 <0.3.0`; dev/test pins and the `typecheck:ci` ruler measure `0.2.1-rc.2`. The `ctx.jobs` seam uses the `SessionId` contract. |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | Gerenciador de pacotes | `pnpm@11.7.0` |
 | Plataforma | Windows / macOS / Linux (plugin somente host) |

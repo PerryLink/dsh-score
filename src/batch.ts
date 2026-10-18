@@ -44,6 +44,8 @@ export interface BatchDeps extends ScoreDeps {
 export interface BatchSettlement {
   leaderboardId: string
   leaderboard: LeaderboardRecord
+  /** False when the storage domain is absent or the write failed. */
+  persisted: boolean
 }
 
 /** Project one score card into a leaderboard row. */
@@ -104,14 +106,16 @@ export async function runBatch(
     rows,
     totals: totalsOf(rows),
   }
+  let persisted = false
   try {
     const domain = await deps.domain()
     await domain.table('leaderboards').put(leaderboardId, leaderboard)
     await domain.global.set({ leaderboardId, createdAt: leaderboard.createdAt })
+    persisted = true
   } catch (error) {
     deps.log(`score: failed to persist leaderboard ${leaderboardId}: ${String(error)}`)
   }
-  return { leaderboardId, leaderboard }
+  return { leaderboardId, leaderboard, persisted }
 }
 
 /** One-line settlement summary for notices and the final flush. */
@@ -156,8 +160,10 @@ export function startBatchJob(deps: BatchDeps, targets: readonly string[], owner
         return outcome
       }
       void runBatch(deps, sanitized, abort.signal, emit)
-        .then(({ leaderboardId, leaderboard }) => {
-          emit(`leaderboard ${leaderboardId} — fetch with score_report("${leaderboardId}")`)
+        .then(({ leaderboardId, leaderboard, persisted }) => {
+          emit(persisted
+            ? `leaderboard ${leaderboardId} — fetch with score_report("${leaderboardId}")`
+            : 'persistence disabled — leaderboard not stored (no storageDomain, or the write failed); score cards above are still complete')
           emit(renderScoreCardForBatch(leaderboard))
           settle({ status: 'completed', detail: leaderboardSummary(leaderboard) })
         })

@@ -337,12 +337,16 @@ export class ProbeDriver {
       observedAt: new Date().toISOString(),
     }
     const run = await this.run('gh', ['api', endpoint], signal)
-    if (run.exitCode !== 0) return { evidence: [evidence] }
+    if (run.exitCode !== 0) {
+      evidence.detail = `gh api ${endpoint} → ${probeFailure(run)}`
+      return { evidence: [evidence] }
+    }
     const trimmed = run.stdout.trim()
     if (trimmed.length === 0) return { evidence: [evidence] }
     try {
       return { value: JSON.parse(trimmed), evidence: [evidence] }
     } catch {
+      evidence.detail = `gh api ${endpoint} → invalid JSON`
       return { evidence: [evidence] }
     }
   }
@@ -355,12 +359,16 @@ export class ProbeDriver {
       observedAt: new Date().toISOString(),
     }
     const run = await this.run('npm', ['view', pkgSpec, '--json'], signal)
-    if (run.exitCode !== 0) return { evidence: [evidence] }
+    if (run.exitCode !== 0) {
+      evidence.detail = `npm view ${pkgSpec} --json → ${probeFailure(run)}`
+      return { evidence: [evidence] }
+    }
     const trimmed = run.stdout.trim()
     if (trimmed.length === 0) return { evidence: [evidence] }
     try {
       return { value: JSON.parse(trimmed), evidence: [evidence] }
     } catch {
+      evidence.detail = `npm view ${pkgSpec} --json → invalid JSON`
       return { evidence: [evidence] }
     }
   }
@@ -419,6 +427,13 @@ export class ProbeDriver {
     const outcome = await this.npmJson(spec, signal)
     return { facts: parseNpmView(outcome.value), evidence: outcome.evidence }
   }
+}
+
+/** Explain a failed probe in the evidence row without leaking credentials. */
+function probeFailure(run: ChildRunResult): string {
+  const status = run.timedOut ? 'timeout' : `exit ${run.exitCode ?? 'signal'}`
+  const tail = sanitizeEvidenceDetail(run.stderr.trim())
+  return tail === '' ? status : `${status}: ${tail}`
 }
 
 /** Sanitize one evidence detail string for the audit link (redacts stray credentials). */

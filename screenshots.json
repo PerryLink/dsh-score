@@ -1,6 +1,14 @@
-{
-  "screenshots": [
-    "docs/assets/dsh-score-demo.png",
-    "docs/assets/dsh-score-evidence.png"
-  ]
-}
+[
+  {
+    "path": "docs/assets/dsh-score-hero.png",
+    "kind": "hero",
+    "alt": "dsh-score terminal output",
+    "caption": "Real dsh-score test run; 102 tests passed."
+  },
+  {
+    "path": "docs/assets/dsh-score-demo.gif",
+    "kind": "demo",
+    "alt": "Animated dsh-score terminal session",
+    "caption": "The same run, assembled line by line."
+  }
+]

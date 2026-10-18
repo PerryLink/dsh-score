@@ -41,7 +41,7 @@ DeepSeek Harness प्लगइन के लिए बहु-आयामी �
 
 पाँच आयाम, वास्तविक `gh`/`npm` साक्ष्य, एक भारित रिस्क कार्ड और लीडरबोर्ड।
 
-![dsh-score का टर्मिनल डेमो: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.png)
+![dsh-score का टर्मिनल डेमो: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-hero.png)
 
 ![Animated terminal demo of dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.gif)
 
@@ -51,13 +51,11 @@ DeepSeek Harness प्लगइन के लिए बहु-आयामी �
 
 ![dsh-score का मापा गया तुलना चार्ट](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-evidence.png)
 
-the weights the five-dimension total is computed from · README §Configuration
-
 ## संगतता
 
 | घटक | संस्करण |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.1-alpha.1`** (GitHub tag; peer रेंज alpha.2 लाइन को स्वीकार करती है: `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`)। dev/test पिन और `typecheck:ci` रूलर अब प्रकाशित `0.1.7-rc.2` लाइन को मापते हैं (`0.1.6-alpha.2` फ़ेस 2026-09-18 को सत्यापित: टाइप गेट, यूनिट/असेंबली सूट, आर्टिफ़ैक्ट बिल्ड); `ctx.jobs` seam को alpha.2 के `SessionId` अनुबंध पर माइग्रेट किया गया। |
+| DeepSeek Harness | **`dsh-v0.2.1-rc.2`** (GitHub tag). The `engines.dsh` gate is `>=0.2.1-0 <0.3.0`; dev/test pins and the `typecheck:ci` ruler measure `0.2.1-rc.2`. The `ctx.jobs` seam uses the `SessionId` contract. |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | पैकेज प्रबंधक | `pnpm@11.7.0` |
 | प्लेटफ़ॉर्म | Windows / macOS / Linux (केवल-होस्ट प्लगइन) |

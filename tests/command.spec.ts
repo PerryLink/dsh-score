@@ -67,7 +67,7 @@ describe('handleScore', () => {
     const deps = batchDeps(harness)
     const result = handleScore(deps, invocation('owner/repo', harness))
     expect(result.kind).toBe('success')
-    const jobId = JobId((result as { text: string }).text.match(/score-batch-\d+/u)?.[0] ?? '')
+    const jobId = JobId((result as { text: string }).text.match(/score-batch-[0-9a-f]+/u)?.[0] ?? '')
     // The registry fences access by session id; the harness Agent carries it as `id`.
     const snapshot = await harness.ctx.jobs.wait(jobId, 10_000, harness.agent.id)
     expect(snapshot.status).toBe('completed')
