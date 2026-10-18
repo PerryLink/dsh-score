@@ -31,6 +31,12 @@ dsh plugin --profile <name> add dsh-score
 ---
 
 
+> **Brand / scope.** `dsh-score` is the umbrella brand. This repository is the
+> **local, on-demand prior inspector** (five dimensions, no outcome evidence).
+> The public, version-bound evidence layer is **`dsh-score-index`** (currently
+> `dsh-attention-index`): <https://perrylink.github.io/dsh-attention-index/>.
+> The local total and the public prior/measured score are different artifacts.
+
 **📖 इकोसिस्टम नॉलेज बेस** — मापे गए आँकड़े, मार्केटिंग नहीं: [डेवलपमेंट गाइड · चयन डेटा · रखरखाव मानदंड](https://perrylink.github.io/dsh-plugin-guide/)।
 
 <!-- star-cta -->
