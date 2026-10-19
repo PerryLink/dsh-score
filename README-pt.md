@@ -110,7 +110,31 @@ São os pontos de entrada reais; instale e chame um.
 
 #### Exemplo detalhado
 
-- `/score`
+**Comando**
+
+~~~sh
+score({ target: "owner/repo" })
+~~~
+
+**Saída**
+
+~~~text
+# Score sc_65e817eec8cd71ed
+
+- Target: `owner/repo` (repo)
+- Grade: **B** — total 88/100
+- Verdict: healthy (weighted total 88/100)
+
+| Dimension | Status | Score | Weight | Summary |
+|---|---|---|---|---|
+| Install success | ⬜ no-evidence | 0 | 25 | no dsh-test-drive result recorded for this target (install success unmeasured) |
+| Maintenance | ✅ pass | 100 | 20 | active (2026-08-15T00:00:00.000Z; 0 open issues) |
+| Documentation | 🟠 warn | 70 | 20 | 1/4 language READMEs + CHANGELOG + SECURITY |
+| Security | ✅ pass | 100 | 20 | license MIT |
+| Protocol compliance | ✅ pass | 81 | 15 | dsh.bundle.patch declared |
+~~~
+
+*Observado em `README.md:141-149,169-191; tests/tools.spec.ts:64-65; tests/score.spec.ts:50-55; src/report.ts:40-53`*
 
 #### Exemplos breves
 
