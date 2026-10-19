@@ -138,6 +138,22 @@ score({ target: "owner/repo" })
 
 *来源 `README.md:141-149,169-191; tests/tools.spec.ts:64-65; tests/score.spec.ts:50-55; src/report.ts:40-53`*
 
+#### 失败分支
+
+**输入**
+
+~~~text
+{"id":"sc_nope"}
+~~~
+
+**输出**
+
+~~~text
+isError=true; error.message=dsh-score: no score recorded with id sc_nope
+~~~
+
+*来源 `plugins/dsh-score/src/tools.ts:351-354 (throw); plugins/dsh-score/tests/tools.spec.ts:95-99 (unknown id); plugins/dsh-score/README.md:179-181 (score_report); exercised through plugins/dsh-score/tests/harness.ts`*
+
 #### 简短示例
 
 
