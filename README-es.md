@@ -53,9 +53,10 @@ Puntuación de calidad multidimensional para plugins de DeepSeek Harness.
 
 Cinco dimensiones, evidencia real de los CLI `gh`/`npm`, una tarjeta de riesgo ponderada y tabla de clasificación.
 
-![Demostración de terminal de dsh-score: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-hero.png)
+![Diagrama de flujo de dsh-score: pregunta → fuentes selladas → informe.](docs/assets/dsh-score-flow.svg)
 
-![Animated terminal demo of dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.gif)
+*Resumen del flujo: pregunta → fuentes selladas → informe. Los ejemplos siguientes usan la superficie de comandos real.*
+
 
 *La misma ejecución, animada.*
 
@@ -102,6 +103,18 @@ allowBuilds:
 ```sh
 dsh plugin --profile web add dsh-score
 ```
+
+### Ejemplos
+
+Son los puntos de entrada reales; instala y llama a uno.
+
+#### Ejemplo detallado
+
+- `/score`
+
+#### Ejemplos breves
+
+
 
 ## Configuración
 

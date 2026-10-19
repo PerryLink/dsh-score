@@ -54,11 +54,11 @@ Multi-dimensional quality scoring for DeepSeek Harness plugins.
 
 Five dimensions, real `gh`/`npm` evidence, one weighted risk card and leaderboard.
 
-![Terminal demo of dsh-score: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-hero.png)
+![Workflow diagram for dsh-score: question → sealed sources → report.](docs/assets/dsh-score-flow.svg)
 
-![Animated terminal demo of dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.gif)
+*Workflow overview: question → sealed sources → report. The examples below use the real command surface.*
 
-*The same run, animated.*
+
 
 ## Comparison
 
@@ -106,6 +106,18 @@ dsh plugin --profile web add dsh-score
 ```
 
 Prebuilt packages need no build allowance. Restart the profile, then use `score` / `/score` from a session.
+
+### Examples
+
+These are the plugin's real entry points; install once, then call one.
+
+#### Detailed example
+
+- `/score`
+
+#### Brief examples
+
+
 
 ## Configuration
 

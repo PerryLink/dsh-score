@@ -46,9 +46,10 @@ dsh plugin --profile <name> add dsh-score
 
 五个维度、真实 gh/npm 证据，一张加权风险卡与排行榜。
 
-![dsh-score 终端演示：dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-hero.png)
+![dsh-score 工作流图：问题 → 封存来源 → 报告。](docs/assets/dsh-score-flow.svg)
 
-![Animated terminal demo of dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.gif)
+*工作流概览：问题 → 封存来源 → 报告。下面的示例使用实际命令面。*
+
 
 *同一次运行，动图版。*
 
@@ -104,6 +105,18 @@ dsh plugin --profile web add dsh-score
 dsh plugin --profile web add dsh-score     # 安装（npm）——或上面的 git 形式
 dsh plugin --profile web remove dsh-score  # 卸载
 ```
+
+### 示例
+
+以下为插件真实入口；安装后调用一个即可。
+
+#### 详细示例
+
+- `/score`
+
+#### 简短示例
+
+
 
 ## 配置
 

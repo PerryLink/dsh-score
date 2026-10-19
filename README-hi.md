@@ -53,9 +53,10 @@ DeepSeek Harness प्लगइन के लिए बहु-आयामी �
 
 पाँच आयाम, वास्तविक `gh`/`npm` साक्ष्य, एक भारित रिस्क कार्ड और लीडरबोर्ड।
 
-![dsh-score का टर्मिनल डेमो: dsh-score — install, then /score returns a five-dimension risk card](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-hero.png)
+![dsh-score कार्यप्रवाह आरेख: प्रश्न → सीलबंद स्रोत → रिपोर्ट।](docs/assets/dsh-score-flow.svg)
 
-![Animated terminal demo of dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-demo.gif)
+*कार्यप्रवाह: प्रश्न → सीलबंद स्रोत → रिपोर्ट। नीचे के उदाहरण वास्तविक कमांड सतह का उपयोग करते हैं।*
+
 
 *वही रन, एनिमेटेड।*
 
@@ -365,3 +366,16 @@ pnpm run build && pnpm run verify:self-contained && pnpm run verify:artifacts &&
 ## लाइसेंस
 
 [Apache-2.0](LICENSE)
+
+### उदाहरण
+
+ये वास्तविक प्रवेश बिंदु हैं; इंस्टॉल के बाद एक चलाएँ।
+
+#### विस्तृत उदाहरण
+
+- `/score`
+
+#### संक्षिप्त उदाहरण
+
+
+
