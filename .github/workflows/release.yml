@@ -52,6 +52,6 @@ jobs:
           # verbose level, otherwise the step just fails with no reason.
           NPM_CONFIG_LOGLEVEL: verbose
       - name: GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           body_path: release-notes.md
