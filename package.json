@@ -1,7 +1,7 @@
 {
   "name": "dsh-score",
-  "version": "0.2.25",
-  "description": "Multi-dimensional quality scoring for DeepSeek Harness plugins: scores one repo or npm package across install success (consuming dsh-test-drive results), maintenance activity, documentation completeness, security scan, and protocol compliance — every conclusion backed by real CLI evidence with audit timestamps — and produces a JSON/Markdown leaderboard report",
+  "version": "0.2.26",
+  "description": "Multi-dimensional quality scoring for DeepSeek Harness plugins: scores one repo or npm package across install success (consuming dsh-test-drive results), maintenance activity, documentation completeness, security scan, and protocol compliance \u2014 every conclusion backed by real CLI evidence with audit timestamps \u2014 and produces a JSON/Markdown leaderboard report",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PerryLink/dsh-score.git"
@@ -115,7 +115,7 @@
     "@deepseek-ai/schemastery": "^3.18.5-alpha.2"
   },
   "dependencies": {
-    "zod": "^4.4.3"
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "^4.0.5",
