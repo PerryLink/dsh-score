@@ -1,6 +1,6 @@
 {
   "name": "dsh-score",
-  "version": "0.2.26",
+  "version": "0.2.27",
   "description": "Multi-dimensional quality scoring for DeepSeek Harness plugins: scores one repo or npm package across install success (consuming dsh-test-drive results), maintenance activity, documentation completeness, security scan, and protocol compliance \u2014 every conclusion backed by real CLI evidence with audit timestamps \u2014 and produces a JSON/Markdown leaderboard report",
   "repository": {
     "type": "git",

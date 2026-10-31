@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.27] - 2026-10-31
+
+### Changed
+
+- Docs: clarify that this is the local inspector while the public evidence layer is `dsh-attention-index`; no code change.
+
 ## [0.2.26] - 2026-10-24
 
 ### Fixed

@@ -1,6 +1,8 @@
 <div align="center">
 
 # 🏆 dsh-score
+
+> **Status: active.** This is the local, on-demand prior inspector; the public evidence layer is [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index). No FROZEN banner.
 - **1024 store channel**: `npm i -g dsh1024` once, then `dsh1024 plugin --profile web add dsh-score` (counts toward the [deepseek1024.com](https://deepseek1024.com) install ranking).
 [![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-score)
 [![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-score?metric=downloads)](https://dshfind.com/plugins/PerryLink/dsh-score?ref=badge)
