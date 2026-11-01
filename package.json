@@ -1,7 +1,7 @@
 {
   "name": "dsh-score",
   "version": "0.2.27",
-  "description": "Multi-dimensional quality scoring for DeepSeek Harness plugins: scores one repo or npm package across install success (consuming dsh-test-drive results), maintenance activity, documentation completeness, security scan, and protocol compliance \u2014 every conclusion backed by real CLI evidence with audit timestamps \u2014 and produces a JSON/Markdown leaderboard report",
+  "description": "Multi-dimensional quality scoring for DeepSeek Harness plugins: scores one repo or npm package across install success (consuming dsh-test-drive results), maintenance activity, documentation completeness, security scan, and protocol compliance — every conclusion backed by real CLI evidence with audit timestamps — and produces a JSON/Markdown leaderboard report",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PerryLink/dsh-score.git"
@@ -33,7 +33,9 @@
     "README-es.md",
     "README-pt.md",
     "README-hi.md",
-    "LICENSE"
+    "LICENSE",
+    "PRIVACY.md",
+    "icon.svg"
   ],
   "dsh": {
     "manifestVersion": 1,
@@ -162,5 +164,6 @@
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/PerryLink"
-  }
+  },
+  "icon": "icon.svg"
 }
