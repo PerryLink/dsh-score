@@ -68,7 +68,7 @@ Cinco dimensiones, evidencia real de los CLI `gh`/`npm`, una tarjeta de riesgo p
 
 | Componente | Versión |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.1-rc.2`** (GitHub tag). The `engines.dsh` gate is `>=0.2.1-0 <0.3.0`; dev/test pins and the `typecheck:ci` ruler measure `0.2.1-rc.2`. The `ctx.jobs` seam uses the `SessionId` contract. |
+| DeepSeek Harness | **`dsh-v0.2.2-rc.1`** (GitHub tag). The `engines.dsh` gate is `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`; dev/test pins and the `typecheck:ci` ruler measure `0.2.2-rc.1`. The `ctx.jobs` seam uses the `SessionId` contract. |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | Gestor de paquetes | `pnpm@11.7.0` |
 | Plataforma | Windows / macOS / Linux (plugin solo host) |

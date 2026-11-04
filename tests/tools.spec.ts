@@ -12,12 +12,11 @@ import { mountHarness, type Harness, type ScriptedSpawn } from './harness.ts'
 
 /**
  * Brand a synthetic tool-call id without naming the host line's brand: the
- * published `0.1.1-rc.2` line exports `CallId` while host HEAD renamed it to
- * `ToolCallId` — deriving the type from `tools.execute` keeps both typecheck
- * rulers green.
+ * published line exports `ToolCallId` while older releases called it `CallId`
+ * — deriving the type from the batch input keeps both typecheck rulers green.
  */
 type ToolExecInput = Parameters<Harness['ctx']['tools']['execute']>[0]
-const makeCallId = (id: string): ToolExecInput['callId'] => id as ToolExecInput['callId']
+const makeCallId = (id: string): ToolExecInput['calls'][number]['id'] => id as ToolExecInput['calls'][number]['id']
 
 const RECENT = '2026-08-15T00:00:00.000Z'
 
@@ -35,13 +34,12 @@ let callCounter = 0
 
 async function callTool(harness: Harness, name: string, args: unknown): Promise<ToolExecutionResult> {
   callCounter += 1
-  return harness.ctx.tools.execute({
-    callId: makeCallId(`tools-spec-${callCounter}`),
-    name,
-    arguments: args,
+  const batch = await harness.ctx.tools.execute({
+    calls: [{ type: 'tool-call', id: makeCallId(`tools-spec-${callCounter}`), name, arguments: JSON.stringify(args) }],
     agent: harness.agent,
     signal: new AbortController().signal,
   })
+  return batch.results[0]!.result
 }
 
 describe('registration', () => {

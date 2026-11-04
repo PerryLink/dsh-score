@@ -1,7 +1,7 @@
 /**
  * Shared test harness: REAL Cordis `Context`, REAL `SessionStore`/`Session`,
  * REAL `ToolRuntime`, REAL `LocalJobRegistry`, REAL `Storage` hub + `DomainFacility`
- * from the `0.1.5-alpha.1` peers — plus a scriptable subprocess provider (a subclass
+ * from the `0.2.2-rc.1` devDeps — plus a scriptable subprocess provider (a subclass
  * of the REAL `SubprocessRuntime`), a memory storage backend, a structural
  * commands registry, and a structurally complete fake agent. The `gh`/`npm`
  * process work is scripted data; the plugin contract, tool pipeline, job
@@ -15,6 +15,7 @@ import type { Agent } from '@deepseek-ai/dsh-agent'
 import AgentRegistry from '@deepseek-ai/dsh-agent'
 import LocalJobRegistry from '@deepseek-ai/dsh-jobs-local'
 import SessionStore, { SessionId, type Session } from '@deepseek-ai/dsh-session'
+import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
 import Storage from '@deepseek-ai/dsh-storage'
 import { DomainFacility } from '@deepseek-ai/dsh-storage-domain'
 import {
@@ -27,6 +28,7 @@ import {
 } from '@deepseek-ai/dsh-subprocess'
 import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
 import ToolRuntime from '@deepseek-ai/dsh-tools'
+import * as NativeToolExecutor from '@deepseek-ai/dsh-tool-executor-native'
 import type { CommandDefinition, CommandDescriptor } from '@deepseek-ai/dsh-commands'
 import { MemoryStorageBackend } from './helpers/memory-backend.ts'
 
@@ -197,8 +199,14 @@ export async function mountHarness(options: HarnessOptions = {}): Promise<Harnes
   session.append('turn/start', { turn: 1 })
   ctx.provide('systemPrompt', { tools: () => () => undefined, section: () => () => undefined } as never)
   await ctx.plugin(ToolRuntime)
+  // 0.2.2 delegates `tools.execute` to an injected executor; the native one is
+  // the deployment default the host ships.
+  await ctx.plugin(NativeToolExecutor)
 
   if (options.jobs !== false) {
+    // 0.2.2's AgentRegistry statically injects `sessionProjections` (its
+    // `register()` is awaited at apply time), so the registry must precede it.
+    await ctx.plugin(SessionProjectionRegistry)
     await ctx.plugin(AgentRegistry)
     await ctx.plugin(LocalJobRegistry)
     ctx.jobs.attachController('test-harness')

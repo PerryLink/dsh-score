@@ -1,10 +1,18 @@
 # Changelog
 
-## [0.2.27] - 2026-10-31
+## [Unreleased]
 
 ### Changed
 
-- Docs: clarify that this is the local inspector while the public evidence layer is `dsh-attention-index`; no code change.
+- **Align the dev/test line with the harness `0.2.2-rc.1` release.** Every `@deepseek-ai/dsh-*` devDependency moves from `0.2.1-rc.2` to `0.2.2-rc.1`; the vendor family follows the host's pins (`@deepseek-ai/cordis` `^4.1.0`, `cordis-plugin-include` / `cordis-plugin-loader` `^1.1.0`, `@deepseek-ai/schemastery` `~3.19.0`), and the peer `engines.dsh` timeline gains `>=0.2.2-0 <0.3.0`. `engines.node` becomes `^22.19.0 || >=24.9.0`.
+- **Add two devDependencies the `0.2.2` runtime contracts now require:** `@deepseek-ai/dsh-session-projection` (the `AgentRegistry` statically injects `sessionProjections` and awaits its `register()`) and `@deepseek-ai/dsh-tool-executor-native` (`tools.execute` delegates to an injected executor).
+
+### Fixed
+
+- **Mount the projection registry and the native tool executor in the test harness.** `SessionProjectionRegistry` now comes before `AgentRegistry`, and `NativeToolExecutor` after `ToolRuntime`, matching the host's own composition order.
+- **Drive tools through the `0.2.2` batch contract.** Test call sites now call `ctx.tools.execute({ calls: [{ type: 'tool-call', id, name, arguments }], signal, agent })` and read `batch.results[0]?.result`, replacing the removed single-call `{ callId, name, arguments }` shape.
+- **Implement `KvUnit.deleteRecords(table, keys)` in the memory test backend.** `0.2.2` widened `KvUnit` with the batched delete; the double had only `deleteRecord`.
+- **Keep the five READMEs on the new `engines.dsh` range** so `check:readmes` stays green.
 
 ## [0.2.26] - 2026-10-24
 
