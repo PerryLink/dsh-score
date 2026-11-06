@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-dark.svg">
-  <img src="docs/assets/dsh-score-flow-light.svg" width="100%" alt="dsh-score 评分流水线：target → gh api / npm view 采证 → 五维评估（install/maintenance/documentation/security/compliance）→ 证据纪律 → dsh-score/v1 评分卡 → lb_... 排行榜；/score 经 ctx.jobs 跑 score-batch">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-score-hero-zh-light.webp" width="100%" alt="dsh-score 配图：左侧是插件名与价值句；右侧是一张真实评分卡——install 行标为 no-evidence 并从分母中剔除，maintenance、documentation、security、compliance 四行各带分数与权重，加权后总分 88/100、等第 B；底部标注本地按需、只读采证">
 </picture>
 
 # dsh-score
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-score
 ## 它是什么
 
 `dsh-score` 是 DeepSeek Harness 的本地质量评分器：给它一个 GitHub 仓库或 npm 包，它跑完安装成功率、维护、文档、安全、合规五个维度，输出一张结构化评分卡（`schema: "dsh-score/v1"`）或一份 JSON + Markdown 排行榜。所有结论都来自真实的 `gh`/`npm` 输出，每条证据都带 `source`、脱敏后的 `detail` 与 `observedAt`；某个维度采不到证据就如实记 `no-evidence`（0 分、不参与加权），绝不用估算数字填空。评分完全按需，不安装、不构建、不运行被评对象。本插件是本地按需评分器；公开证据层在 [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index)。
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-score-flow-v5-light.svg" width="100%" alt="dsh-score 结构图：上方 target 分类后进入三条采证入口（gh api 的七次只读调用、npm view --json、预留的 test_drive 域），汇入 evidence[]；中间是列宽即权重的五维记分台（install 25 / maintenance 20 / documentation 20 / security 20 / compliance 15），install 因无证据记 0 分并剔出分母；底部权重轨显示满 100、有效 75，右侧给出 total = 6615 ÷ 75 = 88、等第 B；最下三个出口是 sc_ 评分卡、lb_ 排行榜与 score_badge">
+</picture>
 
 ## 三步上手
 
@@ -396,7 +401,7 @@ pnpm run check:readmes                             # 五语 README 一致性
 - 测试使用真实 `Context`/`Session`/`ToolRuntime`/`LocalJobRegistry`/存储栈，子进程 provider 为脚本化实现。
 - 真实 CLI 评分（需 PATH 有 `gh`/`npm`，`gh` 已认证）：在已挂载 profile 中调用 `score`。
 - 发布：`node scripts/release.mjs <x.y.z>`（升版本、盖 CHANGELOG、重跑门禁、提交 + tag；绝不 push）。
-- README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python + Pillow），可重复执行，输出 `docs/assets/dsh-score-flow-{light,dark}.svg`。
+- README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow 画 hero 横幅、手写 SVG 画结构图），可重复执行；旧的单版流程图与演示图保留在 `docs/assets/` 供外链使用，README 只引用新的 hero 与 flow-v5 结构图（各含深浅双版）。
 
 Topics：`dsh`、`dsh-plugin`、`deepseek-harness`、`deepseek`、`cordis`、`plugin-scoring`、`quality-score`、`leaderboard`、`supply-chain`
 

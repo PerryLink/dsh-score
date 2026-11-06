@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-dark.svg">
-  <img src="docs/assets/dsh-score-flow-light.svg" width="100%" alt="Fluxo de pontuação do dsh-score: alvo → evidência com gh api / npm view → cinco dimensões (install/maintenance/documentation/security/compliance) → disciplina de evidência → cartão dsh-score/v1 → ranking lb_...; /score executa um trabalho score-batch em ctx.jobs">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-hero-en-dark.webp">
+  <img src="docs/assets/dsh-score-hero-en-light.webp" width="100%" alt="dsh-score: à esquerda o nome do plugin e as frases de valor; à direita, um cartão de pontuação real: a linha install fica em no-evidence e sai do divisor, as outras quatro dimensões trazem a pontuação e o peso, o total ponderado é 88/100 com nota B, e o rodapé indica execução local e sondagem somente leitura">
 </picture>
 
 # dsh-score
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-score
 ## O que é
 
 `dsh-score` é um pontuador de qualidade local para DeepSeek Harness: dê a ele um repositório do GitHub ou um pacote npm e ele roda as cinco dimensões — sucesso de instalação, manutenção, documentação, segurança e conformidade — devolvendo um cartão estruturado (`schema: "dsh-score/v1"`) ou um ranking JSON + Markdown. Toda conclusão vem de saída real de `gh`/`npm` e cada evidência carrega `source`, `detail` sanitizado e `observedAt`; uma dimensão sem evidência reporta `no-evidence` (pontuação 0, excluída do total ponderado) em vez de um número inventado. A pontuação é somente sob demanda: nada é instalado, compilado ou executado. Este plugin é o pontuador local sob demanda; a camada de evidência pública fica em [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-score-flow-v5-light.svg" width="100%" alt="Estrutura do dsh-score: no topo, três entradas de evidência (sete chamadas gh api somente leitura, npm view --json e o domínio reservado test_drive) alimentam evidence[]; abaixo, a bancada de cinco dimensões cuja largura de coluna é o peso (install 25 / maintenance 20 / documentation 20 / security 20 / compliance 15), com install vazio em 0 e fora do divisor; a barra de pesos mostra 100 a 75, a placa total calcula 6615 / 75 = 88 com nota B, e três saídas fecham a figura: o cartão sc_, o ranking lb_ e score_badge">
+</picture>
 
 ## Instalação em três passos
 
@@ -396,7 +401,7 @@ pnpm run check:readmes                             # consistência dos README em
 - Os testes usam o `Context`/`Session`/`ToolRuntime`/`LocalJobRegistry`/stack de storage reais com um provedor de subprocesso roteirizado.
 - Pontuação com CLI real (exige `gh`/`npm` no PATH e `gh` autenticado): invoque `score` de um perfil montado.
 - Release: `node scripts/release.mjs <x.y.z>` (sobe versão, sela o CHANGELOG, roda o gate de novo, commit + tag; nunca push).
-- As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow), seguras de reexecutar; ele grava `docs/assets/dsh-score-flow-{light,dark}.svg`.
+- As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow para o banner hero, SVG escrito à mão para o diagrama de estrutura) e podem ser reexecutadas; o diagrama de fluxo antigo de uma única pele e as imagens de demonstração ficam em `docs/assets/` para links externos, enquanto os READMEs referenciam apenas o novo hero e o diagrama de estrutura flow-v5, cada um em claro e escuro.
 
 Tópicos: `dsh`, `dsh-plugin`, `deepseek-harness`, `deepseek`, `cordis`, `plugin-scoring`, `quality-score`, `leaderboard`, `supply-chain`
 

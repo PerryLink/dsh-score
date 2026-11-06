@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-dark.svg">
-  <img src="docs/assets/dsh-score-flow-light.svg" width="100%" alt="dsh-score स्कोरिंग पाइपलाइन: लक्ष्य → gh api / npm view साक्ष्य → पाँच आयाम (install/maintenance/documentation/security/compliance) → साक्ष्य अनुशासन → dsh-score/v1 स्कोर कार्ड → lb_... लीडरबोर्ड; /score ctx.jobs पर score-batch कार्य चलाता है">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-hero-en-dark.webp">
+  <img src="docs/assets/dsh-score-hero-en-light.webp" width="100%" alt="dsh-score: बाईं ओर प्लगइन का नाम और मूल्य-पंक्तियाँ; दाईं ओर एक वास्तविक स्कोर कार्ड — install पंक्ति no-evidence है और भाजक से बाहर रहती है, शेष चार आयाम अपना स्कोर और भार लेकर आते हैं, भारित कुल 88/100 तथा ग्रेड B है; पाद में स्थानीय, मांग-आधारित, केवल-पढ़ने वाली जाँच लिखी है">
 </picture>
 
 # dsh-score
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-score
 ## यह क्या है
 
 `dsh-score` DeepSeek Harness के लिए एक स्थानीय गुणवत्ता स्कोरर है: इसे कोई GitHub रिपॉज़िटरी या npm पैकेज दें, और यह इंस्टॉल सफलता, रखरखाव, दस्तावेज़ीकरण, सुरक्षा और अनुपालन — पाँचों आयाम चलाकर एक संरचित स्कोर कार्ड (`schema: "dsh-score/v1"`) या JSON + Markdown लीडरबोर्ड लौटाता है। हर निष्कर्ष वास्तविक `gh`/`npm` आउटपुट से आता है और हर साक्ष्य के साथ `source`, सैनिटाइज़ किया `detail` और `observedAt` होता है; जिस आयाम को साक्ष्य नहीं मिलता वह अनुमानित संख्या के बजाय ईमानदारी से `no-evidence` (स्कोर 0, भारित कुल से बाहर) दर्ज करता है। स्कोरिंग पूरी तरह माँग पर है — कुछ भी इंस्टॉल, बिल्ड या चलाया नहीं जाता। यह प्लगइन स्थानीय ऑन-डिमांड स्कोरर है; सार्वजनिक साक्ष्य परत [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index) में है।
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-score-flow-v5-light.svg" width="100%" alt="dsh-score की संरचना: ऊपर तीन साक्ष्य-प्रवेश (सात केवल-पढ़ने वाली gh api कॉल, npm view --json, और आरक्षित test_drive डोमेन) evidence[] में जाते हैं; नीचे पाँच आयामों की बेंच है जिसकी स्तंभ-चौड़ाई ही भार है (install 25 / maintenance 20 / documentation 20 / security 20 / compliance 15), install बिना साक्ष्य 0 पर खोखला है और भाजक से हटा है; भार-पट्टी 100 से 75 दिखाती है, कुल पट्टिका 6615 / 75 = 88 और ग्रेड B निकालती है, और नीचे तीन निर्गम हैं: sc_ स्कोर कार्ड, lb_ लीडरबोर्ड और score_badge">
+</picture>
 
 ## तीन चरणों में शुरुआत
 
@@ -396,7 +401,7 @@ pnpm run check:readmes                             # पाँच-भाषा R
 - टेस्ट असली `Context`/`Session`/`ToolRuntime`/`LocalJobRegistry`/storage स्टैक और स्क्रिप्टेड subprocess provider का उपयोग करते हैं।
 - असली CLI स्कोरिंग (`gh`/`npm` PATH पर और `gh` प्रमाणित होना चाहिए): माउंटेड profile से `score` चलाएँ।
 - रिलीज़: `node scripts/release.mjs <x.y.z>` (संस्करण बढ़ाता, CHANGELOG सील करता, गेट फिर चलाता, commit + tag; कभी push नहीं)।
-- README चित्र [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) से क्रमादेशित रूप से बनते हैं, दोबारा चलाना सुरक्षित; यह `docs/assets/dsh-score-flow-{light,dark}.svg` लिखता है।
+- README चित्र [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) से क्रमादेशित रूप से बनते हैं (hero बैनर Pillow से, संरचना आरेख हाथ से लिखे SVG से) और दोबारा चलाना सुरक्षित है; पुराना एक-रूप फ़्लो आरेख और डेमो चित्र बाहरी लिंक के लिए `docs/assets/` में रहते हैं, जबकि README केवल नए hero और flow-v5 संरचना आरेख का संदर्भ देते हैं, दोनों के हल्के और गहरे संस्करण।
 
 विषय: `dsh`, `dsh-plugin`, `deepseek-harness`, `deepseek`, `cordis`, `plugin-scoring`, `quality-score`, `leaderboard`, `supply-chain`
 

@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-dark.svg">
-  <img src="docs/assets/dsh-score-flow-light.svg" width="100%" alt="dsh-score scoring pipeline: target → gh api / npm view evidence → five dimensions (install/maintenance/documentation/security/compliance) → evidence discipline → dsh-score/v1 score card → lb_... leaderboard; /score runs a score-batch job on ctx.jobs">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-hero-en-dark.webp">
+  <img src="docs/assets/dsh-score-hero-en-light.webp" width="100%" alt="dsh-score hero: the plugin name and value lines on the left; on the right, a real score card - the install row is no-evidence and drops out of the divisor, the other four dimensions carry their score and weight, the weighted total is 88/100 at grade B, and the footer marks local, on-demand, read-only probes">
 </picture>
 
 # dsh-score
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-score
 ## What it is
 
 `dsh-score` is a local quality scorer for DeepSeek Harness: give it a GitHub repository or an npm package and it runs the five dimensions — install success, maintenance, documentation, security, and compliance — then returns a structured score card (`schema: "dsh-score/v1"`) or a JSON + Markdown leaderboard. Every conclusion comes from real `gh`/`npm` output and every piece of evidence carries `source`, sanitized `detail`, and `observedAt`; a dimension that gathers no evidence reports `no-evidence` (score 0, excluded from the weighted total) instead of a guessed number. Scoring is on demand only — nothing is installed, built, or executed. This plugin is the local on-demand scorer; the public evidence layer lives in [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-score-flow-v5-light.svg" width="100%" alt="dsh-score structure: three intake channels on top (seven read-only gh api calls, npm view --json, and the reserved test_drive domain) feed evidence[]; below them the five-dimension bench whose column width is the weight (install 25 / maintenance 20 / documentation 20 / security 20 / compliance 15), with install hollow at 0 and removed from the divisor; the weight rail shows 100 to 75, the total plate computes 6615 / 75 = 88 at grade B, and three outputs close the figure: the sc_ score card, the lb_ leaderboard, and score_badge">
+</picture>
 
 ## Three-step setup
 
@@ -396,7 +401,7 @@ pnpm run check:readmes                             # five-language README consis
 - Tests use the real `Context`/`Session`/`ToolRuntime`/`LocalJobRegistry`/storage stack with a scripted subprocess provider.
 - Real-CLI scoring (requires `gh`/`npm` on PATH and `gh` authenticated): invoke `score` from a mounted profile.
 - Release: `node scripts/release.mjs <x.y.z>` (bumps, stamps CHANGELOG, re-runs the gate, commits + tags; never pushes).
-- The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow), safe to re-run; it writes `docs/assets/dsh-score-flow-{light,dark}.svg`.
+- The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow for the hero banner, hand-written SVG for the structure diagram) and are safe to re-run; the older single-skin flow diagram and demo images stay in `docs/assets/` for external deep links, while the READMEs reference only the new hero and flow-v5 structure diagram, each in light and dark.
 
 Topics: `dsh`, `dsh-plugin`, `deepseek-harness`, `deepseek`, `cordis`, `plugin-scoring`, `quality-score`, `leaderboard`, `supply-chain`
 
