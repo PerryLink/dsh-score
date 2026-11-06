@@ -1,127 +1,153 @@
 <div align="center">
 
-# 🏆 dsh-score
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-dark.svg">
+  <img src="docs/assets/dsh-score-flow-light.svg" width="100%" alt="dsh-score 评分流水线：target → gh api / npm view 采证 → 五维评估（install/maintenance/documentation/security/compliance）→ 证据纪律 → dsh-score/v1 评分卡 → lb_... 排行榜；/score 经 ctx.jobs 跑 score-batch">
+</picture>
 
-> **Status: active.** This is the local, on-demand prior inspector; the public evidence layer is [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index). No FROZEN banner.
-- **1024 store channel**: `npm i -g dsh1024` once, then `dsh1024 plugin --profile web add dsh-score` (counts toward the [deepseek1024.com](https://deepseek1024.com) install ranking).
-[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-score)
+# dsh-score
+
+**给任意仓库或 npm 包打一张带证据链接的五维质量评分卡——安装、维护、文档、安全、合规，每一分都能追溯。**
+
+面向 DeepSeek Harness 的本地评分器：只调 `gh api` 与 `npm view` 采证，不安装、不构建、不执行被评对象；证据缺失时如实记 `no-evidence`，绝不编数字。
+
+[安装](#三步上手) · [配置](#配置) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
+
+[![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
+[![DSH](https://img.shields.io/badge/DSH-%E2%89%A50.2.1%20%3C0.3.0-4B67B4?style=flat-square&labelColor=2B3245)](#兼容性)
+[![npm](https://img.shields.io/npm/v/dsh-score?style=flat-square&labelColor=2B3245&color=CB3837)](https://www.npmjs.com/package/dsh-score)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-score/ci.yml?branch=main&label=CI&style=flat-square&labelColor=2B3245)](https://github.com/PerryLink/dsh-score/actions/workflows/ci.yml)
+[![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24.9-339933?style=flat-square&labelColor=2B3245)](#兼容性)
+
+[![Stars](https://img.shields.io/github/stars/PerryLink/dsh-score?style=flat-square&labelColor=2B3245)](https://github.com/PerryLink/dsh-score/stargazers)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-score?style=flat-square&labelColor=2B3245&color=CB3837)](https://www.npmjs.com/package/dsh-score)
 [![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-score?metric=downloads)](https://dshfind.com/plugins/PerryLink/dsh-score?ref=badge)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/PerryLink/dsh-score/badge)](https://api.securityscorecards.dev/projects/github.com/PerryLink/dsh-score)
-
-**Multi-dimensional quality scoring for DeepSeek Harness plugins.**
-
-*Five dimensions, real `gh`/`npm` evidence, one weighted risk card and leaderboard.*
-
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
-[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-score.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
-[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
-[![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
-[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-score/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-score/actions)
-[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-score?label=version)](https://github.com/PerryLink/dsh-score/releases)
-[![npm version](https://img.shields.io/npm/v/dsh-score)](https://www.npmjs.com/package/dsh-score)
-[![npm downloads](https://img.shields.io/npm/dm/dsh-score)](https://www.npmjs.com/package/dsh-score)
-
-[English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/PerryLink/dsh-score/badge)](https://securityscorecards.dev/viewer/?uri=github.com/PerryLink/dsh-score)
+[![DSH Market](https://img.shields.io/badge/DSH_Market-listed-4B67B4?style=flat-square&labelColor=2B3245)](https://dsh.market/)
+[![Gitee](https://img.shields.io/badge/Gitee-mirror-C71D23?style=flat-square&labelColor=2B3245&logo=gitee)](https://gitee.com/perrylink/dsh-score)
 
 ```sh
 dsh plugin --profile <name> add dsh-score
 ```
 
-
 </div>
 
----
+<sub>社区插件，与 DeepSeek 官方无关。唯一仓库：<https://github.com/PerryLink/dsh-score>（Gitee 为镜像）。</sub>
 
-**📖 Ecosystem knowledge base** — measured data, not marketing: [plugin development guide · plugin-selection data · maintenance criteria](https://perrylink.github.io/dsh-plugin-guide/).
+## 它是什么
 
-<!-- star-cta -->
-## Install & uninstall
+`dsh-score` 是 DeepSeek Harness 的本地质量评分器：给它一个 GitHub 仓库或 npm 包，它跑完安装成功率、维护、文档、安全、合规五个维度，输出一张结构化评分卡（`schema: "dsh-score/v1"`）或一份 JSON + Markdown 排行榜。所有结论都来自真实的 `gh`/`npm` 输出，每条证据都带 `source`、脱敏后的 `detail` 与 `observedAt`；某个维度采不到证据就如实记 `no-evidence`（0 分、不参与加权），绝不用估算数字填空。评分完全按需，不安装、不构建、不运行被评对象。本插件是本地按需评分器；公开证据层在 [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index)。
 
-```sh
-dsh plugin --profile web add dsh-score     # install (npm) — or the git form above
-dsh plugin --profile web remove dsh-score  # uninstall
+## 三步上手
+
+1. **安装**（二选一）：
+
+   ```sh
+   # git 通道（最新 main；等价于 git+https://github.com/PerryLink/dsh-score.git）
+   dsh plugin --profile web add github:PerryLink/dsh-score#<commit-sha>
+   # npm 通道（已发布版本）
+   dsh plugin --profile web add dsh-score
+   ```
+
+   首次走 git 通道会因 pnpm 拦截该包的 `prepare` 构建而失败；把 pnpm 打印的精确键写进 profile 的 `pnpm-workspace.yaml` 后重试：
+
+   ```yaml
+   allowBuilds:
+     'dsh-score': true
+   ```
+
+   npm 通道的预构建包无需构建许可。
+
+2. **最小配置**（默认即可用；要改阈值或权重再加）：
+
+   ```yaml
+   - insert:
+       - id: score
+         name: dsh-score
+         config:
+           weights:
+             install: 25
+             maintenance: 20
+             documentation: 20
+             security: 20
+             compliance: 15
+   ```
+
+3. **验证已生效**：
+
+   ```sh
+   dsh --profile web --dump-config | grep -A2 'id: score'
+   ```
+
+   ```
+   > /score owner/repo
+   [1/1] owner/repo → B (88/100, healthy (weighted total 88/100))
+   ```
+
+   *Observed from `src/batch.ts:70`*
+
+**卸载**：`dsh plugin --profile web remove dsh-score`（或从 profile patch 删掉该行）。
+
+> `dsh-score` 不自带 storage 栈。组合里没有 `storageDomain` 时工具照常可用，评分持久化被禁用并记录原因；已发布的 `dsh-base` bundle 自 `0.1.2-rc.1` 起挂载 storage-domain（已对 `0.1.2-rc.1` 与 `0.1.5-alpha.1` 的 tarball 核验），所以发布线上的持久化默认开启。
+
+## 核心能力
+
+`dsh-score` 把「这个插件能不能装、还在不在维护、文档全不全、安不安全、合不合规」压成一张可复核的分数卡：
+
+- **五维评分** —— 安装成功率 `25`、维护 `20`、文档 `20`、安全 `20`、合规 `15`（权重可配置，默认合计 100）。
+- **证据纪律** —— 每个维度记录其审计链接（`source`、脱敏后的 `detail`、`observedAt`）；无证据的维度报 `no-evidence`（得分 0，从加权总分中剔除），绝不编造数字。
+- **结构化结果** —— 每条记录带 `schema: "dsh-score/v1"` 判别符，字段一等公民化，是下游工具消费的机器可读契约。
+- **批量排行榜** —— `/score` 把目标列表交给 `ctx.jobs` 上的 `score-batch` 任务，产出 JSON + Markdown 排行榜快照。
+- **缓存与刷新** —— 评分卡按目标缓存（默认 24 小时），`refresh: true` 绕过缓存重新采证。
+- **可嵌入徽章** —— `score_badge` 输出 shields.io 徽章（endpoint / SVG / Markdown）与五维 JSON，总徽章可直接贴进任何 README。
+
+```text
+target ──gh api / npm view──▶ 五维证据 ──weighted──▶ 评分卡 dsh-score/v1 ──▶ 排行榜 lb_...
+                                    │
+                                    └─ 无证据 → no-evidence（0 分，剔除）
 ```
 
-## ⭐ 如果它帮到了你
+## 工具与结果
 
-这个插件是 [DSH 插件家族](https://github.com/PerryLink)的一员（95 个，全部 Apache-2.0）。如果你在用，**给个 star** —— 它不会解锁任何功能，但会让下一个人在搜索里更容易找到它。
+### 工具面
 
-*English:* part of a 95 plugin family for DeepSeek Harness. If it is useful, **a star helps the next person find it** — nothing is gated behind it.
+| 入口 | 类型 | 说明 |
+|---|---|---|
+| `score` | 工具 | 单目标五维评分；`refresh: true` 绕过缓存，`background: true` 启动 `score-batch` 后台任务 |
+| `/score <targets...>` | 命令 | 空白/逗号分隔的目标列表批量评分；进度走任务输出，末行给出供 `score_report` 使用的 `lb_...` |
+| `score_report` | 工具 | 取回评分卡（`sc_...`）、排行榜（`lb_...`），不传 id 时返回最新排行榜 |
+| `score_badge` | 工具 | 为一个目标或已存评分卡生成 shields.io 徽章与五维 JSON |
+| `score-batch` | 后台任务 | `ctx.jobs` 上的批量作业；串行评分并写排行榜快照 |
 
+### 工具参数
 
-## What is dsh-score?
-
-Multi-dimensional quality scoring for DeepSeek Harness plugins.
-
-Five dimensions, real `gh`/`npm` evidence, one weighted risk card and leaderboard.
-
-![Workflow diagram for dsh-score: question → sealed sources → report.](docs/assets/dsh-score-flow.svg)
-
-*Workflow overview: question → sealed sources → report. The examples below use the real command surface.*
-
-
-
-## Comparison
-
-![Measured comparison chart for dsh-score](https://raw.githubusercontent.com/PerryLink/dsh-score/main/docs/assets/dsh-score-evidence.png)
-
-## Compatibility
-
-| Component | Version |
-|---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.1`** (GitHub tag). The `engines.dsh` gate is `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`; dev/test pins and the `typecheck:ci` ruler measure `0.2.2-rc.1`. The `ctx.jobs` seam uses the `SessionId` contract. |
-| Node.js | `^22.19.0 \|\| >=24.0.0` |
-| Package manager | `pnpm@11.7.0` |
-| Platform | Windows / macOS / Linux (host-only plugin) |
-| External tools | `gh` CLI on PATH (authenticated for API reads), `npm` CLI on PATH |
-
-## What you get
-
-- `score` tool — one target through the five-dimension pipeline; returns the structured risk card, or `{ kind: 'background', jobId }` with `background: true`.
-- `/score` command — batch scoring of a whitespace/comma-separated target list as a `score-batch` background job over `ctx.jobs`, producing a leaderboard snapshot (JSON + Markdown).
-- `score_report` tool — fetch any stored score card (`sc_...`), leaderboard (`lb_...`), or the latest leaderboard.
-- `score_badge` tool — an embeddable README badge (shields.io flat SVG + endpoint URL) and the five-dimension JSON for one scored target.
-- **Five dimensions** (weights configurable, defaults sum to 100): install success `25`, maintenance `20`, documentation `20`, security `20`, compliance `15`.
-- **Evidence discipline** — every dimension records its audit links (`source`, sanitized `detail`, `observedAt`); a dimension without evidence reports `no-evidence` (score 0, excluded from the weighted total), never a fabricated number.
-- Structured results — every record carries `schema: "dsh-score/v1"` with first-class fields; this is the machine-readable contract downstream tooling consumes.
-
-## Quick start
-
-### Git channel
-
-```sh
-dsh plugin --profile web add github:PerryLink/dsh-score#<commit-sha>
+```
+score(target: string, refresh?: boolean, background?: boolean)
 ```
 
-The first `add` fails because pnpm blocks the package's `prepare` build; copy the exact key pnpm printed into the profile's `pnpm-workspace.yaml` and re-run:
+- `target` —— GitHub 仓库（`github:owner/repo`、`owner/repo`、git/https URL）或 npm 包名。
+- `refresh: true` —— 绕过评分缓存，重新采集证据。
+- `background: true` —— 启动 `score-batch` 任务并返回其 id。
 
-```yaml
-allowBuilds:
-  'dsh-score': true
-```
+`score_report(id?)` 返回评分卡（`sc_...`）、排行榜（`lb_...`），或不传 id 时返回最新排行榜。
 
-### npm channel
+`score_badge(target? | id?, refresh?)`：
 
-```sh
-dsh plugin --profile web add dsh-score
-```
+- `target` —— 经缓存对 GitHub 仓库或 npm 包评分并生成徽章；与 `id` 互斥。
+- `id` —— 对已存评分卡（`sc_...`）生成徽章，不重新评分。
+- `refresh: true` —— 绕过评分缓存（仅对 `target` 生效）。
 
-Prebuilt packages need no build allowance. Restart the profile, then use `score` / `/score` from a session.
+### 评分卡样例
 
-### Examples
+以下为插件真实入口；安装后调用一个即可。
 
-These are the plugin's real entry points; install once, then call one.
-
-#### Detailed example
-
-**Command**
+**命令**：
 
 ~~~sh
 score({ target: "owner/repo" })
 ~~~
 
-**Output**
+**输出**：
 
 ~~~text
 # Score sc_65e817eec8cd71ed
@@ -141,15 +167,13 @@ score({ target: "owner/repo" })
 
 *Observed from `README.md:141-149,169-191; tests/tools.spec.ts:64-65; tests/score.spec.ts:50-55; src/report.ts:40-53`*
 
-#### Failure branch
-
-**Input**
+**失败分支** —— 输入：
 
 ~~~text
 {"id":"sc_nope"}
 ~~~
 
-**Output**
+输出：
 
 ~~~text
 isError=true; error.message=dsh-score: no score recorded with id sc_nope
@@ -157,58 +181,9 @@ isError=true; error.message=dsh-score: no score recorded with id sc_nope
 
 *Observed from `plugins/dsh-score/src/tools.ts:351-354 (throw); plugins/dsh-score/tests/tools.spec.ts:95-99 (unknown id); plugins/dsh-score/README.md:179-181 (score_report); exercised through plugins/dsh-score/tests/harness.ts`*
 
-#### Brief examples
+**简短示例**：`score({ target: "owner/dsh-click" })` · `score_report("sc_65e817eec8cd71ed")` · `score_badge("owner/dsh-click")`
 
-
-
-## Configuration
-
-All keys are optional (defaults shown); invalid values fail loudly at load.
-
-| Key | Default | Description |
-|---|---|---|
-| `probeTimeoutMs` | `60000` | Deadline for one `gh`/`npm` probe command. |
-| `outputTailBytes` | `8000` | Cap on the sanitized output tail recorded per probe. |
-| `cacheMaxAgeMs` | `86400000` | How long a cached score card is reused before re-scoring (0 disables the cache). |
-| `staleCommitWarnDays` | `90` | Commit/publish age at which maintenance drops to `warn`. |
-| `staleCommitFailDays` | `365` | Commit/publish age at which maintenance drops to `fail`. |
-| `staleIssueWarnDays` | `30` | Oldest-open-issue age (response proxy) at which maintenance drops to `warn`. |
-| `staleIssueFailDays` | `180` | Oldest-open-issue age at which maintenance drops to `fail`. |
-| `maxBatchTargets` | `20` | `/score` batch cap. |
-| `batchConcurrency` | `1` | Batch concurrency (serial avoids API-rate contention). |
-| `weights` | `{install:25, maintenance:20, documentation:20, security:20, compliance:15}` | Per-dimension weights (each 0–100; at least one must be > 0). |
-
-## Tools & surfaces
-
-### `score`
-
-```
-score(target: string, refresh?: boolean, background?: boolean)
-```
-
-- `target` — a GitHub repo (`github:owner/repo`, `owner/repo`, a git/https URL) or an npm package name.
-- `refresh: true` bypasses the score cache and re-gathers evidence.
-- `background: true` starts a `score-batch` job and returns its id.
-
-### `/score <targets...>`
-
-Starts one background batch job; progress streams through the job output, and the final line names the leaderboard id for `score_report`.
-
-### `score_report(id?)`
-
-Returns a score card (`sc_...`), a leaderboard (`lb_...`), or — with no id — the latest leaderboard.
-
-### `score_badge(target? | id?, refresh?)`
-
-Generates an embeddable README badge and the five-dimension JSON for one target:
-
-- `target` — score a GitHub repo or npm package (through the cache) and badge it; mutually exclusive with `id`.
-- `id` — badge a stored score card (`sc_...`) without re-scoring.
-- `refresh: true` — bypass the score cache (only applies to `target`).
-
-Returns the badge (SVG + endpoint + Markdown embed) and the compact five-dimension JSON — see [Badge & JSON API](#badge--json-api).
-
-### Structured result sample
+### 结构化结果
 
 ```json
 {
@@ -232,29 +207,19 @@ Returns the badge (SVG + endpoint + Markdown embed) and the compact five-dimensi
 }
 ```
 
-Scoring: the total is a weighted average over dimensions that gathered evidence (no-evidence dimensions are excluded and renormalized); `A` ≥ 90, `B` ≥ 75, `C` ≥ 60, `D` ≥ 40, else `F`, and `N/A` when nothing had evidence.
+计分：总分为收集到证据维度的加权平均（no-evidence 维度被剔除并重新归一）；`A` ≥ 90，`B` ≥ 75，`C` ≥ 60，`D` ≥ 40，否则 `F`，全无证据时为 `N/A`。
 
-## Badge & JSON API
+### 徽章与五维 JSON
 
-`score_badge` generates an embeddable README badge and the five-dimension JSON for one scored target.
+`score_badge` 为某个已评分目标生成可嵌入 README 的徽章与五维 JSON。徽章有三种同源形态：**endpoint**（文档化的 shields.io 静态 URL，零自托管）、**SVG**（自包含的 shields.io flat 风格 SVG，`badge.svg` 字段 / `renderScoreBadge`，供离线或自托管 README）、**Markdown**（两者组合的嵌入片段）。
 
-### Badge
-
-Three forms, all derived from the same settled score card:
-
-- **Endpoint** — a documented [shields.io](https://shields.io) static URL, paste-ready for a README image (zero self-hosting).
-- **SVG** — a self-contained shields.io flat-style SVG (`badge.svg` field / `renderScoreBadge`) for offline or self-hosted READMEs.
-- **Markdown** — the embed snippet combining both.
-
-Embed the total badge in any README:
+嵌入总徽章：
 
 ```markdown
 ![dsh-score: B · 84/100](https://img.shields.io/badge/dsh--score-B_%C2%B7_84%2F100-green)
 ```
 
-### Five-dimension JSON
-
-The same call returns the compact JSON API envelope (`schema: "dsh-score/badge/v1"`):
+同一次调用返回紧凑的 JSON API 信封（`schema: "dsh-score/badge/v1"`）：
 
 ```json
 {
@@ -273,73 +238,192 @@ The same call returns the compact JSON API envelope (`schema: "dsh-score/badge/v
 }
 ```
 
-A `no-evidence` dimension keeps its honest status and score 0 — the badge and JSON never fabricate a number.
+`no-evidence` 维度保持诚实状态并计 0 分——徽章与 JSON 绝不伪造数字。
 
-## Permissions & data
+## 配置
 
-- Only public services are consumed: `ctx.subprocess`, `ctx.jobs`, `ctx.storageDomain`, `ctx.tools`, `ctx.commands`.
-- Score cards and leaderboards are stored in the `score` storage-domain (tables `scores`, `leaderboards`; latest-leaderboard pointer). When the composition has no `storageDomain` (profiles that predate the base bundle's storage rows, such as the `0.1.1-rc.2`-era headless profile), tools still work and score persistence is disabled with a logged reason. The published `dsh-base` bundle mounts storage-domain from `0.1.2-rc.1` on (verified against the `0.1.2-rc.1` and `0.1.5-alpha.1` tarballs), so persistence is active on the published line.
-- Child processes inherit the provider's credential-scrubbed environment; `gh` reads its own credential store. No environment value is ever logged.
-- All report/log strings pass through pure sanitizers: token literals, URL credentials, and bearer headers are redacted, and tails are byte-capped.
+所有键均可选（默认值如表）；非法值在加载期响亮失败。
 
-## Security boundaries
+最常用键：
 
-- **No code execution.** The pipeline runs `gh api` and `npm view` only; it never installs, builds, or runs a target.
-- **Argv-only subprocesses.** Every CLI invocation is an argv array, never shell-interpreted; repo owner/repo segments are validated against a restricted character set before use in an endpoint.
-- **Evidence discipline.** No score is fabricated: a probe that fails or returns unparsable output yields `no-evidence`, never a number.
-- **Detection vs redaction.** Secret-leak and malicious-install-script detection share the same pure regexes as redaction; both are unit-tested against extreme inputs.
-
-## Known limitations
-
-- Repository probes require `gh` to be authenticated and network access to GitHub; npm probes require `npm` and registry access.
-- A target without a resolvable GitHub repository cannot be inspected for documentation, security, or compliance (those dimensions report `no-evidence`).
-- Install success depends on `dsh-test-drive` being mounted and having recorded the target; otherwise it is honestly `no-evidence`.
-- The maintenance "issue response" signal is a proxy (oldest open issue age), not a direct response-time measurement.
-- Score results are cached per target; use `refresh: true` (or wait past `cacheMaxAgeMs`) to force re-scoring.
-
-## Development
-
-```sh
-pnpm install
-pnpm run typecheck && pnpm run typecheck:ci && pnpm test
-pnpm run build && pnpm run verify:self-contained && pnpm run verify:artifacts && pnpm pack
-```
-
-- `typecheck` resolves `@deepseek-ai/*` through the local harness checkout; `typecheck:ci` checks against the published `0.1.7-rc.2` types.
-- Tests use the real `Context`/`Session`/`ToolRuntime`/`LocalJobRegistry`/storage stack with a scripted subprocess provider.
-- Real-CLI scoring (requires `gh`/`npm` on PATH, `gh` authenticated): invoke `score` from a mounted profile.
-- Release: `node scripts/release.mjs <x.y.z>` (bumps, stamps CHANGELOG, re-runs the gate, commits + tags; never pushes).
-
-## Topics
-
-`dsh`, `dsh-plugin`, `deepseek-harness`, `deepseek`, `cordis`, `plugin-scoring`, `quality-score`, `leaderboard`, `supply-chain`
-
-## Contributors
-
-[PerryLink](https://github.com/PerryLink) — design and implementation.
-
-## PerryLink DSH Plugin Family
-
-This project is part of the DeepSeek Harness plugin family from [PerryLink](https://github.com/PerryLink). The roster stays collapsed below so every README keeps a short first screen; expand it to see every row and its status.
+| 键 | 默认值 | 说明 |
+|---|---|---|
+| `probeTimeoutMs` | `60000` | 单条 `gh`/`npm` 探测命令的截止时间（毫秒） |
+| `outputTailBytes` | `8000` | 每条探测记录的脱敏输出尾部上限（字节） |
+| `cacheMaxAgeMs` | `86400000` | 缓存评分卡复用的时长（0 关闭缓存） |
+| `staleCommitWarnDays` | `90` | 提交/发布年龄超过该值，维护维度降为 `warn` |
+| `staleCommitFailDays` | `365` | 提交/发布年龄超过该值，维护维度降为 `fail` |
+| `maxBatchTargets` | `20` | `/score` 批量目标上限 |
+| `batchConcurrency` | `1` | 批量并发（默认串行，避免 API 限流竞争） |
+| `weights` | `{install:25, maintenance:20, documentation:20, security:20, compliance:15}` | 各维度权重（每个 0–100；至少一个 > 0） |
 
 <details>
-<summary>Expand all plugins</summary>
+<summary>完整配置表（10 个键）</summary>
 
-| Plugin | Status |
+| 键 | 默认值 | 说明 |
+|---|---|---|
+| `probeTimeoutMs` | `60000` | 单条 `gh`/`npm` 探测命令的截止时间（毫秒） |
+| `outputTailBytes` | `8000` | 每条探测记录的脱敏输出尾部上限（字节） |
+| `cacheMaxAgeMs` | `86400000` | 缓存评分卡复用的时长（0 关闭缓存） |
+| `staleCommitWarnDays` | `90` | 提交/发布年龄超过该值，维护维度降为 `warn` |
+| `staleCommitFailDays` | `365` | 提交/发布年龄超过该值，维护维度降为 `fail` |
+| `staleIssueWarnDays` | `30` | 最久未关闭 issue 年龄（响应代理）超过该值，维护维度降为 `warn` |
+| `staleIssueFailDays` | `180` | 最久未关闭 issue 年龄超过该值，维护维度降为 `fail` |
+| `maxBatchTargets` | `20` | `/score` 批量目标上限 |
+| `batchConcurrency` | `1` | 批量并发（默认串行，避免 API 限流竞争） |
+| `weights` | `{install:25, maintenance:20, documentation:20, security:20, compliance:15}` | 各维度权重（每个 0–100；至少一个 > 0） |
+
+</details>
+
+profile patch 覆盖示例：
+
+```yaml
+- insert:
+    - id: score
+      name: dsh-score
+      config:
+        cacheMaxAgeMs: 0
+        maxBatchTargets: 10
+        weights:
+          install: 25
+          maintenance: 20
+          documentation: 20
+          security: 20
+          compliance: 15
+```
+
+## FAQ
+
+<details>
+<summary>评分卡和排行榜存哪？没有 storage 会丢吗？</summary>
+
+评分卡与排行榜存进 `score` 存储域（表 `scores`、`leaderboards`，外加最新排行榜指针）。组合里没有 `storageDomain`（例如早于 base bundle storage 行的 headless profile）时，工具照常工作，但评分持久化被禁用并记录原因。已发布的 `dsh-base` bundle 自 `0.1.2-rc.1` 起挂载 storage-domain（已对 `0.1.2-rc.1` 与 `0.1.5-alpha.1` 的 tarball 核验），所以发布线上持久化是开启的。
+
+</details>
+
+<details>
+<summary>采不到证据时会不会随手给个分？</summary>
+
+不会。探测失败、输出不可解析或目标没有可解析的 GitHub 仓库时，对应维度报 `no-evidence`（0 分，从加权总分中剔除并重新归一）；全部维度都无证据时总分为 `N/A`。`no-evidence` 的维度还会带上失败原因（`exit N`、`timeout`、脱敏后的 stderr 尾部或 `invalid JSON`），而不是一个编出来的数字。
+
+</details>
+
+<details>
+<summary>会不会安装、构建或运行被评的包？</summary>
+
+不会。流水线只运行 `gh api` 与 `npm view` 两类只读命令，绝不安装、构建或执行目标；每次 CLI 调用都是 argv 数组、绝不经过 shell 解释，`owner`/`repo` 段在拼进端点前先做受限字符集校验。
+
+</details>
+
+<details>
+<summary>凭据会不会漏进报告或日志？</summary>
+
+不会。子进程继承 provider 已剥离凭据的环境，`gh` 读取它自己的凭据存储；任何环境变量值都不被记录。所有报告/日志字符串都过纯脱敏函数：token 字面量、URL 凭据、bearer 头被脱敏，输出尾部按字节截断。
+
+</details>
+
+<details>
+<summary>评分开销大吗？会不会把 GitHub API 打限流？</summary>
+
+评分卡按目标缓存（默认 `cacheMaxAgeMs` = 24 小时），重复查询不会重复采证；需要最新结果时用 `refresh: true` 或把缓存时长设为 0。`/score` 默认 `batchConcurrency: 1` 串行执行，避免并发探测争抢 API 配额，单条探测最多等 `probeTimeoutMs`（默认 60 秒）。
+
+</details>
+
+## 安全边界
+
+- **不执行代码。** 流水线只运行 `gh api` 与 `npm view`；绝不安装、构建或运行目标。
+- **仅 argv 子进程。** 每次 CLI 调用都是 argv 数组，绝不经过 shell 解释；owner/repo 段在用于端点前先做受限字符集校验。
+- **证据纪律。** 不编造评分：探测失败或输出不可解析时返回 `no-evidence`，绝不填数字。
+- **检测与脱敏分离。** 密钥泄露与恶意安装脚本检测复用与脱敏同一套纯正则，二者均有极端输入单测。
+
+## 权限与数据
+
+- **权限**：只消费公开服务 `ctx.subprocess`、`ctx.jobs`、`ctx.storageDomain`、`ctx.tools`、`ctx.commands`；不提供 Cordis service key。
+- **数据**：评分卡与排行榜存于 `score` 存储域（表 `scores`、`leaderboards`；最新排行榜指针）。组合里没有 `storageDomain` 时工具仍可用，评分持久化被禁用并记录原因。
+- **环境**：子进程继承 provider 已剥离凭据的环境；`gh` 读取其自身的凭据存储。任何环境变量值都不被记录；所有报告/日志字符串经过纯脱敏函数，尾部按字节截断。
+
+## 已知限制
+
+- 仓库探测需要 `gh` 已认证且有到 GitHub 的网络；npm 探测需要 `npm` 与 registry 访问。
+- 无法解析出 GitHub 仓库的目标无法检查文档、安全或合规（这些维度报告 `no-evidence`）。
+- 安装成功率依赖 `dsh-test-drive` 已挂载且已记录该目标；否则如实为 `no-evidence`。
+- 维护维度的「issue 响应」是代理信号（最久未关闭 issue 年龄），不是直接响应时长测量。
+- 评分按目标缓存；用 `refresh: true`（或等过 `cacheMaxAgeMs`）强制重评。
+
+## 与其他 DSH 插件的互操作性
+
+`dsh-score` 只挂自己的评分面，不占用别人的走廊：
+
+- **工具面自持。** 只注册 `score`、`score_report`、`score_badge` 三个工具与 `/score` 一个命令，全部经 `ctx.effect` 注册，停止/热重载即撤销。
+- **不提供服务键。** `inject` 只声明 `tools`、`commands`、`subprocess`、`jobs`；`storageDomain` 经 `ctx.get` 可选读取，从不 require。
+- **无客户端走廊。** 不注册客户端 slot、不注册 `webServer` 路由前缀。
+- **无 patch 层冲突。** 组合包 patch 只 `insert` 自己那一行（`id: score`），从不覆写内置行的 `config`。
+- **不改全局。** 不改原型、不改写 `process.env`、不替换全局 fetch dispatcher。
+- **不挂共享事件。** 不注册任何 waterfall 监听器（含 `agent/pre-step`），因此不参与事件链排序，不可能短路其他插件的链条。
+
+静态证据：`dsh-plugin-doctor` 的验证徽章即由本仓 CI 产物驱动（见「生态与质量」）。
+
+## 兼容性
+
+| 组件 | 版本 |
+|---|---|
+| DeepSeek Harness | **`dsh-v0.2.2-rc.1`**（GitHub tag）。`engines.dsh` 门控为 `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`；dev/test 固定版本与 `typecheck:ci` 尺子都测 `0.2.2-rc.1`。`ctx.jobs` seam 使用 `SessionId` 契约。 |
+| Node.js | `^22.19.0 \|\| >=24.9.0` |
+| 包管理器 | `pnpm@11.7.0` |
+| 平台 | Windows / macOS / Linux（纯 host 插件） |
+| 外部工具 | PATH 上的 `gh` CLI（已认证用于 API 读取）、PATH 上的 `npm` CLI |
+
+## 生态与质量
+
+- [Gitee 镜像](https://gitee.com/perrylink/dsh-score)（同步镜像，以 GitHub 为准）
+- [dshfind 插件页](https://dshfind.com/plugins/PerryLink/dsh-score)（安装量与排名）
+- [OpenSSF Scorecard 报告](https://securityscorecards.dev/viewer/?uri=github.com/PerryLink/dsh-score)（由 [.github/workflows/scorecard.yml](.github/workflows/scorecard.yml) 驱动）
+- [dsh-plugin-doctor 验证报告](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)（徽章数据源）
+- [DSH Market](https://dsh.market/)（已上架）
+- **1024 商店渠道**：先 `npm i -g dsh1024`，再 `dsh1024 plugin --profile web add dsh-score`（计入 [deepseek1024.com](https://deepseek1024.com) 安装排行）
+- [生态实测知识库](https://perrylink.github.io/dsh-plugin-guide/)：插件开发指南 · 选型实测数据 · 维护取舍判据
+
+## 开发
+
+```sh
+pnpm install                                       # node ^22.19 || >=24.9
+pnpm run typecheck && pnpm run typecheck:ci && pnpm test   # 本地 checkout 面 + 已发布线面 + vitest
+pnpm run build && pnpm run verify:self-contained && pnpm run verify:artifacts && pnpm pack
+pnpm run check:readmes                             # 五语 README 一致性
+```
+
+- `typecheck` 经本地 harness checkout 解析 `@deepseek-ai/*`；`typecheck:ci` 对照已发布的 `0.2.2-rc.1` 类型。
+- 测试使用真实 `Context`/`Session`/`ToolRuntime`/`LocalJobRegistry`/存储栈，子进程 provider 为脚本化实现。
+- 真实 CLI 评分（需 PATH 有 `gh`/`npm`，`gh` 已认证）：在已挂载 profile 中调用 `score`。
+- 发布：`node scripts/release.mjs <x.y.z>`（升版本、盖 CHANGELOG、重跑门禁、提交 + tag；绝不 push）。
+- README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python + Pillow），可重复执行，输出 `docs/assets/dsh-score-flow-{light,dark}.svg`。
+
+Topics：`dsh`、`dsh-plugin`、`deepseek-harness`、`deepseek`、`cordis`、`plugin-scoring`、`quality-score`、`leaderboard`、`supply-chain`
+
+## 家族与致谢
+
+本项目是 [PerryLink](https://github.com/PerryLink) 维护的 DeepSeek Harness 插件家族成员（全部 Apache-2.0）。如果这个插件帮到了你，**给个 star**——它不解锁任何功能，但会让下一个人更容易找到它。
+
+- [@PerryLink](https://github.com/PerryLink) —— 创建者与维护者：五维评分流水线、`gh`/`npm` 证据探测、结构化 `dsh-score/v1` 契约、`/score` 批量作业、徽章与五语文档。
+
+<details>
+<summary>展开全部插件</summary>
+
+| 插件 | 状态 |
 |---|---|
 | **[dsh-aqua-input-check](https://github.com/PerryLink/dsh-aqua-input-check)** |  |
 | **[dsh-archive-check](https://github.com/PerryLink/dsh-archive-check)** |  |
 | **[dsh-auto-review](https://github.com/PerryLink/dsh-auto-review)** |  |
-| **[dsh-autotier](https://github.com/PerryLink/dsh-autotier)** | 🧊 FROZEN — see the repo README |
+| **[dsh-autotier](https://github.com/PerryLink/dsh-autotier)** | 🧊 已冻结 — 见仓库 README |
 | **[dsh-bid-ca-precheck](https://github.com/PerryLink/dsh-bid-ca-precheck)** |  |
 | **[dsh-bid-qual-check](https://github.com/PerryLink/dsh-bid-qual-check)** |  |
-| **[dsh-cert-mcp](https://github.com/PerryLink/dsh-cert-mcp)** | 🧊 FROZEN — see the repo README |
+| **[dsh-cert-mcp](https://github.com/PerryLink/dsh-cert-mcp)** | 🧊 已冻结 — 见仓库 README |
 | **[dsh-checkpoint-rewind](https://github.com/PerryLink/dsh-checkpoint-rewind)** |  |
 | **[dsh-click](https://github.com/PerryLink/dsh-click)** |  |
 | **[dsh-composer-history](https://github.com/PerryLink/dsh-composer-history)** |  |
 | **[dsh-contract-stance](https://github.com/PerryLink/dsh-contract-stance)** |  |
 | **[dsh-customs-doc-check](https://github.com/PerryLink/dsh-customs-doc-check)** |  |
-| **[dsh-data-quality](https://github.com/PerryLink/dsh-data-quality)** |  |
+| **[dsh-data-quality](https://github.com/PerryLink/dsh-data-quality)** | 🧊 已冻结 — 见仓库 README |
 | **[dsh-demurrage-ledger](https://github.com/PerryLink/dsh-demurrage-ledger)** |  |
 | **[dsh-doublecheck](https://github.com/PerryLink/dsh-doublecheck)** |  |
 | **[dsh-drill-script-check](https://github.com/PerryLink/dsh-drill-script-check)** |  |
@@ -372,7 +456,7 @@ This project is part of the DeepSeek Harness plugin family from [PerryLink](http
 | **[dsh-mask](https://github.com/PerryLink/dsh-mask)** |  |
 | **[dsh-mcp-panel](https://github.com/PerryLink/dsh-mcp-panel)** |  |
 | **[dsh-medrec-qc](https://github.com/PerryLink/dsh-medrec-qc)** |  |
-| **[dsh-memento](https://github.com/PerryLink/dsh-memento)** |  |
+| **[dsh-memento](https://github.com/PerryLink/dsh-memento)** | 🧊 已冻结 — 见仓库 README |
 | **[dsh-nsfc-form-check](https://github.com/PerryLink/dsh-nsfc-form-check)** |  |
 | **[dsh-nurse-record-check](https://github.com/PerryLink/dsh-nurse-record-check)** |  |
 | **[dsh-observe](https://github.com/PerryLink/dsh-observe)** |  |
@@ -384,10 +468,10 @@ This project is part of the DeepSeek Harness plugin family from [PerryLink](http
 | **[dsh-permit-report-check](https://github.com/PerryLink/dsh-permit-report-check)** |  |
 | **[dsh-pipeline-check](https://github.com/PerryLink/dsh-pipeline-check)** |  |
 | **[dsh-pleading-draft](https://github.com/PerryLink/dsh-pleading-draft)** |  |
-| **[dsh-plugin-doctor](https://github.com/PerryLink/dsh-plugin-doctor)** |  |
+| **[dsh-plugin-doctor](https://github.com/PerryLink/dsh-plugin-doctor)** | 🚫 已退役（仓库已归档） |
 | **[dsh-plugin-guide](https://github.com/PerryLink/dsh-plugin-guide)** |  |
-| **[dsh-plugin-kit](https://github.com/PerryLink/dsh-plugin-kit)** |  |
-| **[dsh-plugin-upgrade](https://github.com/PerryLink/dsh-plugin-upgrade)** |  |
+| **[dsh-plugin-kit](https://github.com/PerryLink/dsh-plugin-kit)** | 🚫 已退役（仓库已归档） |
+| **[dsh-plugin-upgrade](https://github.com/PerryLink/dsh-plugin-upgrade)** | 🚫 已退役（仓库已归档） |
 | **[dsh-policy-brief-draft](https://github.com/PerryLink/dsh-policy-brief-draft)** |  |
 | **[dsh-power-loss-split](https://github.com/PerryLink/dsh-power-loss-split)** |  |
 | **[dsh-power-ticket-check](https://github.com/PerryLink/dsh-power-ticket-check)** |  |
@@ -399,7 +483,7 @@ This project is part of the DeepSeek Harness plugin family from [PerryLink](http
 | **[dsh-review-reply-check](https://github.com/PerryLink/dsh-review-reply-check)** |  |
 | **[dsh-rulefile-check](https://github.com/PerryLink/dsh-rulefile-check)** |  |
 | **[dsh-safety-brief-check](https://github.com/PerryLink/dsh-safety-brief-check)** |  |
-| **[dsh-score](https://github.com/PerryLink/dsh-score)** |  |
+| **[dsh-score](https://github.com/PerryLink/dsh-score)** | 🧊 已冻结 — 见仓库 README |
 | **[dsh-session-sync](https://github.com/PerryLink/dsh-session-sync)** |  |
 | **[dsh-site-log-check](https://github.com/PerryLink/dsh-site-log-check)** |  |
 | **[dsh-skill-pack-security](https://github.com/PerryLink/dsh-skill-pack-security)** |  |
@@ -411,20 +495,22 @@ This project is part of the DeepSeek Harness plugin family from [PerryLink](http
 | **[dsh-tender-extract](https://github.com/PerryLink/dsh-tender-extract)** |  |
 | **[dsh-tender-matrix](https://github.com/PerryLink/dsh-tender-matrix)** |  |
 | **[dsh-test-drive](https://github.com/PerryLink/dsh-test-drive)** |  |
-| **[dsh-ticktick](https://github.com/PerryLink/dsh-ticktick)** |  |
+| **[dsh-ticktick](https://github.com/PerryLink/dsh-ticktick)** | 🚫 已退役（仓库已归档） |
 | **[dsh-translate](https://github.com/PerryLink/dsh-translate)** |  |
 | **[dsh-warranty-calc](https://github.com/PerryLink/dsh-warranty-calc)** |  |
-| **[dsh-budget](https://github.com/PerryLink/dsh-budget)** | 🧊 FROZEN — see the repo README |
-| **[dsh-claude-move](https://github.com/PerryLink/dsh-claude-move)** | 🧊 FROZEN — see the repo README |
-| **[dsh-defend](https://github.com/PerryLink/dsh-defend)** | 🧊 FROZEN — see the repo README |
-| **[dsh-draw](https://github.com/PerryLink/dsh-draw)** | 🧊 FROZEN — see the repo README |
-| **[dsh-reach](https://github.com/PerryLink/dsh-reach)** | 🧊 FROZEN — see the repo README |
-| **[dsh-background-agents](https://github.com/PerryLink/dsh-background-agents)** | 🚫 RETIRED — see the repo README |
-| **[dsh-session-pin](https://github.com/PerryLink/dsh-session-pin)** | 🚫 RETIRED — see the repo README |
-| **[dsh-team-rooms](https://github.com/PerryLink/dsh-team-rooms)** | 🚫 RETIRED — see the repo README |
+| **[dsh-budget](https://github.com/PerryLink/dsh-budget)** | 🧊 已冻结 — 见仓库 README |
+| **[dsh-claude-move](https://github.com/PerryLink/dsh-claude-move)** | 🧊 已冻结 — 见仓库 README |
+| **[dsh-defend](https://github.com/PerryLink/dsh-defend)** | 🧊 已冻结 — 见仓库 README |
+| **[dsh-draw](https://github.com/PerryLink/dsh-draw)** | 🧊 已冻结 — 见仓库 README |
+| **[dsh-reach](https://github.com/PerryLink/dsh-reach)** | 🧊 已冻结 — 见仓库 README |
+| **[dsh-background-agents](https://github.com/PerryLink/dsh-background-agents)** | 🚫 已退役（仓库已归档） |
+| **[dsh-session-pin](https://github.com/PerryLink/dsh-session-pin)** | 🚫 已退役（仓库已归档） |
+| **[dsh-team-rooms](https://github.com/PerryLink/dsh-team-rooms)** | 🚫 已退役（仓库已归档） |
 
 </details>
 
 ## License
 
-[Apache-2.0](LICENSE)
+[LICENSE](LICENSE)（Apache License 2.0）© 2026 dsh-score contributors
+
+<p align="center"><sub>Apache-2.0 · 社区插件，与 DeepSeek 无关。</sub></p>
