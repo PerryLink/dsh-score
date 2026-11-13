@@ -18,7 +18,8 @@ import { mountHarness, type Harness, type ScriptedSpawn } from './harness.ts'
 type ToolExecInput = Parameters<Harness['ctx']['tools']['execute']>[0]
 const makeCallId = (id: string): ToolExecInput['calls'][number]['id'] => id as ToolExecInput['calls'][number]['id']
 
-const RECENT = '2026-08-15T00:00:00.000Z'
+// Relative on purpose: a fixed date eventually crosses the 90-day maintenance threshold.
+const RECENT = new Date(Date.now() - 7 * 86_400_000).toISOString()
 
 const GOOD_REPO_SCRIPTS: ScriptedSpawn[] = [
   { exitCode: 0, stdout: JSON.stringify({ pushed_at: RECENT, open_issues_count: 0, default_branch: 'main', archived: false, license: { spdx_id: 'MIT' }, topics: ['dsh-plugin'] }) },

@@ -15,7 +15,8 @@ import { ProbeDriver } from '../src/probe.ts'
 import { readTestDriveEvidence, ScoreRunner } from '../src/score.ts'
 import { FakeSubprocessRuntime, mountHarness, type ScriptedSpawn } from './harness.ts'
 
-const RECENT = '2026-08-15T00:00:00.000Z'
+// Relative on purpose: a fixed date eventually crosses the 90-day maintenance threshold.
+const RECENT = new Date(Date.now() - 7 * 86_400_000).toISOString()
 
 /** Scripted gh responses for one healthy repo target, in probe order. */
 const GOOD_REPO_SCRIPTS: ScriptedSpawn[] = [

@@ -16,7 +16,8 @@ import { scoreDomainSpec } from '../src/domain.ts'
 import { ProbeDriver } from '../src/probe.ts'
 import { mountHarness, type Harness, type ScriptedSpawn } from './harness.ts'
 
-const RECENT = '2026-08-15T00:00:00.000Z'
+// Relative on purpose: a fixed date eventually crosses the 90-day maintenance threshold.
+const RECENT = new Date(Date.now() - 7 * 86_400_000).toISOString()
 
 const GOOD_REPO_SCRIPTS: ScriptedSpawn[] = [
   { exitCode: 0, stdout: JSON.stringify({ pushed_at: RECENT, open_issues_count: 0, license: { spdx_id: 'MIT' }, topics: ['dsh-plugin'] }) },
