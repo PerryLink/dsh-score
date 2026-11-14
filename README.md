@@ -519,3 +519,8 @@ Topics：`dsh`、`dsh-plugin`、`deepseek-harness`、`deepseek`、`cordis`、`pl
 [LICENSE](LICENSE)（Apache License 2.0）© 2026 dsh-score contributors
 
 <p align="center"><sub>Apache-2.0 · 社区插件，与 DeepSeek 无关。</sub></p>
+
+
+## HCB compatibility input
+
+[HCB](https://github.com/PerryLink/dsh-compat-baseline) supplies declared host compatibility, ENTRY/FLOW/BOOST tracks, capability risk and `hcb-gate/1`. Use it as one input to the score; **do not treat the gate as a quality score**, and do not maintain a second host-version matrix here.
