@@ -523,4 +523,4 @@ Topics：`dsh`、`dsh-plugin`、`deepseek-harness`、`deepseek`、`cordis`、`pl
 
 ## HCB compatibility input
 
-[HCB](https://github.com/PerryLink/dsh-hcb) supplies declared host compatibility, ENTRY/FLOW/BOOST tracks, capability risk and `hcb-gate/1`. Use it as one input to the score; **do not treat the gate as a quality score**, and do not maintain a second host-version matrix here.
+[HCB](https://github.com/PerryLink/dsh-hcb) 0.10.1 — **143 checked / 3 FLOW `manual`** — supplies declared host compatibility, ENTRY/FLOW/BOOST tracks, capability risk and `hcb-gate/1`. Use it as one input to the score; **do not treat the gate as a quality score**, and do not maintain a second host-version matrix here.
