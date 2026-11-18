@@ -9,7 +9,7 @@
 
 **Convierte cualquier repositorio o paquete npm en una tarjeta de calidad de cinco dimensiones con enlaces de evidencia: instalación, mantenimiento, documentación, seguridad y cumplimiento, cada punto trazable.**
 
-Puntuador local para DeepSeek Harness: recoge evidencia solo con `gh api` y `npm view` — nunca instala, construye ni ejecuta el objetivo — y registra `no-evidence` en lugar de inventar un número.
+Puntuador local para DeepSeek Harness: recoge evidencia solo con `dsh-v0.2.2-rc.4`（2026-11-18）；`gh api` y `npm view` — nunca instala, construye ni ejecuta el objetivo — y registra `no-evidence` en lugar de inventar un número.
 
 [Instalar](#instalación-en-tres-pasos) · [Configuración](#configuración) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
@@ -36,7 +36,7 @@ dsh plugin --profile <name> add dsh-score
 
 ## Qué es
 
-`dsh-score` es un puntuador de calidad local para DeepSeek Harness: dale un repositorio de GitHub o un paquete npm y ejecuta las cinco dimensiones — éxito de instalación, mantenimiento, documentación, seguridad y cumplimiento — y devuelve una tarjeta estructurada (`schema: "dsh-score/v1"`) o una tabla JSON + Markdown. Cada conclusión sale de salida real de `gh`/`npm` y cada evidencia lleva `source`, `detail` saneado y `observedAt`; una dimensión sin evidencia reporta `no-evidence` (puntuación 0, excluida del total ponderado) en vez de un número inventado. La puntuación es solo bajo demanda: no se instala, construye ni ejecuta nada. Este plugin es el puntuador local bajo demanda; la capa de evidencia pública vive en [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
+`dsh-v0.2.2-rc.4`（2026-11-18）；`dsh-score` es un puntuador de calidad local para DeepSeek Harness: dale un repositorio de GitHub o un paquete npm y ejecuta las cinco dimensiones — éxito de instalación, mantenimiento, documentación, seguridad y cumplimiento — y devuelve una tarjeta estructurada (`schema: "dsh-score/v1"`) o una tabla JSON + Markdown. Cada conclusión sale de salida real de `gh`/`npm` y cada evidencia lleva `source`, `detail` saneado y `observedAt`; una dimensión sin evidencia reporta `no-evidence` (puntuación 0, excluida del total ponderado) en vez de un número inventado. La puntuación es solo bajo demanda: no se instala, construye ni ejecuta nada. Este plugin es el puntuador local bajo demanda; la capa de evidencia pública vive en [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-v5-dark.svg">

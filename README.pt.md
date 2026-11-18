@@ -9,7 +9,7 @@
 
 **Transforme qualquer repositório ou pacote npm em um cartão de qualidade de cinco dimensões com links de evidência — instalação, manutenção, documentação, segurança e conformidade, cada ponto rastreável.**
 
-Pontuador local para DeepSeek Harness: coleta evidência apenas com `gh api` e `npm view` — nunca instala, compila ou executa o alvo — e registra `no-evidence` em vez de inventar um número.
+Pontuador local para DeepSeek Harness: coleta evidência apenas com `dsh-v0.2.2-rc.4`（2026-11-18）；`gh api` e `npm view` — nunca instala, compila ou executa o alvo — e registra `no-evidence` em vez de inventar um número.
 
 [Instalar](#instalação-em-três-passos) · [Configuração](#configuração) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
@@ -36,7 +36,7 @@ dsh plugin --profile <name> add dsh-score
 
 ## O que é
 
-`dsh-score` é um pontuador de qualidade local para DeepSeek Harness: dê a ele um repositório do GitHub ou um pacote npm e ele roda as cinco dimensões — sucesso de instalação, manutenção, documentação, segurança e conformidade — devolvendo um cartão estruturado (`schema: "dsh-score/v1"`) ou um ranking JSON + Markdown. Toda conclusão vem de saída real de `gh`/`npm` e cada evidência carrega `source`, `detail` sanitizado e `observedAt`; uma dimensão sem evidência reporta `no-evidence` (pontuação 0, excluída do total ponderado) em vez de um número inventado. A pontuação é somente sob demanda: nada é instalado, compilado ou executado. Este plugin é o pontuador local sob demanda; a camada de evidência pública fica em [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
+`dsh-v0.2.2-rc.4`（2026-11-18）；`dsh-score` é um pontuador de qualidade local para DeepSeek Harness: dê a ele um repositório do GitHub ou um pacote npm e ele roda as cinco dimensões — sucesso de instalação, manutenção, documentação, segurança e conformidade — devolvendo um cartão estruturado (`schema: "dsh-score/v1"`) ou um ranking JSON + Markdown. Toda conclusão vem de saída real de `gh`/`npm` e cada evidência carrega `source`, `detail` sanitizado e `observedAt`; uma dimensão sem evidência reporta `no-evidence` (pontuação 0, excluída do total ponderado) em vez de um número inventado. A pontuação é somente sob demanda: nada é instalado, compilado ou executado. Este plugin é o pontuador local sob demanda; a camada de evidência pública fica em [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-v5-dark.svg">

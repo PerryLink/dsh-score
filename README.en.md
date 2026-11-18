@@ -9,7 +9,7 @@
 
 **Turn any repository or npm package into a five-dimension quality scorecard with evidence links — install, maintenance, docs, security, compliance, every point traceable.**
 
-A local scorer for DeepSeek Harness: it collects evidence with `gh api` and `npm view` only — it never installs, builds, or runs the target — and records `no-evidence` instead of inventing a number.
+A local scorer for DeepSeek Harness: it collects evidence with `dsh-v0.2.2-rc.4`（2026-11-18）；`gh api` and `npm view` only — it never installs, builds, or runs the target — and records `no-evidence` instead of inventing a number.
 
 [Install](#three-step-setup) · [Configuration](#configuration) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
@@ -36,7 +36,7 @@ dsh plugin --profile <name> add dsh-score
 
 ## What it is
 
-`dsh-score` is a local quality scorer for DeepSeek Harness: give it a GitHub repository or an npm package and it runs the five dimensions — install success, maintenance, documentation, security, and compliance — then returns a structured score card (`schema: "dsh-score/v1"`) or a JSON + Markdown leaderboard. Every conclusion comes from real `gh`/`npm` output and every piece of evidence carries `source`, sanitized `detail`, and `observedAt`; a dimension that gathers no evidence reports `no-evidence` (score 0, excluded from the weighted total) instead of a guessed number. Scoring is on demand only — nothing is installed, built, or executed. This plugin is the local on-demand scorer; the public evidence layer lives in [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
+`dsh-v0.2.2-rc.4`（2026-11-18）；`dsh-score` is a local quality scorer for DeepSeek Harness: give it a GitHub repository or an npm package and it runs the five dimensions — install success, maintenance, documentation, security, and compliance — then returns a structured score card (`schema: "dsh-score/v1"`) or a JSON + Markdown leaderboard. Every conclusion comes from real `gh`/`npm` output and every piece of evidence carries `source`, sanitized `detail`, and `observedAt`; a dimension that gathers no evidence reports `no-evidence` (score 0, excluded from the weighted total) instead of a guessed number. Scoring is on demand only — nothing is installed, built, or executed. This plugin is the local on-demand scorer; the public evidence layer lives in [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-v5-dark.svg">
