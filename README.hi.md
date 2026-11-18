@@ -514,6 +514,10 @@ pnpm run check:readmes                             # पाँच-भाषा R
 
 </details>
 
+## HCB संगतता इनपुट
+
+होस्ट संगतता मैट्रिक्स और ENTRY/FLOW/BOOST ट्रैक [HCB](https://github.com/PerryLink/dsh-hcb) में प्रकाशित होते हैं; यह README होस्ट संस्करणों की दूसरी मैट्रिक्स नहीं रखता।
+
 ## लाइसेंस
 
 [LICENSE](LICENSE) (Apache License 2.0) © 2026 dsh-score contributors

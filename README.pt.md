@@ -514,6 +514,10 @@ Este projeto faz parte da família de plugins de DeepSeek Harness da [PerryLink]
 
 </details>
 
+## Entrada de compatibilidade do HCB
+
+A matriz de compatibilidade do host e as faixas ENTRY/FLOW/BOOST são publicadas no [HCB](https://github.com/PerryLink/dsh-hcb); este README não mantém uma segunda matriz de versões do host.
+
 ## Licença
 
 [LICENSE](LICENSE) (Apache License 2.0) © 2026 dsh-score contributors
