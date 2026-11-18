@@ -372,7 +372,7 @@ profile patch में ओवरराइड का उदाहरण:
 
 | घटक | संस्करण |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.1`** (GitHub tag)। `engines.dsh` गेट `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` है; dev/test pins और `typecheck:ci` रूलर `0.2.2-rc.1` मापते हैं। `ctx.jobs` seam `SessionId` अनुबंध का उपयोग करता है। |
+| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (GitHub tag)। `engines.dsh` गेट `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` है; dev/test pins और `typecheck:ci` रूलर `0.2.2-rc.1` मापते हैं। `ctx.jobs` seam `SessionId` अनुबंध का उपयोग करता है। |
 | Node.js | `^22.19.0 \|\| >=24.9.0` |
 | पैकेज प्रबंधक | `pnpm@11.7.0` |
 | प्लेटफ़ॉर्म | Windows / macOS / Linux (केवल-होस्ट प्लगइन) |

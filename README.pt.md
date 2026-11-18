@@ -372,7 +372,7 @@ Evidência estática: o selo de verificação do `dsh-plugin-doctor` é alimenta
 
 | Componente | Versão |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.1`** (tag do GitHub). O gate `engines.dsh` é `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`; os pins de dev/test e a régua `typecheck:ci` medem `0.2.2-rc.1`. O seam `ctx.jobs` usa o contrato `SessionId`. |
+| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (tag do GitHub). O gate `engines.dsh` é `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`; os pins de dev/test e a régua `typecheck:ci` medem `0.2.2-rc.1`. O seam `ctx.jobs` usa o contrato `SessionId`. |
 | Node.js | `^22.19.0 \|\| >=24.9.0` |
 | Gerenciador de pacotes | `pnpm@11.7.0` |
 | Plataforma | Windows / macOS / Linux (plugin somente host) |

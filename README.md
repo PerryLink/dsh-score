@@ -372,7 +372,7 @@ profile patch 覆盖示例：
 
 | 组件 | 版本 |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.1`**（GitHub tag）。`engines.dsh` 门控为 `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`；dev/test 固定版本与 `typecheck:ci` 尺子都测 `0.2.2-rc.1`。`ctx.jobs` seam 使用 `SessionId` 契约。 |
+| DeepSeek Harness | **`dsh-v0.2.2-rc.4`**（GitHub tag）。`engines.dsh` 门控为 `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`；dev/test 固定版本与 `typecheck:ci` 尺子都测 `0.2.2-rc.1`。`ctx.jobs` seam 使用 `SessionId` 契约。 |
 | Node.js | `^22.19.0 \|\| >=24.9.0` |
 | 包管理器 | `pnpm@11.7.0` |
 | 平台 | Windows / macOS / Linux（纯 host 插件） |

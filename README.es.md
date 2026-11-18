@@ -372,7 +372,7 @@ Evidencia estática: la insignia de verificación de `dsh-plugin-doctor` se alim
 
 | Componente | Versión |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.1`** (tag de GitHub). El gate `engines.dsh` es `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`; los pins de dev/test y la regla `typecheck:ci` miden `0.2.2-rc.1`. El seam `ctx.jobs` usa el contrato `SessionId`. |
+| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (tag de GitHub). El gate `engines.dsh` es `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`; los pins de dev/test y la regla `typecheck:ci` miden `0.2.2-rc.1`. El seam `ctx.jobs` usa el contrato `SessionId`. |
 | Node.js | `^22.19.0 \|\| >=24.9.0` |
 | Gestor de paquetes | `pnpm@11.7.0` |
 | Plataforma | Windows / macOS / Linux (plugin solo host) |
