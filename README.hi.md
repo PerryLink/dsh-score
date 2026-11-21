@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-score
   <img src="docs/assets/dsh-score-flow-v5-light.svg" width="100%" alt="dsh-score की संरचना: ऊपर तीन साक्ष्य-प्रवेश (सात केवल-पढ़ने वाली gh api कॉल, npm view --json, और आरक्षित test_drive डोमेन) evidence[] में जाते हैं; नीचे पाँच आयामों की बेंच है जिसकी स्तंभ-चौड़ाई ही भार है (install 25 / maintenance 20 / documentation 20 / security 20 / compliance 15), install बिना साक्ष्य 0 पर खोखला है और भाजक से हटा है; भार-पट्टी 100 से 75 दिखाती है, कुल पट्टिका 6615 / 75 = 88 और ग्रेड B निकालती है, और नीचे तीन निर्गम हैं: sc_ स्कोर कार्ड, lb_ लीडरबोर्ड और score_badge">
 </picture>
 
+![dsh-score का असली टर्मिनल रन](docs/assets/dsh-score-demo.gif)
+
+*इस रिपॉज़िटरी में दर्ज असली रन का एनिमेटेड रीप्ले।*
+
+
 ## तीन चरणों में शुरुआत
 
 1. **इंस्टॉल** (कोई एक चैनल चुनें):

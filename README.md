@@ -36,6 +36,10 @@ dsh plugin --profile <name> add dsh-score
 
 ## 它是什么
 
+![dsh-score 真实终端运行](docs/assets/dsh-score-demo.gif)
+
+*本仓库一次真实运行的动图回放。*
+
 `dsh-v0.2.2-rc.4`（2026-11-18）；`dsh-score` 是 DeepSeek Harness 的本地质量评分器：给它一个 GitHub 仓库或 npm 包，它跑完安装成功率、维护、文档、安全、合规五个维度，输出一张结构化评分卡（`schema: "dsh-score/v1"`）或一份 JSON + Markdown 排行榜。所有结论都来自真实的 `gh`/`npm` 输出，每条证据都带 `source`、脱敏后的 `detail` 与 `observedAt`；某个维度采不到证据就如实记 `no-evidence`（0 分、不参与加权），绝不用估算数字填空。评分完全按需，不安装、不构建、不运行被评对象。本插件是本地按需评分器；公开证据层在 [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index)。
 
 <picture>

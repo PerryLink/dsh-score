@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-score
   <img src="docs/assets/dsh-score-flow-v5-light.svg" width="100%" alt="Estructura de dsh-score: arriba, tres entradas de evidencia (siete llamadas gh api de solo lectura, npm view --json y el dominio reservado test_drive) alimentan evidence[]; debajo, el banco de cinco dimensiones cuyo ancho de columna es el peso (install 25 / maintenance 20 / documentation 20 / security 20 / compliance 15), con install hueco en 0 y fuera del divisor; la barra de pesos muestra 100 a 75, la placa total calcula 6615 / 75 = 88 con nota B, y tres salidas cierran la figura: la tarjeta sc_, la clasificación lb_ y score_badge">
 </picture>
 
+![dsh-score: ejecución real de terminal](docs/assets/dsh-score-demo.gif)
+
+*Repetición animada de una ejecución real registrada en este repositorio.*
+
+
 ## Instalación en tres pasos
 
 1. **Instalar** (elige un canal):

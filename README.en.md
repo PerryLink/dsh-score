@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-score
   <img src="docs/assets/dsh-score-flow-v5-light.svg" width="100%" alt="dsh-score structure: three intake channels on top (seven read-only gh api calls, npm view --json, and the reserved test_drive domain) feed evidence[]; below them the five-dimension bench whose column width is the weight (install 25 / maintenance 20 / documentation 20 / security 20 / compliance 15), with install hollow at 0 and removed from the divisor; the weight rail shows 100 to 75, the total plate computes 6615 / 75 = 88 at grade B, and three outputs close the figure: the sc_ score card, the lb_ leaderboard, and score_badge">
 </picture>
 
+![dsh-score: real terminal run](docs/assets/dsh-score-demo.gif)
+
+*Animated replay of a real run recorded in this repository.*
+
+
 ## Three-step setup
 
 1. **Install** (pick one channel):
