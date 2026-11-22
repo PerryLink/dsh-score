@@ -7,6 +7,8 @@
 
 # dsh-score
 
+Current version `0.2.31`.
+
 **Turn any repository or npm package into a five-dimension quality scorecard with evidence links — install, maintenance, docs, security, compliance, every point traceable.**
 
 A local scorer for DeepSeek Harness: it collects evidence with, `gh api` and `npm view` only — it never installs, builds, or runs the target — and records `no-evidence` instead of inventing a number.
