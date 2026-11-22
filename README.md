@@ -9,7 +9,9 @@
 
 **给任意仓库或 npm 包打一张带证据链接的五维质量评分卡——安装、维护、文档、安全、合规，每一分都能追溯。**
 
-面向 DeepSeek Harness 的本地评分器：只调 `dsh-v0.2.2-rc.4`（2026-11-18）；`gh api` 与 `npm view` 采证，不安装、不构建、不执行被评对象；证据缺失时如实记 `no-evidence`，绝不编数字。
+面向 DeepSeek Harness 的本地评分器：只调、`gh api` 与 `npm view` 采证，不安装、不构建、不执行被评对象；证据缺失时如实记 `no-evidence`，绝不编数字。
+
+最近一次核验：DeepSeek Harness `dsh-v0.2.3-alpha.1`（2026-11-22）。
 
 [安装](#三步上手) · [配置](#配置) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
@@ -40,7 +42,7 @@ dsh plugin --profile <name> add dsh-score
 
 *本仓库一次真实运行的动图回放。*
 
-`dsh-v0.2.2-rc.4`（2026-11-18）；`dsh-score` 是 DeepSeek Harness 的本地质量评分器：给它一个 GitHub 仓库或 npm 包，它跑完安装成功率、维护、文档、安全、合规五个维度，输出一张结构化评分卡（`schema: "dsh-score/v1"`）或一份 JSON + Markdown 排行榜。所有结论都来自真实的 `gh`/`npm` 输出，每条证据都带 `source`、脱敏后的 `detail` 与 `observedAt`；某个维度采不到证据就如实记 `no-evidence`（0 分、不参与加权），绝不用估算数字填空。评分完全按需，不安装、不构建、不运行被评对象。本插件是本地按需评分器；公开证据层在 [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index)。
+, `dsh-score` 是 DeepSeek Harness 的本地质量评分器：给它一个 GitHub 仓库或 npm 包，它跑完安装成功率、维护、文档、安全、合规五个维度，输出一张结构化评分卡（`schema: "dsh-score/v1"`）或一份 JSON + Markdown 排行榜。所有结论都来自真实的 `gh`/`npm` 输出，每条证据都带 `source`、脱敏后的 `detail` 与 `observedAt`；某个维度采不到证据就如实记 `no-evidence`（0 分、不参与加权），绝不用估算数字填空。评分完全按需，不安装、不构建、不运行被评对象。本插件是本地按需评分器；公开证据层在 [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index)。
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-v5-dark.svg">
@@ -376,7 +378,7 @@ profile patch 覆盖示例：
 
 | 组件 | 版本 |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.4`**（GitHub tag）。`engines.dsh` 门控为 `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`；dev/test 固定版本与 `typecheck:ci` 尺子都测 `0.2.2-rc.1`。`ctx.jobs` seam 使用 `SessionId` 契约。 |
+| DeepSeek Harness | **`dsh-v0.2.3-alpha.1`**（GitHub tag）。`engines.dsh` 门控为 `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0 \|\| >=0.2.3-0 <0.3.0-0`；dev/test 固定版本与 `typecheck:ci` 尺子都测 `0.2.2-rc.1`。`ctx.jobs` seam 使用 `SessionId` 契约。 |
 | Node.js | `^22.19.0 \|\| >=24.9.0` |
 | 包管理器 | `pnpm@11.7.0` |
 | 平台 | Windows / macOS / Linux（纯 host 插件） |
@@ -527,7 +529,6 @@ Topics：`dsh`、`dsh-plugin`、`deepseek-harness`、`deepseek`、`cordis`、`pl
 [LICENSE](LICENSE)（Apache License 2.0）© 2026 dsh-score contributors
 
 <p align="center"><sub>Apache-2.0 · 社区插件，与 DeepSeek 无关。</sub></p>
-
 
 ## HCB compatibility input
 

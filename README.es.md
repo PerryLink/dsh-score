@@ -9,7 +9,9 @@
 
 **Convierte cualquier repositorio o paquete npm en una tarjeta de calidad de cinco dimensiones con enlaces de evidencia: instalación, mantenimiento, documentación, seguridad y cumplimiento, cada punto trazable.**
 
-Puntuador local para DeepSeek Harness: recoge evidencia solo con `dsh-v0.2.2-rc.4`（2026-11-18）；`gh api` y `npm view` — nunca instala, construye ni ejecuta el objetivo — y registra `no-evidence` en lugar de inventar un número.
+Puntuador local para DeepSeek Harness: recoge evidencia solo con, `gh api` y `npm view` — nunca instala, construye ni ejecuta el objetivo — y registra `no-evidence` en lugar de inventar un número.
+
+Última verificación: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
 
 [Instalar](#instalación-en-tres-pasos) · [Configuración](#configuración) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
@@ -36,7 +38,7 @@ dsh plugin --profile <name> add dsh-score
 
 ## Qué es
 
-`dsh-v0.2.2-rc.4`（2026-11-18）；`dsh-score` es un puntuador de calidad local para DeepSeek Harness: dale un repositorio de GitHub o un paquete npm y ejecuta las cinco dimensiones — éxito de instalación, mantenimiento, documentación, seguridad y cumplimiento — y devuelve una tarjeta estructurada (`schema: "dsh-score/v1"`) o una tabla JSON + Markdown. Cada conclusión sale de salida real de `gh`/`npm` y cada evidencia lleva `source`, `detail` saneado y `observedAt`; una dimensión sin evidencia reporta `no-evidence` (puntuación 0, excluida del total ponderado) en vez de un número inventado. La puntuación es solo bajo demanda: no se instala, construye ni ejecuta nada. Este plugin es el puntuador local bajo demanda; la capa de evidencia pública vive en [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
+, `dsh-score` es un puntuador de calidad local para DeepSeek Harness: dale un repositorio de GitHub o un paquete npm y ejecuta las cinco dimensiones — éxito de instalación, mantenimiento, documentación, seguridad y cumplimiento — y devuelve una tarjeta estructurada (`schema: "dsh-score/v1"`) o una tabla JSON + Markdown. Cada conclusión sale de salida real de `gh`/`npm` y cada evidencia lleva `source`, `detail` saneado y `observedAt`; una dimensión sin evidencia reporta `no-evidence` (puntuación 0, excluida del total ponderado) en vez de un número inventado. La puntuación es solo bajo demanda: no se instala, construye ni ejecuta nada. Este plugin es el puntuador local bajo demanda; la capa de evidencia pública vive en [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-v5-dark.svg">
@@ -46,7 +48,6 @@ dsh plugin --profile <name> add dsh-score
 ![dsh-score: ejecución real de terminal](docs/assets/dsh-score-demo.gif)
 
 *Repetición animada de una ejecución real registrada en este repositorio.*
-
 
 ## Instalación en tres pasos
 
@@ -377,7 +378,7 @@ Evidencia estática: la insignia de verificación de `dsh-plugin-doctor` se alim
 
 | Componente | Versión |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (tag de GitHub). El gate `engines.dsh` es `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`; los pins de dev/test y la regla `typecheck:ci` miden `0.2.2-rc.1`. El seam `ctx.jobs` usa el contrato `SessionId`. |
+| DeepSeek Harness | **`dsh-v0.2.3-alpha.1`** (tag de GitHub). El gate `engines.dsh` es `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0 \|\| >=0.2.3-0 <0.3.0-0`; los pins de dev/test y la regla `typecheck:ci` miden `0.2.2-rc.1`. El seam `ctx.jobs` usa el contrato `SessionId`. |
 | Node.js | `^22.19.0 \|\| >=24.9.0` |
 | Gestor de paquetes | `pnpm@11.7.0` |
 | Plataforma | Windows / macOS / Linux (plugin solo host) |

@@ -9,7 +9,9 @@
 
 **Turn any repository or npm package into a five-dimension quality scorecard with evidence links — install, maintenance, docs, security, compliance, every point traceable.**
 
-A local scorer for DeepSeek Harness: it collects evidence with `dsh-v0.2.2-rc.4`（2026-11-18）；`gh api` and `npm view` only — it never installs, builds, or runs the target — and records `no-evidence` instead of inventing a number.
+A local scorer for DeepSeek Harness: it collects evidence with, `gh api` and `npm view` only — it never installs, builds, or runs the target — and records `no-evidence` instead of inventing a number.
+
+Last verified on DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
 
 [Install](#three-step-setup) · [Configuration](#configuration) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
@@ -36,7 +38,7 @@ dsh plugin --profile <name> add dsh-score
 
 ## What it is
 
-`dsh-v0.2.2-rc.4`（2026-11-18）；`dsh-score` is a local quality scorer for DeepSeek Harness: give it a GitHub repository or an npm package and it runs the five dimensions — install success, maintenance, documentation, security, and compliance — then returns a structured score card (`schema: "dsh-score/v1"`) or a JSON + Markdown leaderboard. Every conclusion comes from real `gh`/`npm` output and every piece of evidence carries `source`, sanitized `detail`, and `observedAt`; a dimension that gathers no evidence reports `no-evidence` (score 0, excluded from the weighted total) instead of a guessed number. Scoring is on demand only — nothing is installed, built, or executed. This plugin is the local on-demand scorer; the public evidence layer lives in [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
+, `dsh-score` is a local quality scorer for DeepSeek Harness: give it a GitHub repository or an npm package and it runs the five dimensions — install success, maintenance, documentation, security, and compliance — then returns a structured score card (`schema: "dsh-score/v1"`) or a JSON + Markdown leaderboard. Every conclusion comes from real `gh`/`npm` output and every piece of evidence carries `source`, sanitized `detail`, and `observedAt`; a dimension that gathers no evidence reports `no-evidence` (score 0, excluded from the weighted total) instead of a guessed number. Scoring is on demand only — nothing is installed, built, or executed. This plugin is the local on-demand scorer; the public evidence layer lives in [`dsh-attention-index`](https://github.com/PerryLink/dsh-attention-index).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-score-flow-v5-dark.svg">
@@ -46,7 +48,6 @@ dsh plugin --profile <name> add dsh-score
 ![dsh-score: real terminal run](docs/assets/dsh-score-demo.gif)
 
 *Animated replay of a real run recorded in this repository.*
-
 
 ## Three-step setup
 
@@ -377,7 +378,7 @@ Static evidence: the `dsh-plugin-doctor` verification badge is driven by this re
 
 | Component | Version |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (GitHub tag). The `engines.dsh` gate is `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0`; dev/test pins and the `typecheck:ci` ruler measure `0.2.2-rc.1`. The `ctx.jobs` seam uses the `SessionId` contract. |
+| DeepSeek Harness | **`dsh-v0.2.3-alpha.1`** (GitHub tag). The `engines.dsh` gate is `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0 \|\| >=0.2.3-0 <0.3.0-0`; dev/test pins and the `typecheck:ci` ruler measure `0.2.2-rc.1`. The `ctx.jobs` seam uses the `SessionId` contract. |
 | Node.js | `^22.19.0 \|\| >=24.9.0` |
 | Package manager | `pnpm@11.7.0` |
 | Platform | Windows / macOS / Linux (host-only plugin) |
